@@ -1,0 +1,64 @@
+version: '2'
+services:
+  api:
+    image: camptocamp/mapfish_print_logs:latest
+    environment:
+      SQLALCHEMY_URL: &db_url postgresql://www-data:www-data@db:5432/print
+      SQLALCHEMY_URL_SLAVE: *db_url
+      STATS_VIEW: 1
+      # STATSD_ADDRESS: 172.17.0.1:8125
+      # STATSD_PREFIX: suissealpine.dev.api
+      DEVELOPMENT: 1
+      C2C_SECRET: toto
+      MAPFISH_LOG_LEVEL: DEBUG
+      C2CWSGI_LOG_LEVEL: DEBUG
+      SQL_LOG_LEVEL: INFO
+      OTHER_LOG_LEVEL: INFO
+      GUNICORN_PARAMS: '-b :8080 --threads 10 --reload'  # only one process in order to get consistent stats
+      C2C_PROFILER_PATH: /api_profiler
+      ES_URL: http://elasticsearch:9200/
+      ES_INDEXES: "print-*"
+    volumes:
+    - ./api/mapfish_print_logs:/app/mapfish_print_logs:ro
+    ports:
+    - 8480:8080
+
+  db:
+    image: camptocamp/postgres:9.6
+    environment:
+      POSTGRES_USER: www-data
+      POSTGRES_PASSWORD: www-data
+      POSTGRES_DB: print
+    # Uncomment following line to have database show all incoming SQL statements
+    # command: postgres -c log_statement=all
+    ports:
+    - 15432:5432
+
+  print:
+    image: camptocamp/mapfish_print:3.16
+    environment:
+      LOG_LEVEL: DEBUG
+      CATALINA_OPTS: >-
+        -Xmx512M -Ddb.username=www-data -Ddb.password=www-data -Ddb.host=db -Ddb.name=print
+        -Dmapfish.maxContentLength=4194304
+      PGOPTIONS: '-c statement_timeout=30000'
+    volumes:
+    - ./configs/print-apps:/usr/local/tomcat/webapps/ROOT/print-apps:ro
+    links:
+    - db
+    ports:
+    - 8680:8080
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.1
+    environment:
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ports:
+      - 9200:9200
+
+  logstash:
+    image: docker pull docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.1
+    volumes:
+      - ./configs/logstash/:/usr/share/logstash/pipeline/
+
+  # TODO: logstash + elasticsearch https://sematext.com/blog/structured-logging-with-rsyslog-and-elasticsearch/

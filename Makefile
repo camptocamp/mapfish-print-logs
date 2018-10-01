@@ -16,3 +16,9 @@ pull:
 .PHONY: build
 build:
 	docker build -t $(DOCKER_BASE):$(DOCKER_TAG) --build-arg "GIT_HASH=$(GIT_HASH)" api
+
+
+run: build
+	docker-compose -p logs stop && \
+	docker-compose -p logs rm -f && \
+	docker-compose -p logs up

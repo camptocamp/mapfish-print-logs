@@ -1,8 +1,10 @@
+import os
+from pyramid.httpexceptions import HTTPInternalServerError
 import requests
 
-ES_URL = 'https://saccas.logs.camptocamp.net/elasticsearch/'
-INDEXES = 'saccas-logstash-*'
-AUTH = "Basic cHZhbHNlY2NoaTpGb29sMWFyZg=="
+ES_URL = os.environ['ES_URL']
+INDEXES = os.environ['ES_INDEXES']
+AUTH = os.environ.get('ES_AUTH')
 
 
 def get_logs(ref):
@@ -21,13 +23,17 @@ def get_logs(ref):
         }]
     }
 
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Accept": "application/json"
+    }
+    if AUTH is not None:
+        headers['Authorization'] = AUTH
+
     r = requests.post(f"{ES_URL}/{INDEXES}/_search", json=query,
-                      headers={
-                          "Authorization": AUTH,
-                          "Content-Type": "application/json;charset=UTF-8",
-                          "Accept": "application/json"
-                      })
-    r.raise_for_status()
+                      headers=headers)
+    if r.status_code != 200:
+        raise HTTPInternalServerError(r.text)
     json = r.json()
     hits = json['hits']['hits']
     return [hit['_source'] for hit in hits]
