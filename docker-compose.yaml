@@ -16,8 +16,8 @@ services:
       OTHER_LOG_LEVEL: INFO
       GUNICORN_PARAMS: '-b :8080 --threads 10 --reload'  # only one process in order to get consistent stats
       C2C_PROFILER_PATH: /api_profiler
-      ES_URL: http://elasticsearch:9200/
-      ES_INDEXES: "print-*"
+      ES_URL: http://elasticsearch:9200/elasticsearch
+      ES_INDEXES: "print-1"
     volumes:
     - ./api/mapfish_print_logs:/app/mapfish_print_logs:ro
     ports:
@@ -53,12 +53,6 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.1
     environment:
       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      discovery.type: single-node
     ports:
       - 9200:9200
-
-  logstash:
-    image: docker pull docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.1
-    volumes:
-      - ./configs/logstash/:/usr/share/logstash/pipeline/
-
-  # TODO: logstash + elasticsearch https://sematext.com/blog/structured-logging-with-rsyslog-and-elasticsearch/

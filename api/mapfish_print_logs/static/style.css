@@ -1,3 +1,15 @@
 .card {
     margin-top: 2em;
 }
+
+.level-INFO {
+    background-color: #b2ff99;
+}
+
+.level-WARN {
+    background-color: #ffb195;
+}
+
+.level-ERROR, .level-SEVERE {
+    background-color: #ff1b22;
+}

@@ -38,5 +38,6 @@ class PrintAccounting(Base):
             processing_time_ms=self.processing_time_ms,
             referer=self.referer,
             stats=self.stats,
+            status=self.status,
             total_time_ms=self.total_time_ms
         )

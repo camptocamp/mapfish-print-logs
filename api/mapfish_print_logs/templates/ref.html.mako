@@ -15,46 +15,48 @@
     </div>
     <div class="card-body">
       <dl class="border rounded row mx-1 bg-light">
-        <dt class="col-lg-2">app_id</dt>
+        <dt class="col-lg-2">app ID</dt>
         <dd class="col-lg-4">${accounting.app_id}</dd>
-        <dt class="col-lg-2">completion_time</dt>
-        <dd class="col-lg-4">${accounting.completion_time}</dd>
-
-        <dt class="col-lg-2">file_size</dt>
-        <dd class="col-lg-4">${accounting.file_size}</dd>
         <dt class="col-lg-2">layout</dt>
         <dd class="col-lg-4">${accounting.layout}</dd>
-
-        <dt class="col-lg-2">mapexport</dt>
-        <dd class="col-lg-4">${accounting.mapexport}</dd>
-        <dt class="col-lg-2">output_format</dt>
-        <dd class="col-lg-4">${accounting.output_format}</dd>
 
         <dt class="col-lg-2">referer</dt>
         <dd class="col-lg-4">${accounting.referer}</dd>
         <dt class="col-lg-2">status</dt>
         <dd class="col-lg-4">${accounting.status}</dd>
 
-        <dt class="col-lg-2">processing_time</dt>
+        <dt class="col-lg-2">completion</dt>
+        <dd class="col-lg-4">${accounting.completion_time}</dd>
+        <dt class="col-lg-2">file size</dt>
+        <dd class="col-lg-4">${accounting.file_size}</dd>
+
+        <dt class="col-lg-2">processing time</dt>
         <dd class="col-lg-4">${accounting.processing_time_ms}ms</dd>
-        <dt class="col-lg-2">total_time</dt>
+        <dt class="col-lg-2">total time</dt>
         <dd class="col-lg-4">${accounting.total_time_ms}ms</dd>
+
+        <dt class="col-lg-2">output format</dt>
+        <dd class="col-lg-4">${accounting.output_format}</dd>
+        <dt class="col-lg-2">mapexport</dt>
+        <dd class="col-lg-4">${accounting.mapexport}</dd>
+
       </dl>
 
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">when</th>
-            <th scope="col">level</th>
-            <th scope="col">message</th>
+            <th scope="col" style="width: 16rem;">When</th>
+            <th scope="col" style="width: 6rem;">Level</th>
+            <th scope="col">Message</th>
           </tr>
         </thead>
         <tbody>
           %for log in logs:
-          <tr>
-            <td>${log['@timestamp']}}</td>
-            <td>${log['level_name']}}</td>
-            <td class="text-truncate">${log['msg']}}</td>
+          <tr class="level-${log['level_name']}">
+            <td>${log['@timestamp']}</td>
+            <td>${log['level_name']}</td>
+            <td class="text-truncate">${log['msg']}</td>
+            <!-- TODO: show details -->
           </tr>
           %endfor
         </tbody>

@@ -9,6 +9,7 @@ AUTH = os.environ.get('ES_AUTH')
 
 def get_logs(ref):
     query = {
+        'size': 1000,
         'query': {
             "bool": {
                 "must": [{
@@ -37,13 +38,3 @@ def get_logs(ref):
     json = r.json()
     hits = json['hits']['hits']
     return [hit['_source'] for hit in hits]
-
-
-def main():
-    logs = get_logs("1e547601-8271-48e6-ac46-1f5104825c36@" +
-                    "571479db-cca8-4091-9293-464132b7d2ea@80B34204:C6EC_5BAE0523_2F28:0061")
-    for msg in logs:
-        print(f"{msg['@timestamp']} [{msg['level_name']}] {msg['logger_name']} - {msg['msg']}")
-
-
-main()
