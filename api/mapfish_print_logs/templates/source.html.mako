@@ -1,8 +1,3 @@
-<%!
-  import urllib
-  def quote_param(value):
-      return urllib.parse.quote(value, safe='')
-%>
 <html>
 <head>
   <meta charset="utf-8">
@@ -31,7 +26,7 @@
           %for job in jobs:
             <tr>
               <td>
-                <a href="ref?ref=${quote_param(job['reference_id'])}" target="_blank">
+                <a href="ref?ref=${job['reference_id'] | u}" target="_blank">
                   ${job['completion_time']}
                 </a>
               </td>
@@ -45,12 +40,12 @@
       <div class="row">
         <div class="mx-auto">
       %if next_pos is not None:
-        <a href="source?source=${quote_param(source)}&pos=${next_pos}&secret=${quote_param(secret)}">
+        <a href="source?source=${source | u}&pos=${next_pos}&key=${key | u}">
           older
         </a>
       %endif
       %if prev_pos is not None:
-        <a href="source?source=${quote_param(source)}&pos=${prev_pos}&secret=${quote_param(secret)}">
+        <a href="source?source=${source | u}&pos=${prev_pos}&key=${key | u}">
           younger
         </a>
       %endif

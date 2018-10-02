@@ -1,0 +1,3 @@
+[run]
+source=/app/mapfish_print_logs
+branch=True

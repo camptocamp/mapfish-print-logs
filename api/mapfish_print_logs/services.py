@@ -1,5 +1,7 @@
 from c2cwsgiutils import services
-from pyramid.httpexceptions import HTTPNotFound
+import os
+from pyramid.httpexceptions import HTTPNotFound, HTTPForbidden
+import yaml
 import sqlalchemy as sa
 
 from . import elastic_search
@@ -7,7 +9,8 @@ from .models import DBSession, PrintAccounting
 
 ref_service = services.create("ref", "/ref")
 source_service = services.create("source", "/source")
-LIMIT = 2
+LIMIT = 10
+SHARED_CONFIG_MASTER = os.environ['SHARED_CONFIG_MASTER']
 
 
 @ref_service.get(renderer='templates/ref.html.mako')
@@ -23,22 +26,40 @@ def get_ref(request):
     }
 
 
+def _quote_like(text):
+    return text.replace("%", "\%").replace("_", "\_")
+
+
 @source_service.get(renderer='templates/source.html.mako')
 def get_source(request):
     source = request.params['source']
-    secret = request.params['secret']
-    # TODO: authenticate: request.params['secret']
+    key = request.params['key']
+    check_key(source, key)
     pos = int(request.params.get('pos', '0'))
     logs = DBSession.query(PrintAccounting).filter(
         sa.or_(
             PrintAccounting.app_id == source,
-            PrintAccounting.app_id.like(source.replace("%", "\%").replace("_", "\_") + ":%")
+            PrintAccounting.app_id.like(_quote_like(source) + ":%")
         )
     ).order_by(PrintAccounting.completion_time.desc()).offset(pos).limit(LIMIT+1).all()
     return {
         'source': source,
-        'secret': secret,
+        'secret': key,
         'jobs': [log.to_json() for log in logs[:LIMIT]],
         'next_pos': None if len(logs) <= LIMIT else pos + LIMIT,
         'prev_pos': None if pos == 0 else max(0, pos - LIMIT)
     }
+
+
+def check_key(source, secret):
+    secrets = read_keys()
+    if source not in secrets:
+        raise HTTPNotFound("No such source")
+    if secret != secrets[source]:
+        raise HTTPForbidden("Invalid secret")
+
+
+def read_keys():
+    with open(SHARED_CONFIG_MASTER) as file:
+        config = yaml.load(file)
+    return {name: source['key'] for name, source in config['sources'].items()}

@@ -13,3 +13,7 @@
 .level-ERROR, .level-SEVERE {
     background-color: #ff1b22;
 }
+
+.table {
+    table-layout: fixed;
+}
