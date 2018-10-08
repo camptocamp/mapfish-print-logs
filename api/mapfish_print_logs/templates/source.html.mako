@@ -4,13 +4,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
-  <title>Mapfish print logs - source</title>
+  <title>Mapfish print logs - ${source | h}</title>
 </head>
 <body>
 <div class="container">
   <div class="card">
     <div class="card-header">
-      <h3>Logs for ${source}</h3>
+      <h3>Logs for ${source | h}</h3>
     </div>
     <div class="card-body">
       <table class="table">
@@ -18,6 +18,7 @@
         <tr>
           <th scope="col">when</th>
           <th scope="col">Status</th>
+          <th scope="col">App ID</th>
           <th scope="col">Layout</th>
           <th scope="col">Referer</th>
         </tr>
@@ -26,13 +27,14 @@
           %for job in jobs:
             <tr>
               <td>
-                <a href="ref?ref=${job['reference_id'] | u}" target="_blank">
-                  ${job['completion_time']}
+                <a href="ref?ref=${job.reference_id | u}" target="_blank">
+                  ${job.completion_time.isoformat().split('.')[0] | h}
                 </a>
               </td>
-              <td>${job['status']}</td>
-              <td>${job['layout']}</td>
-              <td class="text-truncate">${job['referer']}</td>
+              <td class="job-${job.status}">${job.status | h}</td>
+              <td>${job.app_id | h}</td>
+              <td>${job.layout | h}</td>
+              <td class="text-truncate">${job.referer | h}</td>
             </tr>
           %endfor
         </tbody>

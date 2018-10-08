@@ -30,7 +30,7 @@ def _quote_like(text):
     return text.replace("%", "\%").replace("_", "\_")
 
 
-@source_service.get(renderer='templates/source.html.mako')
+@source_service.post(renderer='templates/source.html.mako')
 def get_source(request):
     source = request.params['source']
     key = request.params['key']
@@ -45,7 +45,7 @@ def get_source(request):
     return {
         'source': source,
         'secret': key,
-        'jobs': [log.to_json() for log in logs[:LIMIT]],
+        'jobs': [log for log in logs[:LIMIT]],
         'next_pos': None if len(logs) <= LIMIT else pos + LIMIT,
         'prev_pos': None if pos == 0 else max(0, pos - LIMIT)
     }

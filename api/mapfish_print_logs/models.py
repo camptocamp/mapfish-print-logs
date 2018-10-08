@@ -30,6 +30,7 @@ class PrintAccounting(Base):
     def to_json(self):
         return dict(
             reference_id=self.reference_id,
+            app_id=self.app_id,
             completion_time=self.completion_time.isoformat(),
             file_size=self.file_size,
             layout=self.layout,

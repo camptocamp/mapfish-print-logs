@@ -15,7 +15,6 @@ services:
       SQL_LOG_LEVEL: INFO
       OTHER_LOG_LEVEL: INFO
       GUNICORN_PARAMS: '-b :8080 --threads 10 --reload'  # only one process in order to get consistent stats
-      C2C_PROFILER_PATH: /api_profiler
       ES_URL: http://elasticsearch:9200/elasticsearch
       ES_INDEXES: "print-1"
       SHARED_CONFIG_MASTER: /master_config/master/shared_config_manager.yaml

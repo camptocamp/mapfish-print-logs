@@ -17,3 +17,11 @@
 .table {
     table-layout: fixed;
 }
+
+.job-ERROR {
+    background-color: #ffb195;
+}
+
+.job-CANCELLED {
+    text-decoration: line-through;
+}
