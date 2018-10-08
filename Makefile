@@ -40,7 +40,7 @@ build_api:
 
 .PHONY: build_configs
 build_configs:
-	docker build -t $(DOCKER_BASE)-configs:$(DOCKER_TAG) --build-arg "GIT_HASH=$(GIT_HASH)" configs
+	docker build -t $(DOCKER_BASE)-configs:$(DOCKER_TAG) configs
 
 .PHONY: build_acceptance
 build_acceptance:
