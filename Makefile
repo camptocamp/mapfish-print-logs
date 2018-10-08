@@ -1,5 +1,5 @@
 DOCKER_TAG ?= latest
-DOCKER_BASE = camptocamp/mapfish_print_logs
+DOCKER_BASE = camptocamp/mapfish-print-logs
 GIT_HASH := $(shell git rev-parse HEAD)
 
 #Get the docker version (must use the same version for acceptance tests)
@@ -40,11 +40,11 @@ build_api:
 
 .PHONY: build_configs
 build_configs:
-	docker build -t $(DOCKER_BASE)_configs:$(DOCKER_TAG) --build-arg "GIT_HASH=$(GIT_HASH)" configs
+	docker build -t $(DOCKER_BASE)-configs:$(DOCKER_TAG) --build-arg "GIT_HASH=$(GIT_HASH)" configs
 
 .PHONY: build_acceptance
 build_acceptance:
-	docker build --build-arg DOCKER_VERSION="$(DOCKER_VERSION)" --build-arg DOCKER_COMPOSE_VERSION="$(DOCKER_COMPOSE_VERSION)" -t $(DOCKER_BASE)_acceptance:$(DOCKER_TAG) acceptance_tests
+	docker build --build-arg DOCKER_VERSION="$(DOCKER_VERSION)" --build-arg DOCKER_COMPOSE_VERSION="$(DOCKER_COMPOSE_VERSION)" -t $(DOCKER_BASE)-acceptance:$(DOCKER_TAG) acceptance_tests
 
 run: build
 	docker-compose -p logs stop && \
@@ -56,7 +56,7 @@ acceptance: build_acceptance build
 	rm -rf reports/coverage/api reports/acceptance*.xml
 	mkdir -p reports/coverage/api
 	#run the tests
-	docker run $(DOCKER_TTY) -e DOCKER_TAG=$(DOCKER_TAG) -v /var/run/docker.sock:/var/run/docker.sock --name logs_acceptance_$(DOCKER_TAG)_$$PPID $(DOCKER_BASE)_acceptance:$(DOCKER_TAG) \
+	docker run $(DOCKER_TTY) -e DOCKER_TAG=$(DOCKER_TAG) -v /var/run/docker.sock:/var/run/docker.sock --name logs_acceptance_$(DOCKER_TAG)_$$PPID $(DOCKER_BASE)-acceptance:$(DOCKER_TAG) \
 	bash -c "py.test -vv --color=yes --junitxml /reports/acceptance.xml $(PYTEST_OPTS) acceptance; status=\$$?; junit2html /reports/acceptance.xml /reports/acceptance.html; exit \$$status\$$?"; \
 	status=$$status$$?; \
 	#copy the reports locally \

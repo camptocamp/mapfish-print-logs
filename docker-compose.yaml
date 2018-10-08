@@ -1,7 +1,7 @@
 version: '2'
 services:
   api:
-    image: camptocamp/mapfish_print_logs:latest
+    image: camptocamp/mapfish-print-logs:latest
     environment:
       SQLALCHEMY_URL: &db_url postgresql://www-data:www-data@db:5432/print
       SQLALCHEMY_URL_SLAVE: *db_url
@@ -27,7 +27,7 @@ services:
     - 8480:8080
 
   configs:
-    image: camptocamp/mapfish_print_logs_configs:latest
+    image: camptocamp/mapfish-print-logs-configs:latest
 
   db:
     image: camptocamp/postgres:9.6
