@@ -1,4 +1,4 @@
-FROM camptocamp/c2cwsgiutils:2
+FROM camptocamp/c2cwsgiutils:2-light
 MAINTAINER Camptocamp "info@camptocamp.com"
 
 # Doing things in two steps to avoid needing to re-install everything when we do a rebuild

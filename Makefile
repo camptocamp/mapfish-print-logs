@@ -21,7 +21,7 @@ endif
 
 DOCKER_TTY := $(shell [ -t 0 ] && echo -ti)
 
-all: build
+all: acceptance
 
 .PHONY: pull
 pull:
