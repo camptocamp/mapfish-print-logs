@@ -2,7 +2,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
   <title>Mapfish print logs - ${source | h}</title>
 </head>
@@ -40,18 +42,31 @@
         </tbody>
       </table>
       <div class="row">
-        <div class="mx-auto">
-          %if next_pos is not None:
-          <a href="source?source=${source | u}&pos=${next_pos}&key=${key | u}">
-            older
-          </a>
-          %endif
-          %if prev_pos is not None:
-          <a href="source?source=${source | u}&pos=${prev_pos}&key=${key | u}">
-            younger
-          </a>
-          %endif
-        </div>
+        <form class="form-inline mx-2" role="form" action="source" method="post"
+          enctype="application/x-www-form-urlencoded">
+          <input type="hidden" name="source" value="${source | h}">
+          <input type="hidden" name="key" value="${key | h}">
+          <input type="hidden" name="pos" value="0">
+          <button type="submit" class="btn btn-secondary float-right">refresh</button>
+        </form>
+        %if next_pos is not None:
+          <form class="form-inline mr-2" role="form" action="source" method="post"
+            enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="source" value="${source | h}">
+            <input type="hidden" name="key" value="${key | h}">
+            <input type="hidden" name="pos" value="${next_pos}">
+            <button type="submit" class="btn btn-secondary float-right">older</button>
+          </form>
+        %endif
+        %if prev_pos is not None:
+          <form class="form-inline mr-2" role="form" action="source" method="post"
+            enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="source" value="${source | h}">
+            <input type="hidden" name="key" value="${key | h}">
+            <input type="hidden" name="pos" value="${prev_pos}">
+            <button type="submit" class="btn btn-secondary float-right">younger</button>
+          </form>
+        %endif
       </div>
     </div>
   </div>

@@ -44,7 +44,7 @@ def get_source(request):
     ).order_by(PrintAccounting.completion_time.desc()).offset(pos).limit(LIMIT+1).all()
     return {
         'source': source,
-        'secret': key,
+        'key': key,
         'jobs': [log for log in logs[:LIMIT]],
         'next_pos': None if len(logs) <= LIMIT else pos + LIMIT,
         'prev_pos': None if pos == 0 else max(0, pos - LIMIT)
