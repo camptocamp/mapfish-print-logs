@@ -12,11 +12,14 @@ from . import models
 LOG = logging.getLogger(__name__)
 
 
+def _redirect_home(request):
+    return HTTPMovedPermanently(location='/logs/')
+
+
 def main(_, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    config = Configurator(settings=settings,
-                          route_prefix='/logs')
+    config = Configurator(settings=settings)
     config.include(c2cwsgiutils.pyramid.includeme)
     config.include('pyramid_mako')
     models.init(config)
@@ -25,7 +28,8 @@ def main(_, **settings):
     health_check.add_db_session_check(models.DBSession, query_cb=lambda session: session.execute("select 1"))
 
     config.scan("mapfish_print_logs.services")
-    config.add_static_view(name="/", path="/app/mapfish_print_logs/static", cache_max_age=0)
-    config.add_notfound_view(append_slash=HTTPMovedPermanently)
+    config.add_static_view(name="/logs", path="/app/mapfish_print_logs/static", cache_max_age=0)
+    config.add_route(name='index', path='/logs')
+    config.add_view(view=_redirect_home, route_name='index')
 
     return config.make_wsgi_app()

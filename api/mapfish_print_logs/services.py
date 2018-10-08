@@ -7,8 +7,8 @@ import sqlalchemy as sa
 from . import elastic_search
 from .models import DBSession, PrintAccounting
 
-ref_service = services.create("ref", "/ref")
-source_service = services.create("source", "/source")
+ref_service = services.create("ref", "/logs/ref")
+source_service = services.create("source", "/logs/source")
 LIMIT = 10
 SHARED_CONFIG_MASTER = os.environ['SHARED_CONFIG_MASTER']
 

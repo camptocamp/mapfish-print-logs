@@ -41,16 +41,16 @@
       </table>
       <div class="row">
         <div class="mx-auto">
-      %if next_pos is not None:
-        <a href="source?source=${source | u}&pos=${next_pos}&key=${key | u}">
-          older
-        </a>
-      %endif
-      %if prev_pos is not None:
-        <a href="source?source=${source | u}&pos=${prev_pos}&key=${key | u}">
-          younger
-        </a>
-      %endif
+          %if next_pos is not None:
+          <a href="source?source=${source | u}&pos=${next_pos}&key=${key | u}">
+            older
+          </a>
+          %endif
+          %if prev_pos is not None:
+          <a href="source?source=${source | u}&pos=${prev_pos}&key=${key | u}">
+            younger
+          </a>
+          %endif
         </div>
       </div>
     </div>
