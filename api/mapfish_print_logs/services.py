@@ -5,7 +5,7 @@ import sqlalchemy as sa
 import requests
 
 from . import elastic_search
-from .config import SCM_URL, LIMIT, SHARED_CONFIG_MASTER
+from .config import SCM_URL, SCM_URL_EXTERNAL, LIMIT, SHARED_CONFIG_MASTER
 from .models import DBSession, PrintAccounting
 
 ref_service = services.create("ref", "/logs/ref")
@@ -48,6 +48,8 @@ def get_source(request):
         'source': source,
         'key': key,
         'jobs': [log for log in logs[:LIMIT]],
+        'scm_refresh_url': f'{SCM_URL_EXTERNAL}1/refresh/{source}/{key}' if SCM_URL_EXTERNAL is not None
+                           else None,
         'config': _get_config_info(source, key),
         'next_pos': None if len(logs) <= LIMIT else pos + LIMIT,
         'prev_pos': None if pos == 0 else max(0, pos - LIMIT)

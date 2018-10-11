@@ -15,6 +15,7 @@ services:
       SQL_LOG_LEVEL: INFO
       OTHER_LOG_LEVEL: INFO
       SCM_URL: http://scm:8080/scm
+      SCM_URL_EXTERNAL: http://localhost:8580/scm
       GUNICORN_PARAMS: '-b :8080 --threads 10 --reload'  # only one process in order to get consistent stats
       ES_URL: http://elasticsearch:9200/elasticsearch
       ES_INDEXES: "print-1"
@@ -64,6 +65,8 @@ services:
         id: master
         key: changeme
         source: /master_config/master
+    ports:
+      - 8580:8080
     volumes_from:
       - configs:ro
 

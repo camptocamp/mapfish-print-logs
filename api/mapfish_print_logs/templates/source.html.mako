@@ -1,3 +1,10 @@
+<%!
+def render(value):
+    if isinstance(value, str):
+        return value
+    else:
+        return repr(value)
+%>
 <html>
 <head>
   <meta charset="utf-8">
@@ -13,6 +20,9 @@
   %if config is not None:
   <div class="card">
     <div class="card-header">
+      %if scm_refresh_url is not None:
+      <a class="btn btn-primary float-right" href="${scm_refresh_url}" target="_blank">Refresh config</a>
+      %endif
       <h3>Status for ${source | h}</h3>
     </div>
     <div class="card-body">
@@ -22,8 +32,10 @@
         %for status in config['statuses']:
           <dl class="border rounded row mx-1 bg-light mb-0">
             %for name, value in status.items():
-              <dt class="col-lg-1">${name | h}</dt>
-              <dd class="col-lg-5">${value | h}</dd>
+              %if value:
+                <dt class="col-lg-1">${name | h}</dt>
+                <dd class="col-lg-5">${render(value) | h}</dd>
+              %endif
             %endfor
           </dl>
         %endfor
@@ -34,6 +46,13 @@
 
   <div class="card">
     <div class="card-header">
+      <form class="form-inline mx-2 mb-0 float-right" role="form" action="source" method="post"
+        enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="source" value="${source | h}">
+        <input type="hidden" name="key" value="${key | h}">
+        <input type="hidden" name="pos" value="0">
+        <button type="submit" class="btn btn-primary float-right">Refresh logs</button>
+      </form>
       <h3>Logs for ${source | h}</h3>
     </div>
     <div class="card-body">
@@ -64,13 +83,6 @@
         </tbody>
       </table>
       <div>
-        <form class="form-inline mx-2 mb-0" role="form" action="source" method="post"
-          enctype="application/x-www-form-urlencoded">
-          <input type="hidden" name="source" value="${source | h}">
-          <input type="hidden" name="key" value="${key | h}">
-          <input type="hidden" name="pos" value="0">
-          <button type="submit" class="btn btn-secondary float-right">refresh</button>
-        </form>
         %if next_pos is not None:
           <form class="form-inline mr-2 mb-0" role="form" action="source" method="post"
             enctype="application/x-www-form-urlencoded">
