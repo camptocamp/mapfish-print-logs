@@ -1,10 +1,7 @@
-import os
 from pyramid.httpexceptions import HTTPInternalServerError
 import requests
 
-ES_URL = os.environ['ES_URL']
-INDEXES = os.environ['ES_INDEXES']
-AUTH = os.environ.get('ES_AUTH')
+from .config import ES_URL, ES_INDEXES, ES_AUTH
 
 
 def get_logs(ref):
@@ -28,10 +25,10 @@ def get_logs(ref):
         "Content-Type": "application/json;charset=UTF-8",
         "Accept": "application/json"
     }
-    if AUTH is not None:
-        headers['Authorization'] = AUTH
+    if ES_AUTH is not None:
+        headers['Authorization'] = ES_AUTH
 
-    r = requests.post(f"{ES_URL}/{INDEXES}/_search", json=query,
+    r = requests.post(f"{ES_URL}{ES_INDEXES}/_search", json=query,
                       headers=headers)
     if r.status_code != 200:
         raise HTTPInternalServerError(r.text)

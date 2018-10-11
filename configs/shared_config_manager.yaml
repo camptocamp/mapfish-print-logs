@@ -1,6 +1,6 @@
 sources:
   simple:
     type: git
-    repo: git@github.com:mapfish/mapfish-print.git
+    repo: https://github.com/mapfish/mapfish-print.git
     key: toto
     sub_dir: examples/src/test/resources/examples/simple

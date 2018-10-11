@@ -10,6 +10,28 @@
 </head>
 <body>
 <div class="container">
+  %if config is not None:
+  <div class="card">
+    <div class="card-header">
+      <h3>Status for ${source | h}</h3>
+    </div>
+    <div class="card-body">
+      %if 'status' in config:
+        Error ${config['status'] | h}: ${config['message'] | h}
+      %else:
+        %for status in config['statuses']:
+          <dl class="border rounded row mx-1 bg-light mb-0">
+            %for name, value in status.items():
+              <dt class="col-lg-1">${name | h}</dt>
+              <dd class="col-lg-5">${value | h}</dd>
+            %endfor
+          </dl>
+        %endfor
+      %endif
+    </div>
+  </div>
+  %endif
+
   <div class="card">
     <div class="card-header">
       <h3>Logs for ${source | h}</h3>
@@ -41,8 +63,8 @@
           %endfor
         </tbody>
       </table>
-      <div class="row">
-        <form class="form-inline mx-2" role="form" action="source" method="post"
+      <div>
+        <form class="form-inline mx-2 mb-0" role="form" action="source" method="post"
           enctype="application/x-www-form-urlencoded">
           <input type="hidden" name="source" value="${source | h}">
           <input type="hidden" name="key" value="${key | h}">
@@ -50,7 +72,7 @@
           <button type="submit" class="btn btn-secondary float-right">refresh</button>
         </form>
         %if next_pos is not None:
-          <form class="form-inline mr-2" role="form" action="source" method="post"
+          <form class="form-inline mr-2 mb-0" role="form" action="source" method="post"
             enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="source" value="${source | h}">
             <input type="hidden" name="key" value="${key | h}">
@@ -59,7 +81,7 @@
           </form>
         %endif
         %if prev_pos is not None:
-          <form class="form-inline mr-2" role="form" action="source" method="post"
+          <form class="form-inline mr-2 mb-0" role="form" action="source" method="post"
             enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="source" value="${source | h}">
             <input type="hidden" name="key" value="${key | h}">
