@@ -9,7 +9,7 @@ Base = sqlalchemy.ext.declarative.declarative_base()
 
 def init(config):
     global DBSession
-    DBSession = db.setup_session(config, 'sqlalchemy', 'sqlalchemy_slave')[0]
+    DBSession = db.setup_session(config, 'sqlalchemy')[0]
 
 
 class PrintAccounting(Base):

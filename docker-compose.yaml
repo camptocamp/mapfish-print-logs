@@ -4,7 +4,6 @@ services:
     image: camptocamp/mapfish-print-logs:latest
     environment:
       SQLALCHEMY_URL: &db_url postgresql://www-data:www-data@db:5432/print
-      SQLALCHEMY_URL_SLAVE: *db_url
       STATS_VIEW: 1
       # STATSD_ADDRESS: 172.17.0.1:8125
       # STATSD_PREFIX: suissealpine.dev.api

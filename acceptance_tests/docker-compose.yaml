@@ -4,7 +4,6 @@ services:
     image: camptocamp/mapfish-print-logs:latest
     environment:
       SQLALCHEMY_URL: &db_url postgresql://www-data:www-data@db:5432/print
-      SQLALCHEMY_URL_SLAVE: *db_url
       STATS_VIEW: 1
       DEVELOPMENT: 1
       COVERAGE: 1
