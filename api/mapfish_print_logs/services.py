@@ -26,7 +26,7 @@ def get_ref(request):
 
 
 def _quote_like(text):
-    return text.replace("%", "\%").replace("_", "\_")
+    return text.replace("%", r"\%").replace("_", r"\_")
 
 
 @source_service.post(renderer='templates/source.html.mako')
