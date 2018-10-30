@@ -5,6 +5,8 @@ from .config import ES_URL, ES_INDEXES, ES_AUTH
 
 
 def get_logs(ref):
+    if ES_URL is None:
+        return []
     query = {
         'size': 1000,
         'query': {
