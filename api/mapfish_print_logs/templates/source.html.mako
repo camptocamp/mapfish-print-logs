@@ -46,7 +46,7 @@ def render(value):
 
   <div class="card">
     <div class="card-header">
-      <form class="form-inline mx-2 mb-0 float-right" role="form" action="source" method="post"
+      <form class="form-inline mx-2 mb-0 float-right" role="form" action="/logs/source" method="post"
         enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="source" value="${source | h}">
         <input type="hidden" name="key" value="${key | h}">
