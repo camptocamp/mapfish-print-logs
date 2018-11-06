@@ -1,5 +1,5 @@
 from c2cwsgiutils import services
-from pyramid.httpexceptions import HTTPNotFound, HTTPForbidden
+from pyramid.httpexceptions import HTTPNotFound, HTTPForbidden, HTTPBadRequest
 import yaml
 import sqlalchemy as sa
 import requests
@@ -10,6 +10,7 @@ from .models import DBSession, PrintAccounting
 
 ref_service = services.create("ref", "/logs/ref")
 source_service = services.create("source", "/logs/source")
+auth_source_service = services.create("source_auth", "/logs/source/{source}/{key}")
 
 
 @ref_service.get(renderer='templates/ref.html.mako')
@@ -30,9 +31,14 @@ def _quote_like(text):
 
 
 @source_service.post(renderer='templates/source.html.mako')
+@auth_source_service.get(renderer='templates/source.html.mako')
 def get_source(request):
-    source = request.params['source']
-    key = request.params['key']
+    source = request.matchdict.get('source', request.params.get('source'))
+    if source is None:
+        raise HTTPBadRequest("Missing the source")
+    key = request.matchdict.get('key', request.params.get('key'))
+    if key is None:
+        raise HTTPBadRequest("Missing the key")
     config = _read_shared_config()
     check_key(config, source, key)
     pos = int(request.params.get('pos', '0'))
