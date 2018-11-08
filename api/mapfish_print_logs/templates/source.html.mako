@@ -70,7 +70,7 @@ def render(value):
           %for job in jobs:
             <tr>
               <td>
-                <a href="ref?ref=${job.reference_id | u}" target="_blank">
+                <a href="/logs/ref?ref=${job.reference_id | u}" target="_blank">
                   ${job.completion_time.isoformat().split('.')[0] | h}
                 </a>
               </td>
