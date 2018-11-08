@@ -16,13 +16,14 @@ auth_source_service = services.create("source_auth", "/logs/source/{source}/{key
 @ref_service.get(renderer='templates/ref.html.mako')
 def get_ref(request):
     ref = request.params['ref']
-    accounting = DBSession.query(PrintAccounting).get(ref)
+    accounting = DBSession.query(PrintAccounting).get(ref)  # type: PrintAccounting
     if accounting is None:
         raise HTTPNotFound("No such ref")
+    print("accounting.stats=" + repr(accounting.stats))
     return {
         'ref': ref,
         'logs': elastic_search.get_logs(ref),
-        'accounting': accounting
+        'accounting': accounting,
     }
 
 

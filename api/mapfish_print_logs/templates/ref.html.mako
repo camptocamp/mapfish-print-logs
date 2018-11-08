@@ -43,6 +43,11 @@
         <dt class="col-lg-2">mapexport</dt>
         <dd class="col-lg-4">${accounting.mapexport | h}</dd>
 
+        <dt class="col-lg-2">pages</dt>
+        <dd class="col-lg-4">${accounting.pages_stats() | h}</dd>
+        <dt class="col-lg-2">maps</dt>
+        <dd class="col-lg-4">${accounting.maps_stats() | h}</dd>
+
       </dl>
 
       <table class="table">
