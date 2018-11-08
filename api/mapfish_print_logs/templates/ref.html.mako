@@ -67,7 +67,7 @@
             <td colspan="4">
               <dl class="border rounded row mx-1 bg-light">
                 <dt class="col-lg-2">Message</dt>
-                <dd class="col-lg-10">${log['msg'] | h}</dd>
+                <dd class="col-lg-10"><pre>${log['msg'] | h}</pre></dd>
                 % if 'logger_name' in log:
                 <dt class="col-lg-2">logger</dt>
                 <dd class="col-lg-10">${log['logger_name'] | h}</dd>
