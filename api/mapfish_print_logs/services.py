@@ -20,7 +20,6 @@ def get_ref(request):
     accounting = DBSession.query(PrintAccounting).get(ref)  # type: PrintAccounting
     if accounting is None:
         raise HTTPNotFound("No such ref")
-    print("accounting.stats=" + repr(accounting.stats))
     return {
         'ref': ref,
         'min_level': min_level,
