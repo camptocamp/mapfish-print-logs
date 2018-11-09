@@ -4,7 +4,7 @@ import requests
 from .config import ES_URL, ES_INDEXES, ES_AUTH
 
 
-def get_logs(ref):
+def get_logs(ref, min_level):
     if ES_URL is None:
         return []
     query = {
@@ -14,6 +14,12 @@ def get_logs(ref):
                 "must": [{
                     "match_phrase": {
                         "job_id": ref
+                    }
+                }, {
+                    "range": {
+                        "level_value": {
+                            "gte": min_level
+                        }
                     }
                 }]
             }

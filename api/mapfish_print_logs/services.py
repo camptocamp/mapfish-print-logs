@@ -16,13 +16,15 @@ auth_source_service = services.create("source_auth", "/logs/source/{source}/{key
 @ref_service.get(renderer='templates/ref.html.mako')
 def get_ref(request):
     ref = request.params['ref']
+    min_level = int(request.params.get('min_level', 20000))
     accounting = DBSession.query(PrintAccounting).get(ref)  # type: PrintAccounting
     if accounting is None:
         raise HTTPNotFound("No such ref")
     print("accounting.stats=" + repr(accounting.stats))
     return {
         'ref': ref,
-        'logs': elastic_search.get_logs(ref),
+        'min_level': min_level,
+        'logs': elastic_search.get_logs(ref, min_level),
         'accounting': accounting,
     }
 

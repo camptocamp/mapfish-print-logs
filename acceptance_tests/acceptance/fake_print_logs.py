@@ -6,6 +6,11 @@ import sys
 
 ES_URL = os.environ.get('ES_URL', 'http://localhost:9200/elasticsearch')
 INDEX = os.environ.get('ES_INDEX', 'print-1')
+LEVEL_VALUE = {
+    'DEBUG': 10000,
+    'INFO': 20000,
+    'WARN': 30000
+}
 
 
 def _log_message(es_url, ref, level, message, **kwargs):
@@ -13,6 +18,7 @@ def _log_message(es_url, ref, level, message, **kwargs):
         'job_id': ref,
         '@timestamp': datetime.datetime.now().isoformat(),
         'level_name': level,
+        'level_value': LEVEL_VALUE[level],
         'msg': message
     }
     data.update(kwargs)

@@ -13,6 +13,11 @@
 <div class="container">
   <div class="card">
     <div class="card-header">
+      %if min_level > 10000:
+      <a class="btn btn-primary float-right" href="ref?ref=${ref}&min_level=10000">Show debug</a>
+      %else:
+      <a class="btn btn-primary float-right" href="ref?ref=${ref}&min_level=20000">Hide debug</a>
+      %endif
       <h3>Logs for one print job</h3>
       <small>${ref}</small>
     </div>
