@@ -8,7 +8,7 @@ def get_logs(ref):
     if ES_URL is None:
         return []
     query = {
-        'size': 1000,
+        'size': 5000,
         'query': {
             "bool": {
                 "must": [{
