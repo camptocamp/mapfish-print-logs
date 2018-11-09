@@ -15,6 +15,7 @@ services:
       GUNICORN_PARAMS: '-b :8080 --threads 10 --reload'  # only one process in order to get consistent stats
       ES_URL: http://elasticsearch:9200/elasticsearch
       ES_INDEXES: "print-1"
+      ES_FILTERS: "kubernetes.labels.release=prod"
       SHARED_CONFIG_MASTER: /master_config/master/shared_config_manager.yaml
     volumes_from:
       - configs:ro

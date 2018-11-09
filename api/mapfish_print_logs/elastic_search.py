@@ -1,7 +1,7 @@
 from pyramid.httpexceptions import HTTPInternalServerError
 import requests
 
-from .config import ES_URL, ES_INDEXES, ES_AUTH
+from .config import ES_URL, ES_INDEXES, ES_AUTH, ES_FILTERS
 
 
 def get_logs(ref, min_level):
@@ -11,23 +11,30 @@ def get_logs(ref, min_level):
         'size': 5000,
         'query': {
             "bool": {
-                "must": [{
-                    "match_phrase": {
-                        "job_id": ref
-                    }
-                }, {
-                    "range": {
-                        "level_value": {
-                            "gte": min_level
+                "must": [
+                    {
+                        "match_phrase": {
+                            "job_id": ref
+                        }
+                    }, {
+                        "range": {
+                            "level_value": {
+                                "gte": min_level
+                            }
                         }
                     }
-                }]
+                ]
             }
         },
         'sort': [{
             '@timestamp': {'order': 'asc'}
         }]
     }
+    for filter in ES_FILTERS.split(","):
+        name, value = filter.split("=")
+        query['query']['bool']['must'].append({
+            'term': {name: value}
+        })
 
     headers = {
         "Content-Type": "application/json;charset=UTF-8",

@@ -19,6 +19,7 @@ def _log_message(es_url, ref, level, message, **kwargs):
         '@timestamp': datetime.datetime.now().isoformat(),
         'level_name': level,
         'level_value': LEVEL_VALUE[level],
+        'kubernetes.labels.release': 'prod',
         'msg': message
     }
     data.update(kwargs)
@@ -26,7 +27,7 @@ def _log_message(es_url, ref, level, message, **kwargs):
         "Content-Type": "application/json;charset=UTF-8",
         "Accept": "application/json"
     }
-    r = requests.post(f"{es_url}/{INDEX}", json=data,
+    r = requests.post(f"{es_url}/{INDEX}?refresh=wait_for", json=data,
                       headers=headers)
     r.raise_for_status()
 

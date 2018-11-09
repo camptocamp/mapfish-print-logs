@@ -71,7 +71,6 @@
             <td>${log['@timestamp'] | h}</td>
             <td>${log['level_name'] | h}</td>
             <td class="text-truncate">${log['msg'] | h}</td>
-            <!-- TODO: show details -->
           </tr>
           <tr class="collapse multi-collapse" id="collapse-${i}">
             <td colspan="4">
