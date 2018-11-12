@@ -84,7 +84,7 @@ def render(value):
       </table>
       <div>
         %if next_pos is not None:
-          <form class="form-inline mr-2 mb-0" role="form" action="source" method="post"
+          <form class="form-inline mr-2 mb-0" role="form" action="/logs/source" method="post"
             enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="source" value="${source | h}">
             <input type="hidden" name="key" value="${key | h}">
@@ -93,7 +93,7 @@ def render(value):
           </form>
         %endif
         %if prev_pos is not None:
-          <form class="form-inline mr-2 mb-0" role="form" action="source" method="post"
+          <form class="form-inline mr-2 mb-0" role="form" action="/logs/source" method="post"
             enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="source" value="${source | h}">
             <input type="hidden" name="key" value="${key | h}">
