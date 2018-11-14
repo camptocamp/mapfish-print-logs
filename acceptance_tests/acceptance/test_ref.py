@@ -8,8 +8,6 @@ def test_ok_page1(api_connection, print_job):
     assert f'Starting job {print_job}' in page
     assert "DEBUG" not in page
     assert page.count('<tr class="level-') == 2
-    assert "next" in page
-    assert "previous" not in page
 
 
 def test_ok_page2(api_connection, print_job):
@@ -19,8 +17,6 @@ def test_ok_page2(api_connection, print_job):
     assert f'Finished job {print_job}' in page
     assert "DEBUG" not in page
     assert page.count('<tr class="level-') == 1
-    assert "previous" in page
-    assert "next" not in page
 
 
 def test_unknown(api_connection):

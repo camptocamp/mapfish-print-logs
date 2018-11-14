@@ -82,7 +82,7 @@ def render(value):
           %endfor
         </tbody>
       </table>
-      <div>
+      <div class="page-nav">
         %if next_pos is not None:
           <form class="form-inline mr-2 mb-0" role="form" action="/logs/source" method="post"
             enctype="application/x-www-form-urlencoded">

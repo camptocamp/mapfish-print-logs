@@ -21,14 +21,19 @@ def get_ref(request):
     accounting = DBSession.query(PrintAccounting).get(ref)  # type: PrintAccounting
     if accounting is None:
         raise HTTPNotFound("No such ref")
-    logs = elastic_search.get_logs(ref, min_level, pos, LOG_LIMIT + 1)
+    logs, total = elastic_search.get_logs(ref, min_level, pos, LOG_LIMIT)
+    print(total)
     return {
         'ref': ref,
         'min_level': min_level,
-        'logs': logs[:LOG_LIMIT],
+        'logs': logs,
         'accounting': accounting,
-        'next_pos': None if len(logs) <= LOG_LIMIT else pos + LOG_LIMIT,
-        'prev_pos': None if pos == 0 else max(0, pos - LOG_LIMIT)
+        'cur_pos': pos,
+        'next_pos': None if len(logs) + pos >= total else pos + LOG_LIMIT,
+        'prev_pos': None if pos == 0 else max(0, pos - LOG_LIMIT),
+        'last_pos': None if len(logs) + pos >= total else ((total - 1) // LOG_LIMIT) * LOG_LIMIT,
+        'limit': LOG_LIMIT,
+        'total': total
     }
 
 

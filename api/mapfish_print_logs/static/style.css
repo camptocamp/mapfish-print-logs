@@ -25,3 +25,8 @@
 .job-CANCELLED {
     text-decoration: line-through;
 }
+
+.page-nav .btn {
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+}

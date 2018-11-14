@@ -95,17 +95,24 @@
           %endfor
         </tbody>
       </table>
-      <div>
-        %if next_pos is not None:
-          <a class="btn btn-secondary float-right" href="ref?ref=${ref}&min_level=${min_level}&pos=${next_pos}">
-            next
+      <div class="page-nav">
+        <a class="btn btn-secondary float-right ${'disabled' if last_pos is None else ''}" href="ref?ref=${ref}&min_level=${min_level}&pos=${last_pos}">
+          last
+        </a>
+        <a class="btn btn-secondary float-right ${'disabled' if next_pos is None else ''}" href="ref?ref=${ref}&min_level=${min_level}&pos=${next_pos}">
+          next
+        </a>
+        <a class="btn btn-secondary float-right ${'disabled' if prev_pos is None else ''}" href="ref?ref=${ref}&min_level=${min_level}&pos=${prev_pos}">
+          previous
+        </a>
+        <a class="btn btn-secondary float-right ${'disabled' if prev_pos is None else ''}" href="ref?ref=${ref}&min_level=${min_level}&pos=0">
+          first
+        </a>
+        %for i, pos in enumerate(range(0, total, limit)):
+          <a class="btn btn-primary ${'disabled' if pos == cur_pos else ''}" href="ref?ref=${ref}&min_level=${min_level}&pos=${pos}">
+            ${i}
           </a>
-        %endif
-        %if prev_pos is not None:
-          <a class="btn btn-secondary float-right" href="ref?ref=${ref}&min_level=${min_level}&pos=${prev_pos}">
-            previous
-          </a>
-        %endif
+        %endfor
       </div>
     </div>
   </div>
