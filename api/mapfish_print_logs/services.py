@@ -5,7 +5,7 @@ import sqlalchemy as sa
 import requests
 
 from . import elastic_search
-from .config import SCM_URL, SCM_URL_EXTERNAL, LIMIT, SHARED_CONFIG_MASTER
+from .config import SCM_URL, SCM_URL_EXTERNAL, JOB_LIMIT, SHARED_CONFIG_MASTER, LOG_LIMIT
 from .models import DBSession, PrintAccounting
 
 ref_service = services.create("ref", "/logs/ref")
@@ -16,15 +16,19 @@ auth_source_service = services.create("source_auth", "/logs/source/{source}/{key
 @ref_service.get(renderer='templates/ref.html.mako')
 def get_ref(request):
     ref = request.params['ref']
+    pos = int(request.params.get('pos', '0'))
     min_level = int(request.params.get('min_level', '20000'))
     accounting = DBSession.query(PrintAccounting).get(ref)  # type: PrintAccounting
     if accounting is None:
         raise HTTPNotFound("No such ref")
+    logs = elastic_search.get_logs(ref, min_level, pos, LOG_LIMIT + 1)
     return {
         'ref': ref,
         'min_level': min_level,
-        'logs': elastic_search.get_logs(ref, min_level),
+        'logs': logs[:LOG_LIMIT],
         'accounting': accounting,
+        'next_pos': None if len(logs) <= LOG_LIMIT else pos + LOG_LIMIT,
+        'prev_pos': None if pos == 0 else max(0, pos - LOG_LIMIT)
     }
 
 
@@ -50,17 +54,17 @@ def get_source(request):
             PrintAccounting.app_id == app_id,
             PrintAccounting.app_id.like(_quote_like(app_id) + ":%")
         )
-    ).order_by(PrintAccounting.completion_time.desc()).offset(pos).limit(LIMIT+1).all()
+    ).order_by(PrintAccounting.completion_time.desc()).offset(pos).limit(JOB_LIMIT + 1).all()
 
     return {
         'source': source,
         'key': key,
-        'jobs': [log for log in logs[:LIMIT]],
+        'jobs': [log for log in logs[:JOB_LIMIT]],
         'scm_refresh_url': f'{SCM_URL_EXTERNAL}1/refresh/{source}/{key}' if SCM_URL_EXTERNAL is not None
                            else None,
         'config': _get_config_info(source, key),
-        'next_pos': None if len(logs) <= LIMIT else pos + LIMIT,
-        'prev_pos': None if pos == 0 else max(0, pos - LIMIT)
+        'next_pos': None if len(logs) <= JOB_LIMIT else pos + JOB_LIMIT,
+        'prev_pos': None if pos == 0 else max(0, pos - JOB_LIMIT)
     }
 
 

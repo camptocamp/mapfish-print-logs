@@ -95,6 +95,18 @@
           %endfor
         </tbody>
       </table>
+      <div>
+        %if next_pos is not None:
+          <a class="btn btn-secondary float-right" href="ref?ref=${ref}&min_level=${min_level}&pos=${next_pos}">
+            next
+          </a>
+        %endif
+        %if prev_pos is not None:
+          <a class="btn btn-secondary float-right" href="ref?ref=${ref}&min_level=${min_level}&pos=${prev_pos}">
+            previous
+          </a>
+        %endif
+      </div>
     </div>
   </div>
 </body>

@@ -4,11 +4,12 @@ import requests
 from .config import ES_URL, ES_INDEXES, ES_AUTH, ES_FILTERS
 
 
-def get_logs(ref, min_level):
+def get_logs(ref, min_level, pos, limit):
     if ES_URL is None:
         return []
     query = {
-        'size': 5000,
+        'size': limit,
+        'from': pos,
         'query': {
             "bool": {
                 "must": [
@@ -30,11 +31,12 @@ def get_logs(ref, min_level):
             '@timestamp': {'order': 'asc'}
         }]
     }
-    for filter in ES_FILTERS.split(","):
-        name, value = filter.split("=")
-        query['query']['bool']['must'].append({
-            'term': {name: value}
-        })
+    if ES_FILTERS != "":
+        for filter in ES_FILTERS.split(","):
+            name, value = filter.split("=")
+            query['query']['bool']['must'].append({
+                'term': {name: value}
+            })
 
     headers = {
         "Content-Type": "application/json;charset=UTF-8",

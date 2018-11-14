@@ -16,6 +16,7 @@ services:
       ES_URL: http://elasticsearch:9200/elasticsearch
       ES_INDEXES: "print-1"
       ES_FILTERS: "kubernetes.labels.release=prod"
+      LOG_LIMIT: 2
       SHARED_CONFIG_MASTER: /master_config/master/shared_config_manager.yaml
     volumes_from:
       - configs:ro

@@ -29,7 +29,7 @@ pull:
 
 .venv/timestamp: api/requirements.txt Makefile
 	/usr/bin/virtualenv --python=/usr/bin/python3 .venv
-	.venv/bin/pip install -r api/requirements.txt
+	.venv/bin/pip install --upgrade -r api/requirements.txt
 	touch $@
 
 build: build_api build_configs
