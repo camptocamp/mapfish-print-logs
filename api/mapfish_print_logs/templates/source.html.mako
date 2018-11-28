@@ -2,8 +2,13 @@
 def render(value):
     if isinstance(value, str):
         return value
+    elif isinstance(value, list):
+        return "\n".join(render(i) for i in value)
     else:
         return repr(value)
+
+def dt_render(value):
+    return value.replace("_", " ")
 %>
 <html>
 <head>
@@ -31,10 +36,11 @@ def render(value):
       %else:
         %for status in config['statuses']:
           <dl class="border rounded row mx-1 bg-light mb-0">
+
             %for name, value in status.items():
               %if value:
-                <dt class="col-lg-1">${name | h}</dt>
-                <dd class="col-lg-5">${render(value) | h}</dd>
+                <dt class="col-lg-2">${dt_render(name) | h}</dt>
+                <dd class="col-lg-10">${render(value) | h}</dd>
               %endif
             %endfor
           </dl>

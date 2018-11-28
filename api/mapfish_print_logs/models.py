@@ -56,7 +56,7 @@ class PrintAccounting(Base):
             for stat in stats:
                 summary.setdefault(stat, 0)
                 summary[stat] += 1
-            return ', '.join(f'{n}: {v}' for n, v in summary.items())
+            return '\n'.join(f'{n}: {v}' for n, v in summary.items())
         else:
             return ""
 
@@ -66,7 +66,7 @@ class PrintAccounting(Base):
             maps = []
             for map in self.stats['maps']:
                 maps.append(f'{map["size"]["width"]}x{map["size"]["height"]} D{int(map["dpi"])} L{map["nbLayers"]}')
-            return ', '.join(maps)
+            return '\n'.join(maps)
         else:
             return ""
 

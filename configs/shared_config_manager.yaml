@@ -4,3 +4,8 @@ sources:
     repo: https://github.com/mapfish/mapfish-print.git
     key: toto
     sub_dir: examples/src/test/resources/examples/simple
+    template_engines:
+      - type: shell
+        environment_variables: true
+      - type: shell
+        environment_variables: true
