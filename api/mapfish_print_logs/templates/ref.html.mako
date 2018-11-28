@@ -33,26 +33,27 @@
         <dt class="col-lg-2">status</dt>
         <dd class="col-lg-4">${accounting.status | h}</dd>
 
-        <dt class="col-lg-2">completion</dt>
-        <dd class="col-lg-4">${accounting.completion_time | h}</dd>
-        <dt class="col-lg-2">file size</dt>
-        <dd class="col-lg-4">${accounting.file_size | h}</dd>
-
-        <dt class="col-lg-2">processing time</dt>
-        <dd class="col-lg-4">${accounting.processing_time_ms | h}ms</dd>
-        <dt class="col-lg-2">total time</dt>
-        <dd class="col-lg-4">${accounting.total_time_ms | h}ms</dd>
-
         <dt class="col-lg-2">output format</dt>
         <dd class="col-lg-4">${accounting.output_format | h}</dd>
         <dt class="col-lg-2">mapexport</dt>
         <dd class="col-lg-4">${accounting.mapexport | h}</dd>
 
+        <dt class="col-lg-2">completion</dt>
+        <dd class="col-lg-4">${accounting.completion_time | h}</dd>
+        <dt class="col-lg-2">total time</dt>
+        <dd class="col-lg-4">${accounting.total_time_ms | h}ms</dd>
+
+        %if accounting.status == 'FINISHED':
+        <dt class="col-lg-2">file size</dt>
+        <dd class="col-lg-4">${accounting.file_size | h}</dd>
+        <dt class="col-lg-2">processing time</dt>
+        <dd class="col-lg-4">${accounting.processing_time_ms | h}ms</dd>
+
         <dt class="col-lg-2">pages</dt>
         <dd class="col-lg-4">${accounting.pages_stats() | h}</dd>
         <dt class="col-lg-2">maps</dt>
         <dd class="col-lg-4">${accounting.maps_stats() | h}</dd>
-
+        %endif
       </dl>
 
       <table class="table">
