@@ -108,8 +108,9 @@ def _get_config_info(source, key):
 
 
 @sources_service.post(renderer='templates/sources.html.mako')
+@sources_service.get(renderer='templates/sources.html.mako')
 def get_sources(request):
-    key = request.matchdict.get('key', request.params.get('key'))
+    key = request.params.get('key')
     if key is None:
         raise HTTPBadRequest("Missing the key")
     if key != SOURCES_KEY:
