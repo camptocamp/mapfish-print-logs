@@ -8,6 +8,7 @@ services:
       DEVELOPMENT: 1
       COVERAGE: 1
       C2C_SECRET: toto
+      SOURCES_KEY: toto
       MAPFISH_LOG_LEVEL: DEBUG
       C2CWSGI_LOG_LEVEL: DEBUG
       SQL_LOG_LEVEL: INFO

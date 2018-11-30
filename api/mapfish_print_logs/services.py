@@ -1,4 +1,6 @@
 from c2cwsgiutils import services
+import copy
+import os
 from pyramid.httpexceptions import HTTPNotFound, HTTPForbidden, HTTPBadRequest
 import yaml
 import sqlalchemy as sa
@@ -10,7 +12,9 @@ from .models import DBSession, PrintAccounting
 
 ref_service = services.create("ref", "/logs/ref")
 source_service = services.create("source", "/logs/source")
+sources_service = services.create("sources", "/logs/sources")
 auth_source_service = services.create("source_auth", "/logs/source/{source}/{key}")
+SOURCES_KEY = os.environ['SOURCES_KEY']
 
 
 @ref_service.get(renderer='templates/ref.html.mako')
@@ -101,3 +105,20 @@ def _get_config_info(source, key):
     if r.status_code != 200:
         return dict(status=r.status_code, message=r.text)
     return r.json()
+
+
+@sources_service.post(renderer='templates/sources.html.mako')
+def get_sources(request):
+    key = request.matchdict.get('key', request.params.get('key'))
+    if key is None:
+        raise HTTPBadRequest("Missing the key")
+    if key != SOURCES_KEY:
+        raise HTTPForbidden("Invalid secret")
+    config = _read_shared_config()
+    sources = []
+    for name, config in config['sources'].items():
+        source = copy.deepcopy(config)
+        source['id'] = name
+        sources.append(source)
+
+    return dict(key=key, sources=sorted(sources, key=lambda s: s['id']))

@@ -9,6 +9,7 @@ services:
       # STATSD_PREFIX: suissealpine.dev.api
       DEVELOPMENT: 1
       C2C_SECRET: toto
+      SOURCES_KEY: toto
       MAPFISH_LOG_LEVEL: DEBUG
       C2CWSGI_LOG_LEVEL: DEBUG
       SQL_LOG_LEVEL: INFO
