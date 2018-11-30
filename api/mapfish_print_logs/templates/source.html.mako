@@ -61,7 +61,7 @@ def dt_render(value):
       </form>
       <h3>Logs for ${source | h}</h3>
     </div>
-    <div class="card-body">
+    <nav class="card-body">
       <table class="table">
         <thead>
         <tr>
@@ -88,26 +88,28 @@ def dt_render(value):
           %endfor
         </tbody>
       </table>
-      <div class="page-nav">
-        %if next_pos is not None:
-          <form class="form-inline mr-2 mb-0" role="form" action="/logs/source" method="post"
-            enctype="application/x-www-form-urlencoded">
-            <input type="hidden" name="source" value="${source | h}">
-            <input type="hidden" name="key" value="${key | h}">
-            <input type="hidden" name="pos" value="${next_pos}">
-            <button type="submit" class="btn btn-secondary float-right">older</button>
-          </form>
-        %endif
-        %if prev_pos is not None:
-          <form class="form-inline mr-2 mb-0" role="form" action="/logs/source" method="post"
-            enctype="application/x-www-form-urlencoded">
-            <input type="hidden" name="source" value="${source | h}">
-            <input type="hidden" name="key" value="${key | h}">
-            <input type="hidden" name="pos" value="${prev_pos}">
-            <button type="submit" class="btn btn-secondary float-right">younger</button>
-          </form>
-        %endif
-      </div>
+      <nav>
+        <ul class="pagination justify-content-center">
+          <li class="page-item ${'disabled' if next_pos is None else ''}">
+            <form class="form-inline mb-0" role="form" action="/logs/source" method="post"
+              enctype="application/x-www-form-urlencoded">
+              <input type="hidden" name="source" value="${source | h}">
+              <input type="hidden" name="key" value="${key | h}">
+              <input type="hidden" name="pos" value="${next_pos}">
+              <button type="submit" class="page-link">older</button>
+            </form>
+          </li>
+          <li class="page-item ${'disabled' if prev_pos is None else ''}">
+            <form class="form-inline mb-0" role="form" action="/logs/source" method="post"
+              enctype="application/x-www-form-urlencoded">
+              <input type="hidden" name="source" value="${source | h}">
+              <input type="hidden" name="key" value="${key | h}">
+              <input type="hidden" name="pos" value="${prev_pos}">
+              <button type="submit" class="page-link">younger</button>
+            </form>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </body>

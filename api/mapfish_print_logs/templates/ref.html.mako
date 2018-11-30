@@ -1,4 +1,5 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -96,25 +97,37 @@
           %endfor
         </tbody>
       </table>
-      <div class="page-nav">
-        <a class="btn btn-secondary float-right ${'disabled' if last_pos is None else ''}" href="ref?ref=${ref}&min_level=${min_level}&pos=${last_pos}">
-          last
-        </a>
-        <a class="btn btn-secondary float-right ${'disabled' if next_pos is None else ''}" href="ref?ref=${ref}&min_level=${min_level}&pos=${next_pos}">
-          next
-        </a>
-        <a class="btn btn-secondary float-right ${'disabled' if prev_pos is None else ''}" href="ref?ref=${ref}&min_level=${min_level}&pos=${prev_pos}">
-          previous
-        </a>
-        <a class="btn btn-secondary float-right ${'disabled' if prev_pos is None else ''}" href="ref?ref=${ref}&min_level=${min_level}&pos=0">
-          first
-        </a>
-        %for i, pos in enumerate(range(0, total, limit)):
-          <a class="btn btn-primary ${'disabled' if pos == cur_pos else ''}" href="ref?ref=${ref}&min_level=${min_level}&pos=${pos}">
-            ${i}
-          </a>
-        %endfor
-      </div>
+      <nav>
+        <ul class="pagination justify-content-center">
+          <li class="page-item ${'disabled' if prev_pos is None else ''}">
+            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=0">
+              &lt;&lt;
+            </a>
+          </li>
+          <li class="page-item ${'disabled' if prev_pos is None else ''}">
+            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${prev_pos}">
+              &lt;
+            </a>
+          </li>
+          %for i, pos in enumerate(range(0, total, limit)):
+          <li class="page-item ${'active' if pos == cur_pos else ''}">
+            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${pos}">
+              ${i}
+            </a>
+          </li>
+          %endfor
+          <li class="page-item ${'disabled' if next_pos is None else ''}">
+            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${next_pos}">
+              &gt;
+            </a>
+          </li>
+          <li class="page-item ${'disabled' if last_pos is None else ''}">
+            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${last_pos}">
+              &gt;&gt;
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </body>
