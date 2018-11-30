@@ -41,7 +41,7 @@
               <td>${source.get('target_dir', source['id'])}</td>
               <td>
                 <form class="form-inline mx-2 mb-0" role="form" action="/logs/source" method="post"
-                  enctype="application/x-www-form-urlencoded">
+                  enctype="application/x-www-form-urlencoded" target="_blank">
                   <input type="hidden" name="source" value="${source['id'] | h}">
                   <input type="hidden" name="key" value="${source['key'] | h}">
                   <button type="submit" class="btn btn-primary btn-sm">View logs</button>
