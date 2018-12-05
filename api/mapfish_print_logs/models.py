@@ -1,4 +1,5 @@
 from c2cwsgiutils import db
+import os
 import sqlalchemy as sa
 import sqlalchemy.ext.declarative
 from sqlalchemy.dialects.postgresql import JSONB
@@ -11,6 +12,7 @@ PAGE_SIZE2NAME = {
     '842x1191': 'A3',
     '1191x1684': 'A2'
 }
+SCHEMA = os.environ.get('DB_SCHEMA', 'public')
 
 
 def init(config):
@@ -20,6 +22,7 @@ def init(config):
 
 class PrintAccounting(Base):
     __tablename__ = "print_accountings"
+    __table_args__ = {"schema": SCHEMA}
     reference_id = sa.Column(sa.Text, primary_key=True)
     app_id = sa.Column(sa.Text, nullable=False)
     completion_time = sa.Column(sa.DateTime, nullable=False)
