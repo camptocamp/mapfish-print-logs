@@ -57,6 +57,7 @@
         %endif
       </dl>
 
+      %if len(logs) > 0:
       <table class="table">
         <thead>
           <tr>
@@ -97,6 +98,19 @@
           %endfor
         </tbody>
       </table>
+      %else:
+      <div class="alert alert-warning" role="alert">
+        <p>No log found. This can happen for two reasons:</p>
+        <ul>
+          <li>
+            The logs take some time to be processed.
+          </li>
+          <li>
+            The logs are kept for a limited time. Maybe this job is too old.
+          </li>
+        </ul>
+      </div>
+      %endif
       <nav>
         <ul class="pagination justify-content-center">
           <li class="page-item ${'disabled' if prev_pos is None else ''}">
