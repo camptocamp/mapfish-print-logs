@@ -65,7 +65,7 @@
         <dd class="col-lg-4">${accounting.maps_stats() | h}</dd>
         %endif
 
-        %if 'emails' in accounting.stats:
+        %if accounting.stats is not None and 'emails' in accounting.stats:
           <dt class="col-lg-2">email</dt>
           <dd class="col-lg-4">${'\n'.join(dest['dest'] for dest in accounting.stats['emails']['dests']) | h}</dd>
           <dt class="col-lg-2">storage</dt>
