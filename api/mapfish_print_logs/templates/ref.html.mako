@@ -1,3 +1,12 @@
+<%!
+  def to_size(size):
+    UNITS = ['', 'K', 'M', 'G', 'T', 'P']
+    unit = 0
+    while size >= 1024 and unit+1 < len(UNITS):
+      unit += 1
+      size = size / 1024
+    return ("%f" % (size))[:4].strip('.') + UNITS[unit] + "B"
+%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -46,7 +55,7 @@
 
         %if accounting.status == 'FINISHED':
         <dt class="col-lg-2">file size</dt>
-        <dd class="col-lg-4">${accounting.file_size | h}</dd>
+        <dd class="col-lg-4">${to_size(accounting.file_size) | h}</dd>
         <dt class="col-lg-2">processing time</dt>
         <dd class="col-lg-4">${accounting.processing_time_ms | h}ms</dd>
 
@@ -54,6 +63,15 @@
         <dd class="col-lg-4">${accounting.pages_stats() | h}</dd>
         <dt class="col-lg-2">maps</dt>
         <dd class="col-lg-4">${accounting.maps_stats() | h}</dd>
+        %endif
+
+        %if 'emails' in accounting.stats:
+          <dt class="col-lg-2">email</dt>
+          <dd class="col-lg-4">
+            ${'\n'.join(dest['dest'] for dest in accounting.stats['emails']['dests']) | h}
+          </dd>
+          <dt class="col-lg-2">storage</dt>
+          <dd class="col-lg-4">${accounting.stats['emails']['storageUsed'] | h}</dd>
         %endif
       </dl>
 

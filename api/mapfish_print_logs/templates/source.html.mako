@@ -10,6 +10,7 @@ def render(value):
 def dt_render(value):
     return value.replace("_", " ")
 %>
+<!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
