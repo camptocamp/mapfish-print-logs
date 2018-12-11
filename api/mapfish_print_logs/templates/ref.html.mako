@@ -67,9 +67,7 @@
 
         %if 'emails' in accounting.stats:
           <dt class="col-lg-2">email</dt>
-          <dd class="col-lg-4">
-            ${'\n'.join(dest['dest'] for dest in accounting.stats['emails']['dests']) | h}
-          </dd>
+          <dd class="col-lg-4">${'\n'.join(dest['dest'] for dest in accounting.stats['emails']['dests']) | h}</dd>
           <dt class="col-lg-2">storage</dt>
           <dd class="col-lg-4">${accounting.stats['emails']['storageUsed'] | h}</dd>
         %endif
