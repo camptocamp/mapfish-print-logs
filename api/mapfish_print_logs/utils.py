@@ -1,3 +1,7 @@
+import yaml
+
+from .config import SHARED_CONFIG_MASTER
+
 PAGE_SIZE2NAME = {
     # taken from https://github.com/itext/itextpdf/blob/develop/itext/src/main/java/com/itextpdf/text/PageSize.java
     '420x595': 'A5',
@@ -21,6 +25,12 @@ PAGE_SIZE2NAME = {
     '612x1008': 'Legal',
     '792x1224': 'Tabloid'
 }
+
+
+def read_shared_config():
+    with open(SHARED_CONFIG_MASTER) as file:
+        config = yaml.load(file)
+    return config
 
 
 def page_size2fullname(dico):

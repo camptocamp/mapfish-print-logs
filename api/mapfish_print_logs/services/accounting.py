@@ -5,24 +5,23 @@ from pyramid.httpexceptions import HTTPForbidden, HTTPBadRequest
 from . import auth_source, SOURCES_KEY, read_shared_config
 from .. import accounting, utils
 
+accounting_service = services.create("accounting", "/logs/source/{source}/accounting")
+accounting_csv_service = services.create("accounting_csv", "/logs/source/{source}/accounting.csv")
 global_accounting_service = services.create("accounting_global", "/logs/accounting.csv")
-accounting_service = services.create("accounting", "/logs/source/accounting")
-accounting_csv_service = services.create("accounting_csv", "/logs/source/accounting.csv")
 
 
-@accounting_service.post(renderer='../templates/accounting.html.mako')
+@accounting_service.get(renderer='../templates/accounting.html.mako')
 def get_accounting(request):
     config, key, source = auth_source(request)
     monthly = accounting.monthly(config, utils.get_app_id(config, source))
     return {
         'source': source,
-        'key': key,
         'accounting': monthly,
         'detail_cols': accounting.get_details_cols(monthly)
     }
 
 
-@accounting_csv_service.post()
+@accounting_csv_service.get()
 def get_accounting_csv(request):
     config, key, source = auth_source(request)
     monthly = accounting.monthly(config, utils.get_app_id(config, source))
@@ -38,9 +37,9 @@ def get_accounting_csv(request):
     return request.response
 
 
-@global_accounting_service.post()
+@global_accounting_service.get()
 def global_accounting_csv(request):
-    key = request.params.get('key')
+    key = request.key
     if key is None:
         raise HTTPBadRequest("Missing the key")
     if key != SOURCES_KEY:

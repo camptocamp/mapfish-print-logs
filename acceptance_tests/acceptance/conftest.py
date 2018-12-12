@@ -23,9 +23,20 @@ def composition(request):
     return result
 
 
+class MyConnection(Connection):
+    def login(self, key='toto'):
+        r = self.session.post(self.base_url + 'logs/login', headers=self._merge_headers({}, True),
+                              data=dict(key=key), allow_redirects=False)
+        assert r.status_code == 302
+        assert r.headers['Location'] == self.base_url + 'logs/'
+
+    def logout(self):
+        self.get_raw('logs/logout', expected_status=302, allow_redirects=False)
+
+
 @pytest.fixture
 def api_connection(composition):
-    return Connection(base_url=API_URL, origin='http://example.com/')
+    return MyConnection(base_url=API_URL, origin='http://example.com/')
 
 
 @pytest.fixture(scope="session")

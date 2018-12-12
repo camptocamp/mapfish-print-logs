@@ -2,16 +2,13 @@ import urllib.parse
 
 
 def test_ok(api_connection, print_job):
-    page = api_connection.post('logs/source', data=dict(source='simple', key='toto'))
+    api_connection.login()
+    page = api_connection.get('logs/source/simple')
     print(page)
     assert urllib.parse.quote_plus(print_job) in page
 
 
-def test_get(api_connection, print_job):
-    page = api_connection.get('logs/source/simple/toto')
-    print(page)
-    assert urllib.parse.quote_plus(print_job) in page
-
-
-def test_bad_key(api_connection):
-    api_connection.post('logs/source', data=dict(source='simple', key='bad'), expected_status=403)
+def test_no_login(api_connection):
+    r = api_connection.get_raw('logs/source/simple', expected_status=302, allow_redirects=False)
+    assert r.headers['Location'] == api_connection.base_url + \
+        'logs/login?back=/logs/source/simple'

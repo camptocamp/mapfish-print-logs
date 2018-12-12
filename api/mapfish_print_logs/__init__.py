@@ -7,7 +7,7 @@ import logging
 from pyramid.config import Configurator
 from pyramid.httpexceptions import HTTPMovedPermanently
 
-from . import models
+from . import models, security
 from .config import SCM_URL
 
 LOG = logging.getLogger(__name__)
@@ -22,6 +22,7 @@ def main(_, **settings):
     """
     config = Configurator(settings=settings)
     config.include(c2cwsgiutils.pyramid.includeme)
+    config.include(security.includeme)
     config.include('pyramid_mako')
     models.init(config)
 
@@ -33,7 +34,7 @@ def main(_, **settings):
 
     config.scan("mapfish_print_logs.services")
     config.add_static_view(name="/logs", path="/app/mapfish_print_logs/static", cache_max_age=0)
-    config.add_route(name='index', path='/logs')
-    config.add_view(view=_redirect_home, route_name='index')
+    config.add_route(name='index_redir', path='/logs')
+    config.add_view(view=_redirect_home, route_name='index_redir')
 
     return config.make_wsgi_app()

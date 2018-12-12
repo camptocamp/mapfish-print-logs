@@ -25,39 +25,26 @@
 <div class="container">
   <div class="card">
     <div class="card-header">
-      <form class="form-inline mx-2 mb-0 float-right" role="form" action="/logs/source" method="post"
-        enctype="application/x-www-form-urlencoded">
-        <input type="hidden" name="source" value="${source | h}">
-        <input type="hidden" name="key" value="${key | h}">
-        <input type="hidden" name="pos" value="0">
-        <button type="submit" class="btn btn-primary float-right">Refresh logs</button>
-      </form>
+      <a role="button" class="btn btn-primary float-right" href="/logs/source/${source | u}">
+        Refresh logs
+      </a>
       <h3 style="display: inline">Logs for ${source | h}</h3>
       <nav style="display: inline-block" class="ml-4">
         <ul class="pagination justify-content-center mb-0">
           <li class="page-item ${'disabled' if next_pos is None else ''}">
-            <form class="form-inline mb-0" role="form" action="/logs/source" method="post"
-              enctype="application/x-www-form-urlencoded">
-              <input type="hidden" name="source" value="${source | h}">
-              <input type="hidden" name="key" value="${key | h}">
-              <input type="hidden" name="pos" value="${next_pos}">
-              <button type="submit" class="page-link">older</button>
-            </form>
+            <a role="button" class="page-link" href="/logs/source/${source| u}?pos=${next_pos}">
+              older
+            </a>
           </li>
           <li class="page-item ${'disabled' if prev_pos is None else ''}">
-            <form class="form-inline mb-0" role="form" action="/logs/source" method="post"
-              enctype="application/x-www-form-urlencoded">
-              <input type="hidden" name="source" value="${source | h}">
-              <input type="hidden" name="key" value="${key | h}">
-              <input type="hidden" name="pos" value="${prev_pos}">
-              <button type="submit" class="page-link">younger</button>
-            </form>
+            <a role="button" class="page-link" href="/logs/source/${source | u}?pos=${prev_pos}">
+              younger
+            </a>
           </li>
         </ul>
       </nav>
     </div>
     <div class="card-body">
-
       <table class="table mb-0">
         <thead>
         <tr>
@@ -72,7 +59,7 @@
           %for job in jobs:
             <tr>
               <td>
-                <a href="/logs/ref?ref=${job.reference_id | u}" target="_blank">
+                <a href="/logs/ref?ref=${job.reference_id | u}">
                   ${job.completion_time.isoformat().split('.')[0] | h}
                 </a>
               </td>
@@ -91,14 +78,12 @@
     <div class="card mt-8">
       <div class="card-header">
         %if scm_refresh_url is not None:
-          <a class="btn btn-primary float-right" href="${scm_refresh_url}" target="_blank">Refresh config</a>
-          <form class="form-inline mx-2 mb-0 float-right" role="form" action="/logs/source/accounting" method="post"
-            enctype="application/x-www-form-urlencoded" target="_blank">
-            <input type="hidden" name="source" value="${source | h}">
-            <input type="hidden" name="key" value="${key | h}">
-            <input type="hidden" name="pos" value="0">
-            <button type="submit" class="btn btn-primary float-right">Accounting</button>
-          </form>
+          <a class="btn btn-primary float-right" href="/logs/source/${source | u}/accounting">
+            Accounting
+          </a>
+          <a class="btn btn-secondary float-right mr-2" href="${scm_refresh_url}" target="_blank">
+            Refresh config
+          </a>
         %endif
         <h3>Status for ${source | h}</h3>
       </div>

@@ -13,13 +13,9 @@
 <div class="container">
   <div class="card">
     <div class="card-header">
-      <form class="form-inline mx-2 mb-0 float-right" role="form" action="/logs/source/accounting.csv" method="post"
-        enctype="application/x-www-form-urlencoded" target="_blank">
-        <input type="hidden" name="source" value="${source | h}">
-        <input type="hidden" name="key" value="${key | h}">
-        <input type="hidden" name="pos" value="0">
-        <button type="submit" class="btn btn-primary float-right">CSV</button>
-      </form>
+      <a role="button" class="btn btn-primary float-right" href="/logs/source/${source | u}/accounting.csv">
+        CSV
+      </a>
       <h3 style="display: inline">Accounting for ${source | h}</h3>
     </div>
     <div class="card-body">
