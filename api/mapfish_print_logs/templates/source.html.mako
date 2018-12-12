@@ -1,5 +1,5 @@
 <%!
-def render(value):
+  def render(value):
     if isinstance(value, str):
         return value
     elif isinstance(value, list):
@@ -7,7 +7,7 @@ def render(value):
     else:
         return repr(value)
 
-def dt_render(value):
+  def dt_render(value):
     return value.replace("_", " ")
 %>
 <!doctype html>
@@ -23,34 +23,6 @@ def dt_render(value):
 </head>
 <body>
 <div class="container">
-  %if config is not None:
-  <div class="card">
-    <div class="card-header">
-      %if scm_refresh_url is not None:
-      <a class="btn btn-primary float-right" href="${scm_refresh_url}" target="_blank">Refresh config</a>
-      %endif
-      <h3>Status for ${source | h}</h3>
-    </div>
-    <div class="card-body">
-      %if 'status' in config:
-        Error ${config['status'] | h}: ${config['message'] | h}
-      %else:
-        %for status in config['statuses']:
-          <dl class="border rounded row mx-1 bg-light mb-0">
-
-            %for name, value in status.items():
-              %if value:
-                <dt class="col-lg-2">${dt_render(name) | h}</dt>
-                <dd class="col-lg-10">${render(value) | h}</dd>
-              %endif
-            %endfor
-          </dl>
-        %endfor
-      %endif
-    </div>
-  </div>
-  %endif
-
   <div class="card">
     <div class="card-header">
       <form class="form-inline mx-2 mb-0 float-right" role="form" action="/logs/source" method="post"
@@ -60,10 +32,33 @@ def dt_render(value):
         <input type="hidden" name="pos" value="0">
         <button type="submit" class="btn btn-primary float-right">Refresh logs</button>
       </form>
-      <h3>Logs for ${source | h}</h3>
+      <h3 style="display: inline">Logs for ${source | h}</h3>
+      <nav style="display: inline-block" class="ml-4">
+        <ul class="pagination justify-content-center mb-0">
+          <li class="page-item ${'disabled' if next_pos is None else ''}">
+            <form class="form-inline mb-0" role="form" action="/logs/source" method="post"
+              enctype="application/x-www-form-urlencoded">
+              <input type="hidden" name="source" value="${source | h}">
+              <input type="hidden" name="key" value="${key | h}">
+              <input type="hidden" name="pos" value="${next_pos}">
+              <button type="submit" class="page-link">older</button>
+            </form>
+          </li>
+          <li class="page-item ${'disabled' if prev_pos is None else ''}">
+            <form class="form-inline mb-0" role="form" action="/logs/source" method="post"
+              enctype="application/x-www-form-urlencoded">
+              <input type="hidden" name="source" value="${source | h}">
+              <input type="hidden" name="key" value="${key | h}">
+              <input type="hidden" name="pos" value="${prev_pos}">
+              <button type="submit" class="page-link">younger</button>
+            </form>
+          </li>
+        </ul>
+      </nav>
     </div>
-    <nav class="card-body">
-      <table class="table">
+    <div class="card-body">
+
+      <table class="table mb-0">
         <thead>
         <tr>
           <th scope="col">when</th>
@@ -89,29 +84,43 @@ def dt_render(value):
           %endfor
         </tbody>
       </table>
-      <nav>
-        <ul class="pagination justify-content-center">
-          <li class="page-item ${'disabled' if next_pos is None else ''}">
-            <form class="form-inline mb-0" role="form" action="/logs/source" method="post"
-              enctype="application/x-www-form-urlencoded">
-              <input type="hidden" name="source" value="${source | h}">
-              <input type="hidden" name="key" value="${key | h}">
-              <input type="hidden" name="pos" value="${next_pos}">
-              <button type="submit" class="page-link">older</button>
-            </form>
-          </li>
-          <li class="page-item ${'disabled' if prev_pos is None else ''}">
-            <form class="form-inline mb-0" role="form" action="/logs/source" method="post"
-              enctype="application/x-www-form-urlencoded">
-              <input type="hidden" name="source" value="${source | h}">
-              <input type="hidden" name="key" value="${key | h}">
-              <input type="hidden" name="pos" value="${prev_pos}">
-              <button type="submit" class="page-link">younger</button>
-            </form>
-          </li>
-        </ul>
-      </nav>
     </div>
   </div>
+
+  %if config is not None:
+    <div class="card mt-8">
+      <div class="card-header">
+        %if scm_refresh_url is not None:
+          <a class="btn btn-primary float-right" href="${scm_refresh_url}" target="_blank">Refresh config</a>
+          <form class="form-inline mx-2 mb-0 float-right" role="form" action="/logs/source/accounting" method="post"
+            enctype="application/x-www-form-urlencoded" target="_blank">
+            <input type="hidden" name="source" value="${source | h}">
+            <input type="hidden" name="key" value="${key | h}">
+            <input type="hidden" name="pos" value="0">
+            <button type="submit" class="btn btn-primary float-right">Accounting</button>
+          </form>
+        %endif
+        <h3>Status for ${source | h}</h3>
+      </div>
+      <div class="card-body">
+        %if 'status' in config:
+          Error ${config['status'] | h}: ${config['message'] | h}
+        %else:
+          %for status in config['statuses']:
+            <dl class="border rounded row mx-1 bg-light mb-0">
+
+              %for name, value in status.items():
+                %if value:
+                  <dt class="col-lg-2">${dt_render(name) | h}</dt>
+                  <dd class="col-lg-10">${render(value) | h}</dd>
+                %endif
+              %endfor
+            </dl>
+          %endfor
+        %endif
+      </div>
+    </div>
+  %endif
+
 </body>
 </html>

@@ -1,2 +1,3 @@
 c2cwsgiutils>=2.12.0,<3
-pyramid_mako
+humanfriendly==4.17
+pyramid_mako==1.0.2

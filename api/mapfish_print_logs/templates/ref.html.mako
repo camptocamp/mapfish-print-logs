@@ -1,11 +1,5 @@
 <%!
-  def to_size(size):
-    UNITS = ['', 'K', 'M', 'G', 'T', 'P']
-    unit = 0
-    while size >= 1024 and unit+1 < len(UNITS):
-      unit += 1
-      size = size / 1024
-    return ("%f" % (size))[:4].strip('.') + UNITS[unit] + "B"
+  import humanfriendly
 %>
 <!doctype html>
 <html lang="en">
@@ -51,13 +45,13 @@
         <dt class="col-lg-2">completion</dt>
         <dd class="col-lg-4">${accounting.completion_time | h}</dd>
         <dt class="col-lg-2">total time</dt>
-        <dd class="col-lg-4">${accounting.total_time_ms | h}ms</dd>
+        <dd class="col-lg-4">${accounting.total_time_ms / 1000.0 | h}s</dd>
 
         %if accounting.status == 'FINISHED':
         <dt class="col-lg-2">file size</dt>
-        <dd class="col-lg-4">${to_size(accounting.file_size) | h}</dd>
+        <dd class="col-lg-4">${humanfriendly.format_size(accounting.file_size, binary=True) | h}</dd>
         <dt class="col-lg-2">processing time</dt>
-        <dd class="col-lg-4">${accounting.processing_time_ms | h}ms</dd>
+        <dd class="col-lg-4">${accounting.processing_time_ms / 1000.0 | h}s</dd>
 
         <dt class="col-lg-2">pages</dt>
         <dd class="col-lg-4">${accounting.pages_stats() | h}</dd>
