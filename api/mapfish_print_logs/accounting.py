@@ -27,7 +27,7 @@ def monthly_all(config: dict):
         amount = _compute_cost_cents(stats, a4price, details.setdefault(month, {}).setdefault(source, {}))
         _add_dict(months.setdefault(month, {}), source, amount)
     return list({'source': source, 'month': month, 'amount': amount / 100.0, 'details': details[month][source]}
-                for month, sources in sorted(months.items()) for source, amount in sources.items())
+                for month, sources in sorted(months.items()) for source, amount in sorted(sources.items()))
 
 
 def monthly(config: dict, app_id: str):

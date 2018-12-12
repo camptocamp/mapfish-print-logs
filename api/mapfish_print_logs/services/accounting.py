@@ -33,7 +33,7 @@ def get_accounting_csv(request):
     for month in monthly:
         row = [month['month'], month['amount']]
         for col in details_cols:
-            row.append(month['details'].get(col, 0))
+            row.append(month['details'].get(col, ''))
         writer.writerow(row)
     return request.response
 
@@ -51,10 +51,10 @@ def global_accounting_csv(request):
     details_cols = accounting.get_details_cols(monthly)
     request.response.content_type = "text/csv"
     writer = csv.writer(request.response.body_file)
-    writer.writerow(['source', 'month', 'cost'] + details_cols)
+    writer.writerow(['month', 'source', 'cost'] + details_cols)
     for month in monthly:
-        row = [month['source'], month['month'], month['amount']]
+        row = [month['month'], month['source'], month['amount']]
         for col in details_cols:
-            row.append(month['details'].get(col, 0))
+            row.append(month['details'].get(col, ''))
         writer.writerow(row)
     return request.response

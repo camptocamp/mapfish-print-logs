@@ -24,4 +24,4 @@ def test_global_csv(api_connection, print_job):
     page = api_connection.post('logs/accounting.csv', data=dict(key='toto'))
     print(page)
     now = datetime.now()
-    assert f'source,month,cost,A4\r\nsimple,{now.year}/{now.month},0.05,1\r\n' == page
+    assert f'month,source,cost,A4\r\n{now.year}/{now.month},simple,0.05,1\r\n' == page
