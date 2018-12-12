@@ -3,6 +3,8 @@ import os
 import requests
 import sys
 
+# flake8: noqa: E501
+
 
 ES_URL = os.environ.get('ES_URL', 'http://localhost:9200/elasticsearch')
 INDEX = os.environ.get('ES_INDEX', 'print-1')
@@ -14,7 +16,7 @@ LEVEL_VALUE = {
 
 
 def _log_message(es_url, ref, level, message, **kwargs):
-    data={
+    data = {
         'job_id': ref,
         '@timestamp': datetime.datetime.now().isoformat(),
         'level_name': level,

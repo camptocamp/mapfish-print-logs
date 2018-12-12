@@ -16,5 +16,5 @@ RUN DOCKER_VERSION=${DOCKER_VERSION} \
 
 COPY . ./
 
-RUN flake8 tests
+RUN flake8 acceptance
 CMD py.test -vv --color=yes --junitxml /reports/acceptance.xml acceptance
