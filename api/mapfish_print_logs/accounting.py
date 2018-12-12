@@ -5,29 +5,46 @@ from .models import DBSession, PrintAccounting
 
 
 PDF2M = 1/72 * 2.54/100
-
 A4_SURFACE = 595 * 842
 
 
+def _add_dict(dico: dict, key: str, value=1):
+    if key in dico:
+        dico[key] += value
+    else:
+        dico[key] = value
+
+
+def monthly_all(config: dict):
+    query = DBSession.query(PrintAccounting.app_id, PrintAccounting.completion_time, PrintAccounting.stats) \
+        .filter(PrintAccounting.status == 'FINISHED')
+    a4price = config['accounting']['a4price']
+    months = {}
+    details = {}
+    for app_id, completion_time, stats in query:
+        month = f'{completion_time.year}/{completion_time.month}'
+        source = utils.app_id2source(config, app_id)
+        amount = _compute_cost_cents(stats, a4price, details.setdefault(month, {}).setdefault(source, {}))
+        _add_dict(months.setdefault(month, {}), source, amount)
+    return list({'source': source, 'month': month, 'amount': amount / 100.0, 'details': details[month][source]}
+                for month, sources in sorted(months.items()) for source, amount in sources.items())
+
+
 def monthly(config: dict, app_id: str):
-    query = DBSession.query(PrintAccounting.completion_time, PrintAccounting.stats)\
+    query = DBSession.query(PrintAccounting.completion_time, PrintAccounting.stats) \
         .filter(PrintAccounting.status == 'FINISHED',
                 sa.or_(
                     PrintAccounting.app_id == app_id,
                     PrintAccounting.app_id.like(utils.quote_like(app_id) + ":%")
-                ))\
-        .order_by(PrintAccounting.completion_time)
+                ))
     a4price = config['accounting']['a4price']
     months = {}
     details = {}
     for completion_time, stats in query:
         month = f'{completion_time.year}/{completion_time.month}'
         amount = _compute_cost_cents(stats, a4price, details.setdefault(month, {}))
-        if month not in months:
-            months[month] = amount
-        else:
-            months[month] += amount
-    return list({'month': k, 'amount': v/100, 'details': details[k]} for k, v in sorted(months.items()))
+        _add_dict(months, month, amount)
+    return list({'month': k, 'amount': v / 100.0, 'details': details[k]} for k, v in sorted(months.items()))
 
 
 def _compute_cost_cents(stats, a4price, details):
@@ -36,15 +53,11 @@ def _compute_cost_cents(stats, a4price, details):
     pages = stats['pages']
     cost = 0
     for page in pages:
-        height = page['height']
-        width = page['width']
-        cost += round(height * width / A4_SURFACE * a4price * 100)
+        height, width = utils.get_size(page)
+        cost += round(height * width / A4_SURFACE * a4price * 100.0)
 
         size_name = utils.page_size2name(page)
-        if size_name not in details:
-            details[size_name] = 1
-        else:
-            details[size_name] += 1
+        _add_dict(details, size_name)
 
     return cost
 

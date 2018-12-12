@@ -15,7 +15,13 @@
       <form class="form-inline mx-2 mb-0 float-right" role="form" action="/logs/sources" method="post"
         enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="key" value="${key | h}">
-        <button type="submit" class="btn btn-primary float-right">Refresh</button>
+        <button type="submit" class="btn btn-primary">Refresh</button>
+      </form>
+      <form class="form-inline mx-2 mb-0 float-right" role="form" action="/logs/accounting.csv" method="post"
+        enctype="application/x-www-form-urlencoded" target="_blank">
+        <input type="hidden" name="key" value="${key | h}">
+        <input type="hidden" name="pos" value="0">
+        <button type="submit" class="btn btn-primary">Accounting</button>
       </form>
       <h3>List of sources</h3>
     </div>

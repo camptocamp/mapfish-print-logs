@@ -13,6 +13,7 @@ from .models import DBSession, PrintAccounting
 
 ref_service = services.create("ref", "/logs/ref")
 source_service = services.create("source", "/logs/source")
+global_accounting_service = services.create("accounting_global", "/logs/accounting.csv")
 accounting_service = services.create("accounting", "/logs/source/accounting")
 accounting_csv_service = services.create("accounting_csv", "/logs/source/accounting.csv")
 sources_service = services.create("sources", "/logs/sources")
@@ -49,7 +50,7 @@ def get_ref(request):
 def get_source(request):
     config, key, source = _auth_source(request)
     pos = int(request.params.get('pos', '0'))
-    app_id = _get_app_id(config, source)
+    app_id = utils.get_app_id(config, source)
     logs = DBSession.query(PrintAccounting).filter(
         sa.or_(
             PrintAccounting.app_id == app_id,
@@ -84,7 +85,7 @@ def _auth_source(request):
 @accounting_service.post(renderer='templates/accounting.html.mako')
 def get_accounting(request):
     config, key, source = _auth_source(request)
-    monthly = accounting.monthly(config, _get_app_id(config, source))
+    monthly = accounting.monthly(config, utils.get_app_id(config, source))
     return {
         'source': source,
         'key': key,
@@ -96,7 +97,7 @@ def get_accounting(request):
 @accounting_csv_service.post()
 def get_accounting_csv(request):
     config, key, source = _auth_source(request)
-    monthly = accounting.monthly(config, _get_app_id(config, source))
+    monthly = accounting.monthly(config, utils.get_app_id(config, source))
     details_cols = accounting.get_details_cols(monthly)
     request.response.content_type = "text/csv"
     writer = csv.writer(request.response.body_file)
@@ -109,9 +110,26 @@ def get_accounting_csv(request):
     return request.response
 
 
-def _get_app_id(config, source):
-    source_config = config['sources'][source]
-    return source_config.get('app_id', source)
+@global_accounting_service.post()
+def global_accounting_csv(request):
+    key = request.params.get('key')
+    if key is None:
+        raise HTTPBadRequest("Missing the key")
+    if key != SOURCES_KEY:
+        raise HTTPForbidden("Invalid secret")
+    config = _read_shared_config()
+
+    monthly = accounting.monthly_all(config)
+    details_cols = accounting.get_details_cols(monthly)
+    request.response.content_type = "text/csv"
+    writer = csv.writer(request.response.body_file)
+    writer.writerow(['source', 'month', 'cost'] + details_cols)
+    for month in monthly:
+        row = [month['source'], month['month'], month['amount']]
+        for col in details_cols:
+            row.append(month['details'][col])
+        writer.writerow(row)
+    return request.response
 
 
 def check_key(config, source, secret):

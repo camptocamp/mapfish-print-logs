@@ -24,19 +24,39 @@ PAGE_SIZE2NAME = {
 
 
 def page_size2fullname(dico):
-    height = str(dico['height'])
-    width = str(dico['width'])
-    size = 'x'.join(sorted([width, height]))
+    height, width = get_size(dico)
+    size = 'x'.join(map(str, sorted([width, height])))
     return PAGE_SIZE2NAME.get(size, size) + \
         (' portrait' if height > width else ' landscape')
 
 
+def get_size(dico):
+    height = dico['height']
+    width = dico['width']
+    return height, width
+
+
 def page_size2name(dico):
-    height = str(dico['height'])
-    width = str(dico['width'])
-    size = 'x'.join(sorted([width, height]))
+    height, width = get_size(dico)
+    size = 'x'.join(map(str, sorted([width, height])))
     return PAGE_SIZE2NAME.get(size, size)
 
 
 def quote_like(text):
     return text.replace("%", r"\%").replace("_", r"\_")
+
+
+def get_app_id(config, source):
+    source_config = config['sources'][source]
+    return source_config.get('app_id', source)
+
+
+def app_id2source(config: dict, app_id: str):
+    app_id = app_id.split(':')[0]
+    if app_id in config['sources']:
+        return app_id
+    else:
+        for source, source_config in config['sources'].items():
+            if source_config.get('app_id') == app_id:
+                return source
+    return app_id
