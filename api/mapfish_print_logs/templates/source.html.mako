@@ -26,7 +26,7 @@
   <div class="card">
     <div class="card-header">
       <a role="button" class="btn btn-primary float-right" href="/logs/source/${source | u}">
-        Refresh logs
+        Refresh
       </a>
       <h3 style="display: inline">Logs for ${source | h}</h3>
       <nav style="display: inline-block" class="ml-4">
@@ -82,7 +82,7 @@
             Accounting
           </a>
           <a class="btn btn-secondary float-right mr-2" href="${scm_refresh_url}" target="_blank">
-            Refresh config
+            Force refresh config
           </a>
         %endif
         <h3>Status for ${source | h}</h3>
@@ -106,6 +106,6 @@
       </div>
     </div>
   %endif
-
+</div>
 </body>
 </html>
