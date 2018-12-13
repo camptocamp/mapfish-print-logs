@@ -85,7 +85,7 @@
             Force refresh config
           </a>
         %endif
-        <h3>Status for ${source | h}</h3>
+        <h3>Source config for ${source | h}</h3>
       </div>
       <div class="card-body">
         %if 'status' in config:

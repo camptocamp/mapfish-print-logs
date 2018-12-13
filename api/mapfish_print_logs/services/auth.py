@@ -14,15 +14,17 @@ def login(request):
 def do_login(request):
     key = request.params.get('key')
     back = request.params.get('back', "")
-    request.response.headers.update(remember(request, key))
-    request.response.status_code = 302
-    request.response.headers['Location'] = back if back else "/logs/"
-    return request.response
+    response = request.response
+    response.headerlist.extend(remember(request, key))
+    response.status_code = 302
+    response.headers['Location'] = back if back else "/logs/"
+    return response
 
 
 @logout_service.get()
 def do_logout(request):
-    request.response.headers.update(forget(request))
-    request.response.status_code = 302
-    request.response.headers['Location'] = "/logs/"
-    return request.response
+    response = request.response
+    response.headerlist.extend(forget(request))
+    response.status_code = 302
+    response.headers['Location'] = "/logs/"
+    return response

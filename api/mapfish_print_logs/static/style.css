@@ -29,3 +29,22 @@
 dd {
     white-space: pre-wrap;
 }
+
+a[data-toggle="collapse"] {
+    color: white;
+    background-color: #007bff;
+    font-weight: bold;
+    border-radius: 100%;
+    display: inline-block;
+    width: 1rem;
+    text-align: center;
+}
+
+a[data-toggle="collapse"][aria-expanded="true"]:before {
+    content: '-';
+}
+
+a[data-toggle="collapse"][aria-expanded="false"]:before,
+a[data-toggle="collapse"]:not([aria-expanded]):before{
+    content: '+';
+}
