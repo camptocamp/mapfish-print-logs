@@ -48,7 +48,7 @@
       <table class="table mb-0">
         <thead>
         <tr>
-          <th scope="col">when</th>
+          <th scope="col">When</th>
           <th scope="col">Status</th>
           <th scope="col">App ID</th>
           <th scope="col">Layout</th>
@@ -89,7 +89,9 @@
       </div>
       <div class="card-body">
         %if 'status' in config:
+        <div class="alert alert-warning" role="alert">
           Error ${config['status'] | h}: ${config['message'] | h}
+        </div>
         %else:
           %for status in config['statuses']:
             <dl class="border rounded row mx-1 bg-light mb-0">
