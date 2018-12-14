@@ -25,6 +25,9 @@
         <div class="form-group row">
           <div class="col-sm-4 mx-auto">
             <button type="submit" class="btn btn-lg btn-primary">Login</button>
+            %if message:
+              <div class="alert alert-danger mt-3">${message}</div>
+            %endif
           </div>
         </div>
       </form>
