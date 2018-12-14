@@ -30,3 +30,12 @@ def test_global_csv(api_connection, print_job):
     print(page)
     now = datetime.now()
     assert f'month,source,cost,A4\r\n{now.year}/{now.month},simple,0.05,1\r\n' == page
+
+
+def test_x_api_key(api_connection, print_job):
+    response = api_connection.get('logs/accounting.csv', headers={'X-API-Key': 'toto'})
+    print(response)
+
+
+def test_global_csv_no_login(api_connection):
+    api_connection.get_raw('logs/accounting.csv', expected_status=403)

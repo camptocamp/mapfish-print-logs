@@ -1,6 +1,6 @@
 from c2cwsgiutils import services
 import csv
-from pyramid.httpexceptions import HTTPForbidden, HTTPBadRequest
+from pyramid.httpexceptions import HTTPForbidden
 
 from . import auth_source, SOURCES_KEY, read_shared_config
 from .. import accounting, utils
@@ -41,7 +41,7 @@ def get_accounting_csv(request):
 def global_accounting_csv(request):
     key = request.key
     if key is None:
-        raise HTTPBadRequest("Missing the key")
+        raise HTTPForbidden("Missing the key")
     if key != SOURCES_KEY:
         raise HTTPForbidden("Invalid secret")
     config = read_shared_config()

@@ -13,7 +13,9 @@ class MyAuthenticationPolicy(AuthTktAuthenticationPolicy):
 
 
 def get_key(request):
-    return request.unauthenticated_userid
+    if request.unauthenticated_userid is not None:
+        return request.unauthenticated_userid
+    return request.headers.get('X-API-Key')
 
 
 def includeme(config):
