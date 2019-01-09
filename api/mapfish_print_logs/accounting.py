@@ -22,7 +22,7 @@ def monthly_all(config: dict):
     months = {}
     details = {}
     for app_id, completion_time, stats in query:
-        month = f'{completion_time.year}/{completion_time.month}'
+        month = f'{completion_time.year}/{completion_time.month:02d}'
         source = utils.app_id2source(config, app_id)
         amount = _compute_cost_cents(stats, a4price, details.setdefault(month, {}).setdefault(source, {}))
         _add_dict(months.setdefault(month, {}), source, amount)
@@ -41,7 +41,7 @@ def monthly(config: dict, app_id: str):
     months = {}
     details = {}
     for completion_time, stats in query:
-        month = f'{completion_time.year}/{completion_time.month}'
+        month = f'{completion_time.year}/{completion_time.month:02d}'
         amount = _compute_cost_cents(stats, a4price, details.setdefault(month, {}))
         _add_dict(months, month, amount)
     return list({'month': k, 'amount': v / 100.0, 'details': details[k]} for k, v in sorted(months.items()))

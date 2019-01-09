@@ -6,7 +6,7 @@ def test_ok(api_connection, print_job):
     page = api_connection.get('logs/source/simple/accounting')
     print(page)
     now = datetime.now()
-    assert f'<td>{now.year}/{now.month}</td>' in page
+    assert f'<td>{now.year}/{now.month:02d}</td>' in page
     assert '<td>0.05</td>' in page
 
 
@@ -21,7 +21,7 @@ def test_csv(api_connection, print_job):
     page = api_connection.get('logs/source/simple/accounting.csv')
     print(page)
     now = datetime.now()
-    assert f'month,cost,A4\r\n{now.year}/{now.month},0.05,1\r\n' == page
+    assert f'month,cost,A4\r\n{now.year}/{now.month:02d},0.05,1\r\n' == page
 
 
 def test_global_csv(api_connection, print_job):
@@ -29,7 +29,7 @@ def test_global_csv(api_connection, print_job):
     page = api_connection.get('logs/accounting.csv')
     print(page)
     now = datetime.now()
-    assert f'month,source,cost,A4\r\n{now.year}/{now.month},simple,0.05,1\r\n' == page
+    assert f'month,source,cost,A4\r\n{now.year}/{now.month:02d},simple,0.05,1\r\n' == page
 
 
 def test_x_api_key(api_connection, print_job):
