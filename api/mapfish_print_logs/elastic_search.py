@@ -29,6 +29,8 @@ def get_logs(ref, min_level, pos, limit):
         },
         'sort': [{
             '@timestamp': {'order': 'asc'}
+        }, {
+            'offset': {'order': 'asc'}
         }]
     }
     if ES_FILTERS != "":

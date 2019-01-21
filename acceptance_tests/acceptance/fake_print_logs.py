@@ -8,6 +8,7 @@ import sys
 
 ES_URL = os.environ.get('ES_URL', 'http://localhost:9200/elasticsearch')
 INDEX = os.environ.get('ES_INDEX', 'print-1')
+OFFSET = 0
 LEVEL_VALUE = {
     'DEBUG': 10000,
     'INFO': 20000,
@@ -16,13 +17,16 @@ LEVEL_VALUE = {
 
 
 def _log_message(es_url, ref, level, message, **kwargs):
+    global OFFSET
+    OFFSET += 1
     data = {
         'job_id': ref,
         '@timestamp': datetime.datetime.now().isoformat(),
         'level_name': level,
         'level_value': LEVEL_VALUE[level],
         'kubernetes.labels.release': 'prod',
-        'msg': message
+        'msg': message,
+        'offset': OFFSET
     }
     data.update(kwargs)
     headers = {
