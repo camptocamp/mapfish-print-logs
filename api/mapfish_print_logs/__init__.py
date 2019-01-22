@@ -9,6 +9,7 @@ from pyramid.httpexceptions import HTTPMovedPermanently
 
 from . import models, security
 from .config import SCM_URL
+from .elastic_search import SEARCH_URL, SEARCH_HEADERS
 
 LOG = logging.getLogger(__name__)
 
@@ -30,7 +31,9 @@ def main(_, **settings):
     health_check.add_db_session_check(models.DBSession, query_cb=lambda session: session.execute("select 1"))
     if SCM_URL is not None:
         health_check.add_url_check(SCM_URL + "c2c/health_check", name="scm", level=3)
-    # TODO: health_check.add_url_check(f"{ES_URL}{ES_INDEXES}/_settings", name="elasticsearch", level=3)
+    health_check.add_url_check(SEARCH_URL, params=dict(size=0), headers=SEARCH_HEADERS,
+                               check_cb=lambda request, response: response.json(),
+                               name="elasticsearch", level=3)
 
     config.scan("mapfish_print_logs.services")
     config.add_static_view(name="/logs", path="/app/mapfish_print_logs/static", cache_max_age=0)
