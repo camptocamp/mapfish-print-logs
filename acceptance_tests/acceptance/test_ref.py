@@ -21,3 +21,12 @@ def test_ok_page2(api_connection, print_job):
 
 def test_unknown(api_connection):
     api_connection.get('logs/ref', params=dict(ref='unknown'), expected_status=404)
+
+
+def test_filter(api_connection, print_job):
+    page = api_connection.get('logs/ref', params=dict(ref=print_job, filter_loggers='org.mapfish.print',
+                                                      min_level='10000'))
+    print(page)
+    assert print_job in page
+    assert f'Starting job {print_job}' not in page
+    assert 'Some &lt;b&gt;debug&lt;/b&gt;' in page

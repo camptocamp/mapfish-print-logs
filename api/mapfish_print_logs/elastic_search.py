@@ -13,7 +13,7 @@ if ES_AUTH is not None:
 SEARCH_URL = f"{ES_URL}{ES_INDEXES}/_search"
 
 
-def get_logs(ref, min_level, pos, limit):
+def get_logs(ref, min_level, pos, limit, filter_loggers):
     if ES_URL is None:
         return []
     query = {
@@ -48,6 +48,14 @@ def get_logs(ref, min_level, pos, limit):
             query['query']['bool']['must'].append({
                 'term': {name: value}
             })
+    if filter_loggers:
+        query['query']['bool']['must_not'] = [
+            {
+                "match_phrase": {
+                    "logger_name": x
+                }
+            } for x in filter_loggers
+        ]
 
     r = requests.post(SEARCH_URL, json=query, headers=SEARCH_HEADERS)
     if r.status_code != 200:

@@ -17,12 +17,18 @@
   <div class="card">
     <div class="card-header">
       %if min_level > 10000:
-      <a class="btn btn-primary float-right" href="ref?ref=${ref}&min_level=10000">Show debug</a>
+      <a class="btn btn-primary float-right" href="ref?ref=${ref}&min_level=10000&filter_loggers=${','.join(filter_loggers)}">Show debug</a>
       %else:
-      <a class="btn btn-primary float-right" href="ref?ref=${ref}&min_level=20000">Hide debug</a>
+      <a class="btn btn-primary float-right" href="ref?ref=${ref}&min_level=20000&filter_loggers=${','.join(filter_loggers)}">Hide debug</a>
       %endif
       <h3>Logs for one print job</h3>
-      <small>${ref}</small>
+      <small>
+        ${ref}
+      </small>
+      %if filter_loggers:
+        <br>
+        filters: ${', '.join(filter_loggers)} (<a href="ref?ref=${ref}&min_level=${min_level}">clear</a>)
+      %endif
     </div>
     <div class="card-body">
       <dl class="border rounded row mx-1 bg-light">
@@ -88,9 +94,12 @@
             <td colspan="4">
               <dl class="border rounded row mx-1 bg-light">
                 <dt class="col-lg-2">Message</dt>
-                <dd class="col-lg-10"><pre>${log['msg'] | h}</pre></dd>
+                <dd class="col-lg-10">${log['msg'] | h}</dd>
                 % if 'logger_name' in log:
-                <dt class="col-lg-2">logger</dt>
+                <dt class="col-lg-2">
+                  logger
+                  <a title="hide this logger" href="ref?ref=${ref}&min_level=${min_level}&pos=${cur_pos}&filter_loggers=${','.join(filter_loggers + [log['logger_name']])}">✂</a>
+                </dt>
                 <dd class="col-lg-10">${log['logger_name'] | h}</dd>
                 % endif
                 % if 'thread_name' in log:
@@ -123,29 +132,34 @@
       <nav>
         <ul class="pagination justify-content-center">
           <li class="page-item ${'disabled' if prev_pos is None else ''}">
-            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=0">
+            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=0&filter_loggers=${','.join(filter_loggers)}">
               &lt;&lt;
             </a>
           </li>
           <li class="page-item ${'disabled' if prev_pos is None else ''}">
-            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${prev_pos}">
+            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${prev_pos}&filter_loggers=${','.join(filter_loggers)}">
               &lt;
             </a>
           </li>
-          %for i, pos in enumerate(range(0, total, limit)):
+          %for i, pos in enumerate(range(0, min(total, max_logs), limit)):
           <li class="page-item ${'active' if pos == cur_pos else ''}">
-            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${pos}">
+            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${pos}&filter_loggers=${','.join(filter_loggers)}">
               ${i}
             </a>
           </li>
           %endfor
+          %if total > max_logs:
+            <li class="page-item">
+              ...
+            </li>
+          %endif
           <li class="page-item ${'disabled' if next_pos is None else ''}">
-            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${next_pos}">
+            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${next_pos}&filter_loggers=${','.join(filter_loggers)}">
               &gt;
             </a>
           </li>
           <li class="page-item ${'disabled' if last_pos is None else ''}">
-            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${last_pos}">
+            <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${last_pos}&filter_loggers=${','.join(filter_loggers)}">
               &gt;&gt;
             </a>
           </li>
