@@ -1,4 +1,4 @@
-FROM camptocamp/c2cwsgiutils:2-light
+FROM camptocamp/c2cwsgiutils:3
 MAINTAINER Camptocamp "info@camptocamp.com"
 
 # Doing things in two steps to avoid needing to re-install everything when we do a rebuild
@@ -7,7 +7,7 @@ MAINTAINER Camptocamp "info@camptocamp.com"
 # Step #1 copy only the stuff needed to install the dependencies and run the script
 WORKDIR /app
 COPY *.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --disable-pip-version-check --no-cache-dir -r requirements.txt
 
 EXPOSE 8080
 
