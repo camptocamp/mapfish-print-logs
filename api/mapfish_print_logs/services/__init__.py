@@ -19,6 +19,10 @@ def auth_source(request):
 
 
 def check_key(config, source, secret):
+    if source == 'all':
+        if secret != SOURCES_KEY:
+            raise HTTPForbidden("Invalid secret")
+        return
     if source not in config['sources']:
         raise HTTPNotFound("No such source")
     if secret not in (SOURCES_KEY, config['sources'][source]['key']):

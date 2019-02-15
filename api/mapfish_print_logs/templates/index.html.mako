@@ -41,7 +41,7 @@
             </tr>
             </thead>
             <tbody>
-              %for source in sources:
+              %for source in sources + ([{'id': 'all', 'app_id': 'All sources'}] if is_admin else []):
                 <tr>
                   <td>
                     ${source['id'] | h}
