@@ -33,7 +33,7 @@
           %for month in accounting:
             <tr>
               <td>${month['month']}</td>
-              <td>${month['amount']}</td>
+              <td>${"%.02f" % (month['amount'])}</td>
               %for detail in detail_cols:
                 <td>${month['details'].get(detail, 0)}</td>
               %endfor
