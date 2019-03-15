@@ -21,6 +21,9 @@
       %else:
       <a class="btn btn-primary float-right" href="ref?ref=${ref}&min_level=20000&filter_loggers=${','.join(filter_loggers)}">Hide debug</a>
       %endif
+      %if source is not None:
+      <a class="btn btn-secondary float-right mr-2" href="/logs/source/${source}">Back to source</a>
+      %endif
       <h3>Logs for one print job</h3>
       <small>
         ${ref}

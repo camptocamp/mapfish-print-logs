@@ -1,4 +1,5 @@
 import yaml
+from typing import Optional
 
 from .config import SHARED_CONFIG_MASTER
 
@@ -61,8 +62,10 @@ def get_app_id(config, source):
     return source_config.get('app_id', source)
 
 
-def app_id2source(config: dict, app_id: str):
+def app_id2source(app_id: str, config: Optional[dict] = None):
     app_id = app_id.split(':')[0]
+    if config is None:
+        config = read_shared_config()
     if app_id in config['sources']:
         return app_id
     else:

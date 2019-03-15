@@ -28,6 +28,7 @@
       <a role="button" class="btn btn-primary float-right" href="/logs/source/${source | u}">
         Refresh
       </a>
+      <a class="btn btn-secondary float-right mr-2" href="/logs/">Back to sources</a>
       <h3 style="display: inline">Logs for ${source | h}</h3>
       <nav style="display: inline-block" class="ml-4">
         <ul class="pagination justify-content-center mb-0">

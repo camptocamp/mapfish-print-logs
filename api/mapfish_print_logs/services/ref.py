@@ -4,6 +4,7 @@ from pyramid.httpexceptions import HTTPNotFound
 from .. import elastic_search
 from ..models import DBSession, PrintAccounting
 from ..config import LOG_LIMIT, MAX_LOGS
+from ..utils import app_id2source
 
 ref_service = services.create("ref", "/logs/ref")
 
@@ -34,5 +35,6 @@ def get_ref(request):
         'limit': LOG_LIMIT,
         'total': total,
         'max_logs': MAX_LOGS,
-        'filter_loggers': filter_loggers
+        'filter_loggers': filter_loggers,
+        'source': app_id2source(accounting.app_id) if request.key is not None else None,
     }
