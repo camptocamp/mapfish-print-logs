@@ -28,6 +28,15 @@
       <a role="button" class="btn btn-primary float-right" href="/logs/source/${source | u}">
         Refresh
       </a>
+      <a role="button" class="btn btn-secondary float-right mr-2"
+        href="/logs/source/${source | u}?only_errors=${'0' if only_errors else '1'}">
+        %if only_errors:
+          Show all
+        %else:
+          Show only errors
+        %endif
+      </a>
+
       <a class="btn btn-secondary float-right mr-2" href="/logs/">Back to sources</a>
       <h3 style="display: inline">Logs for ${source | h}</h3>
       <nav style="display: inline-block" class="ml-4">

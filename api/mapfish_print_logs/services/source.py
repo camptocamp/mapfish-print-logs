@@ -13,6 +13,7 @@ source_service = services.create("source_auth", "/logs/source/{source}")
 def get_source(request):
     config, key, source = auth_source(request)
     pos = int(request.params.get('pos', '0'))
+    only_errors = request.params.get('only_errors', '0') == '1'
     query = DBSession.query(PrintAccounting)
     if source != 'all':
         app_id = utils.get_app_id(config, source)
@@ -28,6 +29,8 @@ def get_source(request):
     else:
         source_key = None
         scm_refresh_url = None
+    if only_errors:
+        query = query.filter(PrintAccounting.status != 'FINISHED')
     logs = query.order_by(PrintAccounting.completion_time.desc()).offset(pos).limit(JOB_LIMIT + 1).all()
 
     return {
@@ -36,5 +39,6 @@ def get_source(request):
         'scm_refresh_url': scm_refresh_url,
         'config': get_config_info(source, source_key) if source != 'all' else None,
         'next_pos': None if len(logs) <= JOB_LIMIT else pos + JOB_LIMIT,
-        'prev_pos': None if pos == 0 else max(0, pos - JOB_LIMIT)
+        'prev_pos': None if pos == 0 else max(0, pos - JOB_LIMIT),
+        'only_errors': only_errors
     }
