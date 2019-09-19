@@ -24,11 +24,11 @@ def get_logs(ref, min_level, pos, limit, filter_loggers):
                 "must": [
                     {
                         "match_phrase": {
-                            "job_id": ref
+                            "json.job_id": ref
                         }
                     }, {
                         "range": {
-                            "level_value": {
+                            "json.level_value": {
                                 "gte": min_level
                             }
                         }
@@ -52,7 +52,7 @@ def get_logs(ref, min_level, pos, limit, filter_loggers):
         query['query']['bool']['must_not'] = [
             {
                 "match_phrase": {
-                    "logger_name": x
+                    "json.logger_name": x
                 }
             } for x in filter_loggers
         ]

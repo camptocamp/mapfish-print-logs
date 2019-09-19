@@ -87,31 +87,31 @@
         </thead>
         <tbody>
           %for i, log in enumerate(logs):
-          <tr class="level-${log['level_name'] | h}">
+          <tr class="level-${log['json']['level_name'] | h}">
             <td><a data-toggle="collapse" href="#collapse-${i}"></a></td>
             <td>${log['@timestamp'] | h}</td>
-            <td>${log['level_name'] | h}</td>
-            <td class="text-truncate">${log['msg'] | h}</td>
+            <td>${log['json']['level_name'] | h}</td>
+            <td class="text-truncate">${log['json']['msg'] | h}</td>
           </tr>
           <tr class="collapse" id="collapse-${i}">
             <td colspan="4">
               <dl class="border rounded row mx-1 bg-light">
                 <dt class="col-lg-2">Message</dt>
-                <dd class="col-lg-10">${log['msg'] | h}</dd>
-                % if 'logger_name' in log:
+                <dd class="col-lg-10">${log['json']['msg'] | h}</dd>
+                % if 'logger_name' in log['json']:
                 <dt class="col-lg-2">
                   logger
-                  <a title="hide this logger" href="ref?ref=${ref}&min_level=${min_level}&pos=${cur_pos}&filter_loggers=${','.join(filter_loggers + [log['logger_name']])}">✂</a>
+                  <a title="hide this logger" href="ref?ref=${ref}&min_level=${min_level}&pos=${cur_pos}&filter_loggers=${','.join(filter_loggers + [log['json']['logger_name']])}">✂</a>
                 </dt>
-                <dd class="col-lg-10">${log['logger_name'] | h}</dd>
+                <dd class="col-lg-10">${log['json']['logger_name'] | h}</dd>
                 % endif
-                % if 'thread_name' in log:
+                % if 'thread_name' in log['json']:
                   <dt class="col-lg-2">thread</dt>
-                  <dd class="col-lg-10">${log['thread_name'] | h}</dd>
+                  <dd class="col-lg-10">${log['json']['thread_name'] | h}</dd>
                 % endif
-                % if 'stack_trace' in log:
+                % if 'stack_trace' in log['json']:
                 <dt class="col-lg-2">stacktrace</dt>
-                <dd class="col-lg-10"><pre>${log['stack_trace'] | h}</pre></dd>
+                <dd class="col-lg-10"><pre>${log['json']['stack_trace'] | h}</pre></dd>
                 % endif
               </dl>
             </td>
