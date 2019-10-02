@@ -39,7 +39,7 @@ def get_logs(ref, min_level, pos, limit, filter_loggers):
         'sort': [{
             '@timestamp': {'order': 'asc'}
         }, {
-            'offset': {'order': 'asc'}
+            'log.offset': {'order': 'asc', 'unmapped_type': 'long'}
         }]
     }
     if ES_FILTERS != "":

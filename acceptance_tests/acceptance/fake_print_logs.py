@@ -32,7 +32,9 @@ def _log_message(es_url, ref, level, message, **kwargs):
                 'release': 'prod'
             }
         },
-        'offset': OFFSET
+        'log': {
+            'offset': OFFSET
+        }
     }
     data['json'].update(kwargs)
     headers = {

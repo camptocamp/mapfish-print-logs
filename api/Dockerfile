@@ -25,7 +25,7 @@ ARG GIT_HASH
 RUN pip install --no-cache-dir -e . && \
     flake8 /app/mapfish_print_logs /app/*.py && \
     c2cwsgiutils_genversion.py $GIT_HASH && \
-    python -m compileall -q .
+    python -m compileall -q . /usr/local/lib/python3.7
 
 # www-data
 USER 33
