@@ -22,10 +22,9 @@ def _log_message(es_url, ref, level, message, **kwargs):
     data = {
         'json': {
             'job_id': ref,
-            'level_name': level,
             'level_value': LEVEL_VALUE[level],
-            'msg': message,
         },
+        'message': message,
         '@timestamp': datetime.datetime.now().isoformat(),
         'kubernetes': {
             'labels': {
@@ -33,6 +32,7 @@ def _log_message(es_url, ref, level, message, **kwargs):
             }
         },
         'log': {
+            'level': level,
             'offset': OFFSET
         }
     }

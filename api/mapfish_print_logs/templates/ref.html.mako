@@ -87,17 +87,17 @@
         </thead>
         <tbody>
           %for i, log in enumerate(logs):
-          <tr class="level-${log['json']['level_name'] | h}">
+          <tr class="level-${log['log']['level'] | h}">
             <td><a data-toggle="collapse" href="#collapse-${i}"></a></td>
             <td>${log['@timestamp'] | h}</td>
-            <td>${log['json']['level_name'] | h}</td>
-            <td class="text-truncate">${log['json']['msg'] | h}</td>
+            <td>${log['log']['level'] | h}</td>
+            <td class="text-truncate">${log['message'] | h}</td>
           </tr>
           <tr class="collapse" id="collapse-${i}">
             <td colspan="4">
               <dl class="border rounded row mx-1 bg-light">
                 <dt class="col-lg-2">Message</dt>
-                <dd class="col-lg-10">${log['json']['msg'] | h}</dd>
+                <dd class="col-lg-10">${log['message'] | h}</dd>
                 % if 'logger_name' in log['json']:
                 <dt class="col-lg-2">
                   logger
