@@ -28,7 +28,7 @@ services:
     image: camptocamp/mapfish-print-logs-configs:latest
 
   db:
-    image: camptocamp/postgres:9.6
+    image: camptocamp/postgres:11
     environment:
       POSTGRES_USER: www-data
       POSTGRES_PASSWORD: www-data
@@ -39,7 +39,7 @@ services:
     - 15432:5432
 
   print:
-    image: camptocamp/mapfish_print:3.18
+    image: camptocamp/mapfish_print:3.22
     environment:
       LOG_LEVEL: DEBUG
       CATALINA_OPTS: >-

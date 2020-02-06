@@ -26,6 +26,7 @@ all: acceptance
 .PHONY: pull
 pull:
 	for image in `find -name Dockerfile | xargs grep --no-filename FROM | awk '{print $$2}' | sort -u`; do docker pull $$image; done
+	for image in `find -name "docker-compose*.yaml" | xargs grep --no-filename "image:" | awk '{print $$2}' | sort -u | grep -v $(DOCKER_BASE) | grep -v rancher`; do docker pull $$image; done
 
 .venv/timestamp: api/requirements.txt Makefile
 	/usr/bin/virtualenv --python=/usr/bin/python3.7 .venv
