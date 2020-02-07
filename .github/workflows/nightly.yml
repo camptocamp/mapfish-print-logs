@@ -1,4 +1,4 @@
-name: Rebuild
+name: Nightly
 
 on:
   schedule:
@@ -54,6 +54,6 @@ jobs:
           then
             docker tag camptocamp/mapfish-print-logs:latest camptocamp/mapfish-print-logs:${tag}
           fi
-          docker push camptocamp/mapfish-print-logs:${{matrix.branch}}
+          docker push camptocamp/mapfish-print-logs:${tag}
 
           rm -rf ~/.docker*  # docker logout
