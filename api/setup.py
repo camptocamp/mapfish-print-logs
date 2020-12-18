@@ -6,7 +6,7 @@ INSTALL_REQUIRES = open(os.path.join(HERE, 'requirements.txt')).read().splitline
 
 setup(
     name='mapfish_print_logs',
-    version='0.0',
+    version='1.0',
     description='Micro service to expose logs from mapfish_print',
     classifiers=[
         "Programming Language :: Python",
@@ -24,8 +24,5 @@ setup(
     install_requires=INSTALL_REQUIRES,
     tests_require=INSTALL_REQUIRES,
     test_suite="mapfish_print_logs",
-    entry_points="""\
-    [paste.app_factory]
-    main = mapfish_print_logs:main
-    """
+    entry_points={"paste.app_factory": ["main = mapfish_print_logs:main"]},
 )
