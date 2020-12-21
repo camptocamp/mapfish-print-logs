@@ -1,19 +1,20 @@
-from c2cwsgiutils import db
 import os
+
 import sqlalchemy as sa
 import sqlalchemy.ext.declarative
+from c2cwsgiutils import db
 from sqlalchemy.dialects.postgresql import JSONB
 
 from . import utils
 
 DBSession = None
 Base = sqlalchemy.ext.declarative.declarative_base()
-SCHEMA = os.environ.get('DB_SCHEMA', 'public')
+SCHEMA = os.environ.get("DB_SCHEMA", "public")
 
 
 def init(config):
     global DBSession
-    DBSession = db.setup_session(config, 'sqlalchemy')[0]
+    DBSession = db.setup_session(config, "sqlalchemy")[0]
 
 
 class PrintAccounting(Base):
@@ -45,26 +46,28 @@ class PrintAccounting(Base):
             referer=self.referer,
             stats=self.stats,
             status=self.status,
-            total_time_ms=self.total_time_ms
+            total_time_ms=self.total_time_ms,
         )
 
     def pages_stats(self):
-        if self.stats and 'pages' in self.stats:
-            stats = [utils.page_size2fullname(page) for page in self.stats['pages']]
+        if self.stats and "pages" in self.stats:
+            stats = [utils.page_size2fullname(page) for page in self.stats["pages"]]
             summary = {}
             for stat in stats:
                 summary.setdefault(stat, 0)
                 summary[stat] += 1
-            return '\n'.join(f'{n}: {v}' for n, v in summary.items())
+            return "\n".join(f"{n}: {v}" for n, v in summary.items())
         else:
             return ""
 
     def maps_stats(self):
-        if self.stats and 'maps' in self.stats:
+        if self.stats and "maps" in self.stats:
             # [{'dpi': 72.0, 'size': {'width': 780, 'height': 330}, 'nbLayers': 1}]
             maps = []
-            for map in self.stats['maps']:
-                maps.append(f'{map["size"]["width"]}x{map["size"]["height"]} D{int(map["dpi"])} L{map["nbLayers"]}')
-            return '\n'.join(maps)
+            for map in self.stats["maps"]:
+                maps.append(
+                    f'{map["size"]["width"]}x{map["size"]["height"]} D{int(map["dpi"])} L{map["nbLayers"]}'
+                )
+            return "\n".join(maps)
         else:
             return ""

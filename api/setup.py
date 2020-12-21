@@ -1,23 +1,24 @@
 import os
-from setuptools import setup, find_packages
+
+from setuptools import find_packages, setup
 
 HERE = os.path.abspath(os.path.dirname(__file__))
-INSTALL_REQUIRES = open(os.path.join(HERE, 'requirements.txt')).read().splitlines()
+INSTALL_REQUIRES = open(os.path.join(HERE, "requirements.txt")).read().splitlines()
 
 setup(
-    name='mapfish_print_logs',
-    version='1.0',
-    description='Micro service to expose logs from mapfish_print',
+    name="mapfish_print_logs",
+    version="1.0",
+    description="Micro service to expose logs from mapfish_print",
     classifiers=[
         "Programming Language :: Python",
         "Framework :: Pyramid",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
     ],
-    author='',
-    author_email='info@camptocamp.com',
-    url='',
-    keywords='web pyramid mapfish',
+    author="",
+    author_email="info@camptocamp.com",
+    url="",
+    keywords="web pyramid mapfish",
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,

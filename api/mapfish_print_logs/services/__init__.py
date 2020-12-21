@@ -1,15 +1,16 @@
 import os
-from pyramid.httpexceptions import HTTPNotFound, HTTPForbidden, HTTPBadRequest
+
 import requests
+from pyramid.httpexceptions import HTTPBadRequest, HTTPForbidden, HTTPNotFound
 
 from ..config import SCM_URL
 from ..utils import read_shared_config
 
-SOURCES_KEY = os.environ['SOURCES_KEY']
+SOURCES_KEY = os.environ["SOURCES_KEY"]
 
 
 def auth_source(request):
-    source = request.matchdict.get('source')
+    source = request.matchdict.get("source")
     if source is None:
         raise HTTPBadRequest("Missing the source")
     key = request.authenticated_userid
@@ -19,13 +20,13 @@ def auth_source(request):
 
 
 def check_key(config, source, secret):
-    if source == 'all':
+    if source == "all":
         if secret != SOURCES_KEY:
             raise HTTPForbidden("Invalid secret")
         return
-    if source not in config['sources']:
+    if source not in config["sources"]:
         raise HTTPNotFound("No such source")
-    if secret not in (SOURCES_KEY, config['sources'][source]['key']):
+    if secret not in (SOURCES_KEY, config["sources"][source]["key"]):
         raise HTTPForbidden("Invalid secret")
 
 
@@ -33,7 +34,7 @@ def get_config_info(source, key):
     if SCM_URL is None:
         return None
     try:
-        r = requests.get(f'{SCM_URL}1/status/{source}/{key}')
+        r = requests.get(f"{SCM_URL}1/status/{source}/{key}")
     except Exception as e:
         return dict(status=500, message=str(e))
     if r.status_code != 200:

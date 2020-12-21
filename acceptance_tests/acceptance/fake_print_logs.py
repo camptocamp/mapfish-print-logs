@@ -1,56 +1,48 @@
 import datetime
 import os
-import requests
 import sys
+
+import requests
 
 # flake8: noqa: E501
 
 
-ES_URL = os.environ.get('ES_URL', 'http://localhost:9200/elasticsearch')
-INDEX = os.environ.get('ES_INDEX', 'print-1')
+ES_URL = os.environ.get("ES_URL", "http://localhost:9200/elasticsearch")
+INDEX = os.environ.get("ES_INDEX", "print-1")
 OFFSET = 0
-LEVEL_VALUE = {
-    'DEBUG': 10000,
-    'INFO': 20000,
-    'WARN': 30000
-}
+LEVEL_VALUE = {"DEBUG": 10000, "INFO": 20000, "WARN": 30000}
 
 
 def _log_message(es_url, ref, level, message, **kwargs):
     global OFFSET
     OFFSET += 1
     data = {
-        'json': {
-            'job_id': ref,
-            'level_value': LEVEL_VALUE[level],
+        "json": {
+            "job_id": ref,
+            "level_value": LEVEL_VALUE[level],
         },
-        'message': message,
-        '@timestamp': datetime.datetime.now().isoformat(),
-        'kubernetes': {
-            'labels': {
-                'release': 'prod'
-            }
-        },
-        'log': {
-            'level': level,
-            'offset': OFFSET
-        }
+        "message": message,
+        "@timestamp": datetime.datetime.now().isoformat(),
+        "kubernetes": {"labels": {"release": "prod"}},
+        "log": {"level": level, "offset": OFFSET},
     }
-    data['json'].update(kwargs)
-    headers = {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Accept": "application/json"
-    }
-    r = requests.post(f"{es_url}/{INDEX}?refresh=wait_for", json=data,
-                      headers=headers)
+    data["json"].update(kwargs)
+    headers = {"Content-Type": "application/json;charset=UTF-8", "Accept": "application/json"}
+    r = requests.post(f"{es_url}/{INDEX}?refresh=wait_for", json=data, headers=headers)
     r.raise_for_status()
 
 
 def gen_fake_print_logs(ref, es_url=ES_URL):
-    _log_message(es_url, ref, 'INFO', f'Starting job {ref}', logger_name="org.mapfish.print")
-    _log_message(es_url, ref, 'DEBUG', f'Some <b>debug</b>', logger_name="org.mapfish.print.map")
-    _log_message(es_url, ref, 'WARN', f'Some warning with stacktrace', logger_name="unknown.jul.logger",
-                 thread_name="Post result to registry", stack_trace="""\
+    _log_message(es_url, ref, "INFO", f"Starting job {ref}", logger_name="org.mapfish.print")
+    _log_message(es_url, ref, "DEBUG", f"Some <b>debug</b>", logger_name="org.mapfish.print.map")
+    _log_message(
+        es_url,
+        ref,
+        "WARN",
+        f"Some warning with stacktrace",
+        logger_name="unknown.jul.logger",
+        thread_name="Post result to registry",
+        stack_trace="""\
 java.net.SocketTimeoutException: connect timed out
     at java.net.PlainSocketImpl.socketConnect(Native Method)
     at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
@@ -93,13 +85,20 @@ java.net.SocketTimeoutException: connect timed out
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
     at java.lang.Thread.run(Thread.java:748)
-""")
-    _log_message(es_url, ref, 'INFO', f'Finished job {ref} with some very long message', logger_name="org.mapfish.print")
+""",
+    )
+    _log_message(
+        es_url,
+        ref,
+        "INFO",
+        f"Finished job {ref} with some very long message",
+        logger_name="org.mapfish.print",
+    )
 
 
 def main():
     gen_fake_print_logs(sys.argv[1])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
