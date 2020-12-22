@@ -2,8 +2,8 @@ import copy
 
 from c2cwsgiutils import services
 
-from .. import utils
-from . import SOURCES_KEY
+from mapfish_print_logs import utils
+from mapfish_print_logs.services import SOURCES_KEY
 
 login_service = services.create("index", "/logs/")
 

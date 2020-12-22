@@ -2,29 +2,20 @@ import logging
 
 import pytest
 from c2cwsgiutils.acceptance import utils
-from c2cwsgiutils.acceptance.composition import Composition
 from c2cwsgiutils.acceptance.connection import Connection
 from c2cwsgiutils.acceptance.print import PrintConnection
 
 from .fake_print_logs import gen_fake_print_logs
 
-API_URL = "http://" + utils.DOCKER_GATEWAY + ":8480/"
-PRINT_URL = "http://" + utils.DOCKER_GATEWAY + ":8680/print"
-ES_URL = "http://" + utils.DOCKER_GATEWAY + ":9200/elasticsearch"
-PROJECT_NAME = "logs"
+API_URL = "http://api:8080/"
+PRINT_URL = "http://print:8080/print"
+ES_URL = "http://elasticsearch:9200/elasticsearch"
 LOG = logging.getLogger(__name__)
 
 
 @pytest.fixture(scope="session")
-def composition(request):
-    result = Composition(
-        request,
-        PROJECT_NAME,
-        "/acceptance_tests/docker-compose.yaml",
-        coverage_paths=[PROJECT_NAME + "_api_1:/tmp/coverage"],
-    )
-    utils.wait_url(API_URL + "logs/c2c/health_check")
-    return result
+def wait():
+    utils.wait_url(API_URL + "logs/c2c/health_check?secret=toto")
 
 
 class MyConnection(Connection):
@@ -43,12 +34,14 @@ class MyConnection(Connection):
 
 
 @pytest.fixture
-def api_connection(composition):
+def api_connection(wait):
+    del wait
     return MyConnection(base_url=API_URL, origin="http://example.com/")
 
 
 @pytest.fixture(scope="session")
-def print_connection(composition):
+def print_connection(wait):
+    del wait
     connection = PrintLogConnection(PRINT_URL, PRINT_URL)
     connection.wait_ready()
     return connection

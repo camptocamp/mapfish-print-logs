@@ -1,7 +1,7 @@
 import sqlalchemy as sa
 
-from . import utils
-from .models import DBSession, PrintAccounting
+from mapfish_print_logs import utils
+from mapfish_print_logs.models import DBSession, PrintAccounting
 
 PDF2M = 1 / 72 * 2.54 / 100
 A4_SURFACE = 595 * 842

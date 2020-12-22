@@ -1,4 +1,5 @@
 version: '2'
+
 services:
   api:
     image: camptocamp/mapfish-print-logs:latest
@@ -14,19 +15,23 @@ services:
       C2CWSGI_LOG_LEVEL: DEBUG
       SQL_LOG_LEVEL: INFO
       OTHER_LOG_LEVEL: INFO
-      SCM_URL: http://scm:8080/scm
-      SCM_URL_EXTERNAL: http://localhost:8580/scm
-      GUNICORN_PARAMS: '-b :8080 --threads 10 --reload'  # only one process in order to get consistent stats
+      GUNICORN_LOG_LEVEL: INFO
+      ALEMBIC_LOG_LEVEL: INFO
+
+      # SCM_URL: http://scm:8080/scm
+      # SCM_URL_EXTERNAL: http://scm:8080/scm
+      GUNICORN_PARAMS: '--bind=:8080 --threads=10 --reload' # only one process in order to get consistent stats
       ES_URL: http://elasticsearch:9200/elasticsearch
-      ES_INDEXES: "print-1"
+      ES_INDEXES: 'print-1'
       LOG_LIMIT: 3
       SHARED_CONFIG_MASTER: /master_config/master/shared_config_manager.yaml
     volumes:
-    - ./api/mapfish_print_logs:/app/mapfish_print_logs:ro
+      - ./api/mapfish_print_logs:/app/mapfish_print_logs:ro
+      # - ../c2cwsgiutils/c2cwsgiutils:/usr/local/lib/python3.8/dist-packages/c2cwsgiutils:ro
     volumes_from:
       - configs:ro
     ports:
-    - 8480:8080
+      - 8480:8080
 
   configs:
     image: camptocamp/mapfish-print-logs-configs:latest
@@ -40,7 +45,7 @@ services:
     # Uncomment following line to have database show all incoming SQL statements
     # command: postgres -c log_statement=all
     ports:
-    - 15432:5432
+      - 15432:5432
 
   print:
     image: camptocamp/mapfish_print:3.22
@@ -51,30 +56,37 @@ services:
         -Dmapfish.maxContentLength=4194304
       PGOPTIONS: '-c statement_timeout=30000'
     volumes_from:
-    - configs:ro
-    links:
-    - db
-    ports:
-    - 8680:8080
-
-  scm:
-    image: camptocamp/shared_config_manager:latest
-    environment:
-      LOG_LEVEL: DEBUG
-      MASTER_CONFIG: &master_config |
-        type: rsync
-        id: master
-        key: changeme
-        source: /master_config/master
-    ports:
-      - 8580:8080
-    volumes_from:
       - configs:ro
+    links:
+      - db
+    ports:
+      - 8680:8080
+
+  # scm:
+  #   image: camptocamp/shared_config_manager:latest
+  #   environment:
+  #     LOG_LEVEL: DEBUG
+  #     MASTER_CONFIG: &master_config |
+  #       type: rsync
+  #       id: master
+  #       key: changeme
+  #       source: /master_config/master
+  #   ports:
+  #     - 8580:8080
+  #   volumes_from:
+  #     - configs:ro
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.3
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.3-amd64
     environment:
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      ES_JAVA_OPTS: '-Xms512m -Xmx512m'
       discovery.type: single-node
     ports:
-    - 9200:9200
+      - 9200:9200
+
+  run:
+    image: camptocamp/mapfish-print-logs-acceptance:latest
+    volumes:
+      - ./reports:/reports
+      - ./acceptance_tests/acceptance:/acceptance_tests/acceptance:ro
+      # - ../c2cwsgiutils/c2cwsgiutils:/usr/local/lib/python3.8/dist-packages/c2cwsgiutils:ro

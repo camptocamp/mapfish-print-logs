@@ -2,10 +2,11 @@ from typing import Optional
 
 import yaml
 
-from .config import SHARED_CONFIG_MASTER
+from mapfish_print_logs.config import SHARED_CONFIG_MASTER
 
 PAGE_SIZE2NAME = {
-    # taken from https://github.com/itext/itextpdf/blob/develop/itext/src/main/java/com/itextpdf/text/PageSize.java
+    # taken from:
+    # https://github.com/itext/itextpdf/blob/develop/itext/src/main/java/com/itextpdf/text/PageSize.java
     "420x595": "A5",
     "595x842": "A4",
     "842x1191": "A3",
@@ -64,10 +65,12 @@ def app_id2source(app_id: str, config: Optional[dict] = None):
     app_id = app_id.split(":")[0]
     if config is None:
         config = read_shared_config()
+
     if app_id in config["sources"]:
         return app_id
-    else:
-        for source, source_config in config["sources"].items():
-            if source_config.get("app_id") == app_id:
-                return source
+
+    for source, source_config in config["sources"].items():
+        if source_config.get("app_id") == app_id:
+            return source
+
     return app_id

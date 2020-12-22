@@ -1,10 +1,10 @@
 from c2cwsgiutils import services
 from pyramid.httpexceptions import HTTPNotFound
 
-from .. import elastic_search
-from ..config import LOG_LIMIT, MAX_LOGS
-from ..models import DBSession, PrintAccounting
-from ..utils import app_id2source
+from mapfish_print_logs import elastic_search
+from mapfish_print_logs.config import LOG_LIMIT, MAX_LOGS
+from mapfish_print_logs.models import DBSession, PrintAccounting
+from mapfish_print_logs.utils import app_id2source
 
 ref_service = services.create("ref", "/logs/ref")
 

@@ -5,7 +5,7 @@ import sqlalchemy.ext.declarative
 from c2cwsgiutils import db
 from sqlalchemy.dialects.postgresql import JSONB
 
-from . import utils
+from mapfish_print_logs import utils
 
 DBSession = None
 Base = sqlalchemy.ext.declarative.declarative_base()
@@ -57,17 +57,15 @@ class PrintAccounting(Base):
                 summary.setdefault(stat, 0)
                 summary[stat] += 1
             return "\n".join(f"{n}: {v}" for n, v in summary.items())
-        else:
-            return ""
+        return ""
 
     def maps_stats(self):
         if self.stats and "maps" in self.stats:
             # [{'dpi': 72.0, 'size': {'width': 780, 'height': 330}, 'nbLayers': 1}]
             maps = []
-            for map in self.stats["maps"]:
+            for map_ in self.stats["maps"]:
                 maps.append(
-                    f'{map["size"]["width"]}x{map["size"]["height"]} D{int(map["dpi"])} L{map["nbLayers"]}'
+                    f'{map_["size"]["width"]}x{map_["size"]["height"]} D{int(map_["dpi"])} L{map_["nbLayers"]}'
                 )
             return "\n".join(maps)
-        else:
-            return ""
+        return ""

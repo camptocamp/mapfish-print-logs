@@ -1,7 +1,7 @@
 import requests
 from pyramid.httpexceptions import HTTPInternalServerError
 
-from .config import ES_AUTH, ES_FILTERS, ES_INDEXES, ES_URL
+from mapfish_print_logs.config import ES_AUTH, ES_FILTERS, ES_INDEXES, ES_URL
 
 SEARCH_HEADERS = {"Content-Type": "application/json;charset=UTF-8", "Accept": "application/json"}
 if ES_AUTH is not None:
@@ -39,6 +39,6 @@ def get_logs(ref, min_level, pos, limit, filter_loggers):
     if r.status_code != 200:
         raise HTTPInternalServerError(r.text)
     json = r.json()
-    total = json["hits"]["total"]
+    total = json["hits"]["total"]["value"]
     hits = json["hits"]["hits"]
     return [hit["_source"] for hit in hits], total

@@ -15,7 +15,7 @@ setup(
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
     ],
-    author="",
+    author="Camptocamp",
     author_email="info@camptocamp.com",
     url="",
     keywords="web pyramid mapfish",

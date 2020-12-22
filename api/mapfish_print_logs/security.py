@@ -6,10 +6,9 @@ from pyramid.httpexceptions import HTTPFound
 class MyAuthenticationPolicy(AuthTktAuthenticationPolicy):
     def authenticated_userid(self, request):
         key = request.key
-        if key is not None:
-            return key
-        else:
+        if key is None:
             raise HTTPFound(location="/logs/login?back=" + request.current_route_path())
+        return key
 
 
 def get_key(request):

@@ -3,8 +3,8 @@ import os
 import requests
 from pyramid.httpexceptions import HTTPBadRequest, HTTPForbidden, HTTPNotFound
 
-from ..config import SCM_URL
-from ..utils import read_shared_config
+from mapfish_print_logs.config import SCM_URL
+from mapfish_print_logs.utils import read_shared_config
 
 SOURCES_KEY = os.environ["SOURCES_KEY"]
 

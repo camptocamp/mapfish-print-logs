@@ -2,8 +2,8 @@ from c2cwsgiutils import services
 from pyramid.renderers import render_to_response
 from pyramid.security import forget, remember
 
-from .. import utils
-from . import SOURCES_KEY
+from mapfish_print_logs import utils
+from mapfish_print_logs.services import SOURCES_KEY
 
 login_service = services.create("login", "/logs/login")
 logout_service = services.create("logout", "/logs/logout")
@@ -23,7 +23,7 @@ def do_login(request):
 
     if not key_ok:
         config = utils.read_shared_config()
-        for name, config in config["sources"].items():
+        for config in config["sources"].values():
             if config["key"] == key:
                 key_ok = True
                 break
@@ -34,10 +34,9 @@ def do_login(request):
         response.status_code = 302
         response.headers["Location"] = back if back else "/logs/"
         return response
-    else:
-        return render_to_response(
-            "../templates/login.html.mako", dict(back=back, message="Invalid key"), request=request
-        )
+    return render_to_response(
+        "../templates/login.html.mako", dict(back=back, message="Invalid key"), request=request
+    )
 
 
 @logout_service.get()

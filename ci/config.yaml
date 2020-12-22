@@ -7,7 +7,7 @@ checks:
     codeql.yaml: False
   black:
     ignore_patterns_re:
-      - api/mapfish_print_logs/templates/source\.html\.mako:
+      - api/mapfish_print_logs/templates/source\.html\.mako
   codespell:
     ignore_re:
       - configs/print-apps/simple/countries\.geojson

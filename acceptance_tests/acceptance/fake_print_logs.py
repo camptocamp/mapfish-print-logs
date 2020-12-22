@@ -7,7 +7,7 @@ import requests
 # flake8: noqa: E501
 
 
-ES_URL = os.environ.get("ES_URL", "http://localhost:9200/elasticsearch")
+ES_URL = os.environ.get("ES_URL", "http://elasticsearch:9200/elasticsearch")
 INDEX = os.environ.get("ES_INDEX", "print-1")
 OFFSET = 0
 LEVEL_VALUE = {"DEBUG": 10000, "INFO": 20000, "WARN": 30000}

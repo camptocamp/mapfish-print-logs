@@ -1,10 +1,10 @@
 import sqlalchemy as sa
 from c2cwsgiutils import services
 
-from .. import utils
-from ..config import JOB_LIMIT, SCM_URL_EXTERNAL
-from ..models import DBSession, PrintAccounting
-from . import auth_source, get_config_info
+from mapfish_print_logs import utils
+from mapfish_print_logs.config import JOB_LIMIT, SCM_URL_EXTERNAL
+from mapfish_print_logs.models import DBSession, PrintAccounting
+from mapfish_print_logs.services import auth_source, get_config_info
 
 source_service = services.create("source_auth", "/logs/source/{source}")
 
@@ -12,6 +12,7 @@ source_service = services.create("source_auth", "/logs/source/{source}")
 @source_service.get(renderer="../templates/source.html.mako")
 def get_source(request):
     config, key, source = auth_source(request)
+    del key
     pos = int(request.params.get("pos", "0"))
     only_errors = request.params.get("only_errors", "0") == "1"
     query = DBSession.query(PrintAccounting)
@@ -35,7 +36,7 @@ def get_source(request):
 
     return {
         "source": source,
-        "jobs": [log for log in logs[:JOB_LIMIT]],
+        "jobs": logs[:JOB_LIMIT],
         "scm_refresh_url": scm_refresh_url,
         "config": get_config_info(source, source_key) if source != "all" else None,
         "next_pos": None if len(logs) <= JOB_LIMIT else pos + JOB_LIMIT,

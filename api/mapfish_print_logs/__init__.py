@@ -8,14 +8,16 @@ from c2cwsgiutils.health_check import HealthCheck
 from pyramid.config import Configurator
 from pyramid.httpexceptions import HTTPMovedPermanently
 
-from . import models, security
-from .config import SCM_URL
-from .elastic_search import SEARCH_HEADERS, SEARCH_URL
+from mapfish_print_logs import models, security
+from mapfish_print_logs.config import SCM_URL
+from mapfish_print_logs.elastic_search import SEARCH_HEADERS, SEARCH_URL
 
 LOG = logging.getLogger(__name__)
 
 
 def _redirect_home(request):
+    del request
+
     return HTTPMovedPermanently(location="/logs/")
 
 
@@ -28,7 +30,9 @@ def main(_, **settings):
     models.init(config)
 
     health_check = HealthCheck(config)
-    health_check.add_db_session_check(models.DBSession, query_cb=lambda session: session.execute("select 1"))
+    health_check.add_db_session_check(
+        models.DBSession, query_cb=lambda session: session.execute("SELECT 1").fetchall()[0][0]
+    )
     if SCM_URL is not None:
         health_check.add_url_check(SCM_URL + "c2c/health_check", name="scm", level=3)
     health_check.add_url_check(

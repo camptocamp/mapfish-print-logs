@@ -1,31 +1,83 @@
-FROM camptocamp/c2cwsgiutils:3
-MAINTAINER Camptocamp "info@camptocamp.com"
+FROM ubuntu:20.04 AS base
+LABEL maintainer "info@camptocamp.org"
+
+RUN apt update && \
+  DEBIAN_FRONTEND=noninteractive apt install --assume-yes --no-install-recommends \
+  python3-pip python3-dev gcc libpq-dev && \
+  apt clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache/*
 
 # Doing things in two steps to avoid needing to re-install everything when we do a rebuild
 # after changing code
 
 # Step #1 copy only the stuff needed to install the dependencies and run the script
 WORKDIR /app
-COPY *.txt /app/
-RUN pip install --disable-pip-version-check --no-cache-dir -r requirements.txt
+COPY requirements.txt /app/
+RUN python3 -m pip install --disable-pip-version-check --no-cache-dir --requirement=requirements.txt
+COPY Pipfile Pipfile.lock /app/
+RUN pipenv install --system --clear
+RUN apt remove --assume-yes --auto-remove python3-dev gcc
 
-EXPOSE 8080
+# From c2cwsgiutils
+
+CMD ["c2cwsgiutils-run"]
+
+ENV TERM=linux \
+  LANG=C.UTF-8 \
+  LOG_TYPE=console \
+  LOG_HOST=localhost \
+  LOG_PORT=514 \
+  SQL_LOG_LEVEL=WARN \
+  GUNICORN_LOG_LEVEL=WARN \
+  OTHER_LOG_LEVEL=WARN \
+  DEVELOPMENT=0 \
+  PKG_CONFIG_ALLOW_SYSTEM_LIBS=OHYESPLEASE
+
+ENV C2C_BASE_PATH=/logs/c2c \
+  C2C_SECRET= \
+  C2CWSGIUTILS_CONFIG=/app/production.ini \
+  C2C_REDIS_URL= \
+  C2C_REDIS_SENTINELS= \
+  C2C_REDIS_TIMEOUT=3 \
+  C2C_REDIS_SERVICENAME=mymaster \
+  C2C_REDIS_DB=0 \
+  C2C_BROADCAST_PREFIX=broadcast_api_ \
+  C2C_REQUEST_ID_HEADER= \
+  C2C_REQUESTS_DEFAULT_TIMEOUT= \
+  C2C_SQL_PROFILER_ENABLED=1 \
+  C2C_PROFILER_PATH= \
+  C2C_PROFILER_MODULES= \
+  C2C_DEBUG_VIEW_ENABLED=1 \
+  C2C_ENABLE_EXCEPTION_HANDLING=0 \
+  C2C_LOG_VIEW_ENABLED=1 \
+  C2C_REQUESTS_DEFAULT_TIMEOUT=10
+# End from c2cwsgiutils
 
 ENV MAPFISH_LOG_LEVEL=INFO \
     C2CWSGI_LOG_LEVEL=INFO \
     ALEMBIC_LOG_LEVEL=INFO \
     SQLALCHEMY_POOL_SIZE=5 \
     SQLALCHEMY_MAX_OVERFLOW=25 \
-    GUNICORN_PARAMS="-b :8080 --worker-class gthread --threads 10 --workers 1"
+    GUNICORN_PARAMS="--bind=:8080 --worker-class=gthread --threads=10 --workers=2"
 
 # Step #2 copy the rest of the files (watch for the .dockerignore)
 COPY . /app
 
 ARG GIT_HASH
-RUN pip install --no-cache-dir -e . && \
-    flake8 /app/mapfish_print_logs /app/*.py && \
-    c2cwsgiutils_genversion.py $GIT_HASH && \
-    python -m compileall -q . /usr/local/lib/python3.7
+RUN python3 -m pip install --no-cache-dir --no-deps --editable=.
 
+RUN c2cwsgiutils-genversion $GIT_HASH && \
+    python3 -m compileall -q . /usr/local/lib/python3.* \
+    -x /usr/local/lib/python3.*/dist-packages/pipenv/
+
+
+FROM base as checker
+
+RUN pipenv install --dev --system --clear
+RUN prospector
+
+FROM base as runner
+
+EXPOSE 8080
 # www-data
 USER 33

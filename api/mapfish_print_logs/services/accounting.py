@@ -3,8 +3,8 @@ import csv
 from c2cwsgiutils import services
 from pyramid.httpexceptions import HTTPForbidden
 
-from .. import accounting, utils
-from . import SOURCES_KEY, auth_source, read_shared_config
+from mapfish_print_logs import accounting, utils
+from mapfish_print_logs.services import SOURCES_KEY, auth_source, read_shared_config
 
 accounting_service = services.create("accounting", "/logs/source/{source}/accounting")
 accounting_csv_service = services.create("accounting_csv", "/logs/source/{source}/accounting.csv")
@@ -14,6 +14,7 @@ global_accounting_service = services.create("accounting_global", "/logs/accounti
 @accounting_service.get(renderer="../templates/accounting.html.mako")
 def get_accounting(request):
     config, key, source = auth_source(request)
+    del key
     monthly = accounting.monthly(config, utils.get_app_id(config, source))
     return {"source": source, "accounting": monthly, "detail_cols": accounting.get_details_cols(monthly)}
 
@@ -21,6 +22,7 @@ def get_accounting(request):
 @accounting_csv_service.get()
 def get_accounting_csv(request):
     config, key, source = auth_source(request)
+    del key
     monthly = accounting.monthly(config, utils.get_app_id(config, source))
     details_cols = accounting.get_details_cols(monthly)
     request.response.content_type = "text/csv"
