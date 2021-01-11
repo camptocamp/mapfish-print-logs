@@ -1,0 +1,22 @@
+checks:
+  required_workflows:
+    clean.yaml: False
+    audit.yaml: False
+    dependabot-auto-merge.yaml: False
+    backport.yaml: False
+    codeql.yaml: False
+  black:
+    ignore_patterns_re:
+      - api/mapfish_print_logs/templates/source\.html\.mako
+  codespell:
+    ignore_re:
+      - configs/print-apps/simple/countries\.geojson
+
+version:
+  branch_to_version_re:
+    - from: master
+      to: latest
+
+publish:
+  pypi:
+    packages: []

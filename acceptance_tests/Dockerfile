@@ -1,20 +1,18 @@
-FROM camptocamp/c2cwsgiutils:3
+FROM ubuntu:20.04
 LABEL maintainer "info@camptocamp.org"
-
-ARG DOCKER_VERSION=1.12.0
-ARG DOCKER_COMPOSE_VERSION=1.10.0
 
 WORKDIR /acceptance_tests
 
-ENV DOCKER_RUN=1 \
-    PYTHONPATH=/acceptance_tests
+ENV PYTHONPATH=/acceptance_tests
 
-# Install all Debian dependencies except nodejs which requires https transport
-RUN DOCKER_VERSION=${DOCKER_VERSION} \
-    DOCKER_COMPOSE_VERSION=${DOCKER_COMPOSE_VERSION} \
-    /opt/c2cwsgiutils/install_docker.sh
+RUN apt update && \
+  DEBIAN_FRONTEND=noninteractive apt install --assume-yes --no-install-recommends \
+  python3-pip python3-dev libpq-dev gcc && \
+  apt clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache/*
 
 COPY . ./
+RUN python3 -m pip install --disable-pip-version-check --no-cache-dir --requirement=requirements.txt
+RUN pipenv install --system --clear
 
-RUN flake8 acceptance
-CMD py.test -vv --color=yes --junitxml /reports/acceptance.xml acceptance
+CMD sleep infinity
