@@ -1,9 +1,7 @@
 checks:
-  required_workflows:
-    clean.yaml: False
-    audit.yaml: False
-    backport.yaml: False
-    codeql.yaml: False
+  versions:
+    extra_versions:
+      - latest
   black:
     ignore_patterns_re:
       - api/mapfish_print_logs/templates/source\.html\.mako
@@ -13,6 +11,8 @@ checks:
 
 version:
   branch_to_version_re:
+    - from: ([0-9]+.[0-9]+)
+      to: \1
     - from: master
       to: latest
 
