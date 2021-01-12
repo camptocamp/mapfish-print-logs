@@ -1,15 +1,15 @@
 ---
-name: Rebuild
+name: Audit
 
 on:
   schedule:
     - cron: '30 2 * * *'
 
 jobs:
-  rebuild:
+  audit:
     runs-on: ubuntu-20.04
-    name: Rebuild
-    timeout-minutes: 15
+    name: Audit
+    timeout-minutes: 10
 
     strategy:
       fail-fast: false
@@ -27,27 +27,15 @@ jobs:
         with:
           ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
           github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
-          patterns: docker
+
+      - uses: asdf-vm/actions/install@v1
+        with:
+          tool_versions: python 3.8.0
 
       - run: echo "${HOME}/.local/bin" >> ${GITHUB_PATH}
       - run: python3 -m pip install --user --requirement=ci/requirements.txt
 
-      - name: Checks
-        run: c2cciutils-checks
-
-      - name: Pull
-        run: make pull
-
-      - name: Build
-        run: make build
-
-      - run: make run
-      - name: Acceptance
-        run: make acceptance
-      - run: docker-compose exec -T run junit2html /reports/acceptance.xml /reports/acceptance.html
-        if: always()
-      - run: docker-compose logs
-        if: failure()
-
-      - name: Publish
-        run: c2cciutils-publish --type=rebuild --branch=${{ matrix.branch }}
+      - name: Audit
+        run: c2cciutils-audit --branch=${{ matrix.branch }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
