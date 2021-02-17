@@ -39,6 +39,6 @@ def get_logs(ref, min_level, pos, limit, filter_loggers):
     if r.status_code != 200:
         raise HTTPInternalServerError(r.text)
     json = r.json()
-    total = json["hits"]["total"]
+    total = json["hits"]["total"]["value"]
     hits = json["hits"]["hits"]
-    return [hit["_source"] for hit in hits], total if isinstance(total, int) else total["value"]
+    return [hit["_source"] for hit in hits], total
