@@ -15,7 +15,7 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN python3 -m pip install --disable-pip-version-check --no-cache-dir --requirement=requirements.txt
 COPY Pipfile Pipfile.lock /app/
-RUN pipenv install --system --clear
+RUN pipenv sync --system --clear
 RUN apt remove --assume-yes --auto-remove python3-dev gcc
 
 # From c2cwsgiutils
@@ -73,7 +73,7 @@ RUN c2cwsgiutils-genversion $GIT_HASH && \
 
 FROM base as checker
 
-RUN pipenv install --dev --system --clear
+RUN pipenv sync --dev --system --clear
 RUN prospector
 
 FROM base as runner
