@@ -1,7 +1,5 @@
 checks:
-  versions:
-    extra_versions:
-      - latest
+  versions: False
   required_workflows:
     codeql.yaml: False
   black:
