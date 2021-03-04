@@ -13,6 +13,6 @@ RUN apt update && \
 
 COPY . ./
 RUN python3 -m pip install --disable-pip-version-check --no-cache-dir --requirement=requirements.txt
-RUN pipenv install --system --clear
+RUN pipenv sync --system --clear
 
 CMD sleep infinity
