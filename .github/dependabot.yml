@@ -7,7 +7,17 @@ updates:
       time: '02:00'
 
   - package-ecosystem: docker
-    directory: '/'
+    directory: '/configs'
+    schedule:
+      interval: daily
+      time: '02:00'
+  - package-ecosystem: docker
+    directory: '/api'
+    schedule:
+      interval: daily
+      time: '02:00'
+  - package-ecosystem: docker
+    directory: '/acceptance_tests'
     schedule:
       interval: daily
       time: '02:00'
