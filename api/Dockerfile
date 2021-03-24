@@ -3,7 +3,7 @@ LABEL maintainer "info@camptocamp.org"
 
 RUN apt update && \
   DEBIAN_FRONTEND=noninteractive apt install --assume-yes --no-install-recommends \
-  python3-pip python3-dev gcc libpq-dev && \
+  python3-pip python3-dev gcc libpq-dev postgresql-client && \
   apt clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache/*
 
