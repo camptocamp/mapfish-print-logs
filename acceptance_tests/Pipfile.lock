@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "659e739e283e03ce8247632ef201c4b8c90030faddd9497d0a7940a39db3991a"
+            "sha256": "e441be8ce28e33d7ca12cb03b491e5a8a835513ff2787dcb3222d08bc007577e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -159,14 +159,19 @@
             ],
             "version": "==1.1.1"
         },
+        "jinja2": {
+            "hashes": [
+                "sha256:03e47ad063331dd6a3f04a43eddca8a966a26ba0c5b7207a9a9e4e08f1b29419",
+                "sha256:a6d58433de0ae800347cab1fa3043cebbabe8baa9d29e668f1c768cb87a333c6"
+            ],
+            "version": "==2.11.3"
+        },
         "junit2html": {
             "hashes": [
-                "sha256:189f50d83330bcdb64ba21a70aa0b2ca3c977c51f7955200a433706983c25d32",
-                "sha256:3f8790a1ba031d6a61ab2b93c7cf1203ac89ceee94fd427aeeb7ce41e8f9e785",
-                "sha256:debe365dc8c85d8eb2e15ee297d38a3de08c7daac17f14a41970a610fdca268a"
+                "sha256:9cc731b2bdea19c605b265679f8f6321fcaadb42843420b8cfd9c88ef1f7d57c"
             ],
             "index": "pypi",
-            "version": "==26"
+            "version": "==30.0.6"
         },
         "lxml": {
             "hashes": [
