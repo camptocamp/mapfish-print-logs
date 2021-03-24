@@ -5,6 +5,16 @@ updates:
     schedule:
       interval: daily
       time: '02:00'
+  - package-ecosystem: pip
+    directory: '/api'
+    schedule:
+      interval: daily
+      time: '02:00'
+  - package-ecosystem: pip
+    directory: '/acceptance_tests'
+    schedule:
+      interval: daily
+      time: '02:00'
 
   - package-ecosystem: docker
     directory: '/configs'
