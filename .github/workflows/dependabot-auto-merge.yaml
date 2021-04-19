@@ -2,9 +2,6 @@
 name: Auto merge Dependabot updates
 
 on:
-  pull_request:
-    types:
-      - opened
   workflow_run:
     workflows:
       - Continuous integration
@@ -28,4 +25,3 @@ jobs:
         uses: ridedott/dependabot-auto-merge-action@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_LOGIN: dependabot[bot]
