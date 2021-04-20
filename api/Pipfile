@@ -7,7 +7,7 @@ name = "pypi"
 humanfriendly = "==9.1"
 pyramid-mako = "==1.1.0"
 c2cwsgiutils = {version = "==4.1.1", extras = ["broadcast", "standard"]}
-pyramid = "==1.10.5"
+pyramid = "==2.0"
 sqlalchemy = "==1.3.22"
 
 [dev-packages]
