@@ -8,6 +8,7 @@ checks:
   codespell:
     ignore_re:
       - configs/print-apps/simple/countries\.geojson
+  dependabot_config: False
 
 version:
   branch_to_version_re:
