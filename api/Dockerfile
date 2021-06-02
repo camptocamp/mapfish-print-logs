@@ -58,6 +58,7 @@ ENV MAPFISH_LOG_LEVEL=INFO \
     ALEMBIC_LOG_LEVEL=INFO \
     SQLALCHEMY_POOL_SIZE=5 \
     SQLALCHEMY_MAX_OVERFLOW=25 \
+    SQLALCHEMY_WARN_20=true \
     GUNICORN_PARAMS="--bind=:8080 --worker-class=gthread --threads=10 --workers=2"
 
 # Step #2 copy the rest of the files (watch for the .dockerignore)
