@@ -1,54 +1,55 @@
 body {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .card {
-    margin-top: 2em;
+  margin-top: 2em;
 }
 
 .level-INFO {
-    background-color: #b2ff99;
+  background-color: #b2ff99;
 }
 
 .level-WARN {
-    background-color: #ffb195;
+  background-color: #ffb195;
 }
 
-.level-ERROR, .level-SEVERE {
-    background-color: #ff1b22;
+.level-ERROR,
+.level-SEVERE {
+  background-color: #ff1b22;
 }
 
 .table {
-    table-layout: fixed;
+  table-layout: fixed;
 }
 
 .job-ERROR {
-    background-color: #ffb195;
+  background-color: #ffb195;
 }
 
 .job-CANCELLED {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 dd {
-    white-space: pre-wrap;
+  white-space: pre-wrap;
 }
 
-a[data-toggle="collapse"] {
-    color: white;
-    background-color: #007bff;
-    font-weight: bold;
-    border-radius: 100%;
-    display: inline-block;
-    width: 1rem;
-    text-align: center;
+a[data-toggle='collapse'] {
+  color: white;
+  background-color: #007bff;
+  font-weight: bold;
+  border-radius: 100%;
+  display: inline-block;
+  width: 1rem;
+  text-align: center;
 }
 
-a[data-toggle="collapse"][aria-expanded="true"]:before {
-    content: '-';
+a[data-toggle='collapse'][aria-expanded='true']:before {
+  content: '-';
 }
 
-a[data-toggle="collapse"][aria-expanded="false"]:before,
-a[data-toggle="collapse"]:not([aria-expanded]):before{
-    content: '+';
+a[data-toggle='collapse'][aria-expanded='false']:before,
+a[data-toggle='collapse']:not([aria-expanded]):before {
+  content: '+';
 }
