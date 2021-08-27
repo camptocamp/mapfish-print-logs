@@ -1,4 +1,6 @@
-import sqlalchemy as sa
+from typing import Any, Dict, List, cast
+
+import sqlalchemy as sa  # type: ignore
 
 from mapfish_print_logs import utils
 from mapfish_print_logs.models import DBSession, PrintAccounting
@@ -7,20 +9,21 @@ PDF2M = 1 / 72 * 2.54 / 100
 A4_SURFACE = 595 * 842
 
 
-def _add_dict(dico: dict, key: str, value=1):
+def _add_dict(dico: Dict[str, Any], key: str, value: int = 1) -> None:
     if key in dico:
         dico[key] += value
     else:
         dico[key] = value
 
 
-def monthly_all(config: dict):
+def monthly_all(config: Dict[str, Any]) -> List[Dict[str, Any]]:
+    assert DBSession is not None
     query = DBSession.query(
         PrintAccounting.app_id, PrintAccounting.completion_time, PrintAccounting.stats
     ).filter(PrintAccounting.status == "FINISHED")
     a4price = config["accounting"]["a4price"]
-    months = {}
-    details = {}
+    months: Dict[str, Dict[str, float]] = {}
+    details: Dict[str, Any] = {}
     for app_id, completion_time, stats in query:
         month = f"{completion_time.year}/{completion_time.month:02d}"
         source = utils.app_id2source(app_id, config)
@@ -33,24 +36,25 @@ def monthly_all(config: dict):
     )
 
 
-def monthly(config: dict, app_id: str):
+def monthly(config: Dict[str, Any], app_id: str) -> List[Dict[str, Any]]:
+    assert DBSession is not None
     query = DBSession.query(PrintAccounting.completion_time, PrintAccounting.stats).filter(
         PrintAccounting.status == "FINISHED",
         sa.or_(
             PrintAccounting.app_id == app_id, PrintAccounting.app_id.like(utils.quote_like(app_id) + ":%")
         ),
     )
-    a4price = config["accounting"]["a4price"]
-    months = {}
-    details = {}
+    a4price = cast(float, config["accounting"]["a4price"])
+    months: Dict[str, float] = {}
+    details: Dict[str, Dict[str, str]] = {}
     for completion_time, stats in query:
         month = f"{completion_time.year}/{completion_time.month:02d}"
-        amount = _compute_cost_cents(stats, a4price, details.setdefault(month, {}))
+        amount = _compute_cost_cents(stats, a4price, cast(Dict[str, Any], details.setdefault(month, {})))
         _add_dict(months, month, amount)
     return list({"month": k, "amount": v / 100.0, "details": details[k]} for k, v in sorted(months.items()))
 
 
-def _compute_cost_cents(stats, a4price, details):
+def _compute_cost_cents(stats: Dict[str, Any], a4price: float, details: Dict[str, Any]) -> int:
     if stats is None or "pages" not in stats:
         return 0
     pages = stats["pages"]
@@ -65,7 +69,7 @@ def _compute_cost_cents(stats, a4price, details):
     return cost
 
 
-def get_details_cols(months):
+def get_details_cols(months: List[Dict[str, Any]]) -> List[str]:
     cols = set()
     for month in months:
         cols |= month["details"].keys()

@@ -1,23 +1,27 @@
-from pyramid.authentication import AuthTktAuthenticationPolicy
-from pyramid.authorization import ACLAuthorizationPolicy
-from pyramid.httpexceptions import HTTPFound
+from typing import Optional, cast
+
+import pyramid.config  # type: ignore
+import pyramid.request  # type: ignore
+from pyramid.authentication import AuthTktAuthenticationPolicy  # type: ignore
+from pyramid.authorization import ACLAuthorizationPolicy  # type: ignore
+from pyramid.httpexceptions import HTTPFound  # type: ignore
 
 
-class MyAuthenticationPolicy(AuthTktAuthenticationPolicy):
-    def authenticated_userid(self, request):
+class MyAuthenticationPolicy(AuthTktAuthenticationPolicy):  # type: ignore
+    def authenticated_userid(self, request: pyramid.request.Request) -> str:
         key = request.key
         if key is None:
             raise HTTPFound(location="/logs/login?back=" + request.current_route_path())
-        return key
+        return cast(str, key)
 
 
-def get_key(request):
+def get_key(request: pyramid.request.Request) -> Optional[str]:
     if request.unauthenticated_userid is not None:
-        return request.unauthenticated_userid
-    return request.headers.get("X-API-Key")
+        return cast(str, request.unauthenticated_userid)
+    return cast(Optional[str], request.headers.get("X-API-Key"))
 
 
-def includeme(config):
+def includeme(config: pyramid.config.Configurator) -> None:
     settings = config.get_settings()
     authn_policy = MyAuthenticationPolicy(
         secret=settings["auth.secret"],

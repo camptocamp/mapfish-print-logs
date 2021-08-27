@@ -68,7 +68,7 @@ RUN pipenv sync --dev --system --clear
 
 COPY . /app
 
-RUN prospector
+RUN prospector --output=pylint
 
 
 FROM base as runner

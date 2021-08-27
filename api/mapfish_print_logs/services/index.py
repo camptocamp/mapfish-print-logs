@@ -1,5 +1,7 @@
 import copy
+from typing import Any, Dict
 
+import pyramid.request  # type: ignore
 from c2cwsgiutils import services
 
 from mapfish_print_logs import utils
@@ -8,8 +10,8 @@ from mapfish_print_logs.services import SOURCES_KEY
 login_service = services.create("index", "/logs/")
 
 
-@login_service.get(renderer="../templates/index.html.mako")
-def index(request):
+@login_service.get(renderer="../templates/index.html.mako")  # type: ignore
+def index(request: pyramid.request.Request) -> Dict[str, Any]:
     key = request.key
     is_auth = key is not None
     is_admin = is_auth and key == SOURCES_KEY
@@ -23,4 +25,7 @@ def index(request):
                 source["id"] = name
                 sources.append(source)
 
-    return {"is_auth": is_auth, "is_admin": is_admin, "sources": list(sorted(sources, key=lambda s: s["id"]))}
+    def get_id(source: Dict[str, int]) -> int:
+        return source["id"]
+
+    return {"is_auth": is_auth, "is_admin": is_admin, "sources": list(sorted(sources, key=get_id))}

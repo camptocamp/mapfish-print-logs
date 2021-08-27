@@ -1,5 +1,7 @@
+from typing import Any, Dict, List, Tuple
+
 import requests
-from pyramid.httpexceptions import HTTPInternalServerError
+from pyramid.httpexceptions import HTTPInternalServerError  # type: ignore
 
 from mapfish_print_logs.config import ES_AUTH, ES_FILTERS, ES_INDEXES, ES_URL
 
@@ -10,10 +12,10 @@ if ES_AUTH is not None:
 SEARCH_URL = f"{ES_URL}{ES_INDEXES}/_search"
 
 
-def get_logs(ref, min_level, pos, limit, filter_loggers):
+def get_logs(ref: str, min_level: int, pos: int, limit: int, filter_loggers: str) -> Tuple[List[str], int]:
     if ES_URL is None:
-        return []
-    query = {
+        return [], 0
+    query: Dict[str, Any] = {
         "size": limit,
         "from": pos,
         "query": {
@@ -35,10 +37,10 @@ def get_logs(ref, min_level, pos, limit, filter_loggers):
             {"match_phrase": {"json.logger_name": x}} for x in filter_loggers
         ]
 
-    r = requests.post(SEARCH_URL, json=query, headers=SEARCH_HEADERS)
-    if r.status_code != 200:
-        raise HTTPInternalServerError(r.text)
-    json = r.json()
+    response = requests.post(SEARCH_URL, json=query, headers=SEARCH_HEADERS)
+    if response.status_code != 200:
+        raise HTTPInternalServerError(response.text)
+    json = response.json()
     total = json["hits"]["total"]["value"]
     hits = json["hits"]["hits"]
     return [hit["_source"] for hit in hits], total
