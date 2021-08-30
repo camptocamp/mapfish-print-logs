@@ -10,7 +10,7 @@ from sqlalchemy.dialects.postgresql import JSONB  # type: ignore
 from mapfish_print_logs import utils
 
 DBSession = None  # pylint: disable=invalid-name
-Base = sqlalchemy.ext.declarative.declarative_base()  # pylint: disable=invalid-name
+Base = sqlalchemy.ext.declarative.declarative_base()
 SCHEMA = os.environ.get("DB_SCHEMA", "public")
 
 
