@@ -14,7 +14,7 @@ sqlalchemy = "==1.4.23"
 prospector = {version = "==1.4.0", extras = ["with_bandit", "with_mypy"]}
 flake8 = "==3.8.4"
 types-setuptools = "==57.0.2"
-types-pyyaml = "==5.4.7"
+types-pyyaml = "==5.4.8"
 types-requests = "==2.25.6"
 
 [requires]
