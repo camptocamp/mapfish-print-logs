@@ -2,7 +2,7 @@ import os
 from typing import Optional
 
 
-def _ensure_slash(txt: Optional[str]):
+def _ensure_slash(txt: Optional[str]) -> Optional[str]:
     if txt is None:
         return None
     if txt.endswith("/"):

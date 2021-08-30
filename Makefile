@@ -21,6 +21,7 @@ build: build_api build_configs
 
 .PHONY: build_api
 build_api:
+	docker build --target=checker --tag=$(DOCKER_BASE):$(DOCKER_TAG) --build-arg=GIT_HASH=$(GIT_HASH) api
 	docker build --tag=$(DOCKER_BASE):$(DOCKER_TAG) --build-arg=GIT_HASH=$(GIT_HASH) api
 
 .PHONY: build_configs

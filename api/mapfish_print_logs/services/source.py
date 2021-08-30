@@ -1,4 +1,7 @@
-import sqlalchemy as sa
+from typing import Any, Dict, Optional
+
+import pyramid.request  # type: ignore
+import sqlalchemy as sa  # type: ignore
 from c2cwsgiutils import services
 
 from mapfish_print_logs import utils
@@ -9,12 +12,13 @@ from mapfish_print_logs.services import auth_source, get_config_info
 source_service = services.create("source_auth", "/logs/source/{source}")
 
 
-@source_service.get(renderer="../templates/source.html.mako")
-def get_source(request):
+@source_service.get(renderer="../templates/source.html.mako")  # type: ignore
+def get_source(request: pyramid.request.Request) -> Dict[str, Any]:
     config, key, source = auth_source(request)
     del key
     pos = int(request.params.get("pos", "0"))
     only_errors = request.params.get("only_errors", "0") == "1"
+    assert DBSession is not None
     query = DBSession.query(PrintAccounting)
     if source != "all":
         app_id = utils.get_app_id(config, source)
@@ -24,7 +28,7 @@ def get_source(request):
             )
         )
         source_key = config["sources"][source]["key"]
-        scm_refresh_url = (
+        scm_refresh_url: Optional[str] = (
             f"{SCM_URL_EXTERNAL}1/refresh/{source}/{source_key}" if SCM_URL_EXTERNAL is not None else None
         )
     else:

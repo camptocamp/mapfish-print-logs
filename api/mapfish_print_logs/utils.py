@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any, Dict, Optional, Tuple, cast
 
 import yaml
 
@@ -28,40 +28,40 @@ PAGE_SIZE2NAME = {
 }
 
 
-def read_shared_config():
-    with open(SHARED_CONFIG_MASTER) as file:
-        config = yaml.load(file)
+def read_shared_config() -> Dict[str, Any]:
+    with open(SHARED_CONFIG_MASTER, encoding="utf-8") as file:
+        config = cast(Dict[str, Any], yaml.load(file, Loader=yaml.SafeLoader))
     return config
 
 
-def page_size2fullname(dico):
+def page_size2fullname(dico: Dict[str, Any]) -> str:
     height, width = get_size(dico)
     size = "x".join(map(str, sorted([width, height])))
     return PAGE_SIZE2NAME.get(size, size) + (" portrait" if height > width else " landscape")
 
 
-def get_size(dico):
+def get_size(dico: Dict[str, Any]) -> Tuple[int, int]:
     height = dico["height"]
     width = dico["width"]
     return height, width
 
 
-def page_size2name(dico):
+def page_size2name(dico: Dict[str, Any]) -> str:
     height, width = get_size(dico)
     size = "x".join(map(str, sorted([width, height])))
-    return PAGE_SIZE2NAME.get(size, size)
+    return cast(str, PAGE_SIZE2NAME.get(size, size))
 
 
-def quote_like(text):
+def quote_like(text: str) -> str:
     return text.replace("%", r"\%").replace("_", r"\_")
 
 
-def get_app_id(config, source):
+def get_app_id(config: Dict[str, Any], source: str) -> str:
     source_config = config["sources"][source]
-    return source_config.get("app_id", source)
+    return cast(str, source_config.get("app_id", source))
 
 
-def app_id2source(app_id: str, config: Optional[dict] = None):
+def app_id2source(app_id: str, config: Optional[Dict[str, Any]] = None) -> str:
     app_id = app_id.split(":")[0]
     if config is None:
         config = read_shared_config()
@@ -71,6 +71,6 @@ def app_id2source(app_id: str, config: Optional[dict] = None):
 
     for source, source_config in config["sources"].items():
         if source_config.get("app_id") == app_id:
-            return source
+            return cast(str, source)
 
     return app_id

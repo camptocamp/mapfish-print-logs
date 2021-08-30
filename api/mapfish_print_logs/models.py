@@ -1,23 +1,25 @@
 import os
+from typing import Any, Dict
 
-import sqlalchemy as sa
-import sqlalchemy.ext.declarative
+import pyramid.config  # type: ignore
+import sqlalchemy as sa  # type: ignore
+import sqlalchemy.ext.declarative  # type: ignore
 from c2cwsgiutils import db
-from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.dialects.postgresql import JSONB  # type: ignore
 
 from mapfish_print_logs import utils
 
-DBSession = None
-Base = sqlalchemy.ext.declarative.declarative_base()
+DBSession = None  # pylint: disable=invalid-name
+Base = sqlalchemy.ext.declarative.declarative_base()  # pylint: disable=invalid-name
 SCHEMA = os.environ.get("DB_SCHEMA", "public")
 
 
-def init(config):
-    global DBSession
+def init(config: pyramid.config.Configurator) -> None:
+    global DBSession  # pylint: disable=global-statement,invalid-name
     DBSession = db.setup_session(config, "sqlalchemy")[0]
 
 
-class PrintAccounting(Base):
+class PrintAccounting(Base):  # type: ignore
     __tablename__ = "print_accountings"
     __table_args__ = {"schema": SCHEMA}
     reference_id = sa.Column(sa.Text, primary_key=True)
@@ -33,7 +35,7 @@ class PrintAccounting(Base):
     status = sa.Column(sa.Text, nullable=False)
     total_time_ms = sa.Column(sa.Integer)
 
-    def to_json(self):
+    def to_json(self) -> Dict[str, Any]:
         return dict(
             reference_id=self.reference_id,
             app_id=self.app_id,
@@ -49,23 +51,24 @@ class PrintAccounting(Base):
             total_time_ms=self.total_time_ms,
         )
 
-    def pages_stats(self):
+    def pages_stats(self) -> str:
         if self.stats and "pages" in self.stats:
             stats = [utils.page_size2fullname(page) for page in self.stats["pages"]]
-            summary = {}
+            summary: Dict[str, Any] = {}
             for stat in stats:
                 summary.setdefault(stat, 0)
                 summary[stat] += 1
             return "\n".join(f"{n}: {v}" for n, v in summary.items())
         return ""
 
-    def maps_stats(self):
+    def maps_stats(self) -> str:
         if self.stats and "maps" in self.stats:
             # [{'dpi': 72.0, 'size': {'width': 780, 'height': 330}, 'nbLayers': 1}]
             maps = []
             for map_ in self.stats["maps"]:
                 maps.append(
-                    f'{map_["size"]["width"]}x{map_["size"]["height"]} D{int(map_["dpi"])} L{map_["nbLayers"]}'
+                    f'{map_["size"]["width"]}x{map_["size"]["height"]} D{int(map_["dpi"])} '
+                    f'L{map_["nbLayers"]}'
                 )
             return "\n".join(maps)
         return ""

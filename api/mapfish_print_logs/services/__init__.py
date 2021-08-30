@@ -1,15 +1,19 @@
+import logging
 import os
+from typing import Any, Dict, Optional, Tuple, cast
 
+import pyramid.request  # type: ignore
 import requests
-from pyramid.httpexceptions import HTTPBadRequest, HTTPForbidden, HTTPNotFound
+from pyramid.httpexceptions import HTTPBadRequest, HTTPForbidden, HTTPNotFound  # type: ignore
 
 from mapfish_print_logs.config import SCM_URL
 from mapfish_print_logs.utils import read_shared_config
 
 SOURCES_KEY = os.environ["SOURCES_KEY"]
+LOG = logging.getLogger(__name__)
 
 
-def auth_source(request):
+def auth_source(request: pyramid.request.Request) -> Tuple[Dict[str, Any], str, str]:
     source = request.matchdict.get("source")
     if source is None:
         raise HTTPBadRequest("Missing the source")
@@ -19,7 +23,7 @@ def auth_source(request):
     return config, key, source
 
 
-def check_key(config, source, secret):
+def check_key(config: Dict[str, Any], source: str, secret: str) -> None:
     if source == "all":
         if secret != SOURCES_KEY:
             raise HTTPForbidden("Invalid secret")
@@ -30,13 +34,15 @@ def check_key(config, source, secret):
         raise HTTPForbidden("Invalid secret")
 
 
-def get_config_info(source, key):
+def get_config_info(source: str, key: str) -> Optional[Dict[str, Any]]:
     if SCM_URL is None:
         return None
+    url = f"{SCM_URL}1/status/{source}/{key}"
     try:
-        r = requests.get(f"{SCM_URL}1/status/{source}/{key}")
-    except Exception as e:
-        return dict(status=500, message=str(e))
-    if r.status_code != 200:
-        return dict(status=r.status_code, message=r.text)
-    return r.json()
+        response = requests.get(url)
+    except Exception:  # pylint: disable=broad-except
+        LOG.exception("Error in request: %s", url)
+        return dict(status=500, message="Error in subrequest, see logs for details")
+    if response.status_code != 200:
+        return dict(status=response.status_code, message=response.text)
+    return cast(Dict[str, Any], response.json())

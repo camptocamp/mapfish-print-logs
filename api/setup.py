@@ -1,9 +1,10 @@
 import os
 
-from setuptools import find_packages, setup
+from setuptools import find_packages, setup  # type: ignore
 
 HERE = os.path.abspath(os.path.dirname(__file__))
-INSTALL_REQUIRES = open(os.path.join(HERE, "requirements.txt")).read().splitlines()
+with open(os.path.join(HERE, "requirements.txt"), encoding="utf-8") as requirements:
+    INSTALL_REQUIRES = requirements.read().splitlines()
 
 setup(
     name="mapfish_print_logs",

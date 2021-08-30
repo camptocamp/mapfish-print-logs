@@ -1,5 +1,8 @@
+from typing import Any, Dict
+
+import pyramid.request  # type: ignore
 from c2cwsgiutils import services
-from pyramid.httpexceptions import HTTPNotFound
+from pyramid.httpexceptions import HTTPNotFound  # type: ignore
 
 from mapfish_print_logs import elastic_search
 from mapfish_print_logs.config import LOG_LIMIT, MAX_LOGS
@@ -9,8 +12,8 @@ from mapfish_print_logs.utils import app_id2source
 ref_service = services.create("ref", "/logs/ref")
 
 
-@ref_service.get(renderer="../templates/ref.html.mako")
-def get_ref(request):
+@ref_service.get(renderer="../templates/ref.html.mako")  # type: ignore
+def get_ref(request: pyramid.request.Request) -> Dict[str, Any]:
     ref = request.params["ref"]
     pos = int(request.params.get("pos", "0"))
     min_level = int(request.params.get("min_level", "20000"))
@@ -19,6 +22,7 @@ def get_ref(request):
         filter_loggers = filter_loggers.split(",")
     else:
         filter_loggers = []
+    assert DBSession is not None
     accounting = DBSession.query(PrintAccounting).get(ref)  # type: PrintAccounting
     if accounting is None:
         raise HTTPNotFound("No such ref")

@@ -61,7 +61,18 @@ ENV MAPFISH_LOG_LEVEL=INFO \
     SQLALCHEMY_WARN_20=true \
     GUNICORN_PARAMS="--bind=:8080 --worker-class=gthread --threads=10 --workers=2"
 
-# Step #2 copy the rest of the files (watch for the .dockerignore)
+
+FROM base as checker
+
+RUN pipenv sync --dev --system --clear
+
+COPY . /app
+
+RUN prospector --output=pylint
+
+
+FROM base as runner
+
 COPY . /app
 
 ARG GIT_HASH
@@ -70,14 +81,6 @@ RUN python3 -m pip install --no-cache-dir --no-deps --editable=.
 RUN c2cwsgiutils-genversion $GIT_HASH && \
     python3 -m compileall -q . /usr/local/lib/python3.* \
     -x /usr/local/lib/python3.*/dist-packages/pipenv/
-
-
-FROM base as checker
-
-RUN pipenv sync --dev --system --clear
-RUN prospector
-
-FROM base as runner
 
 EXPOSE 8080
 # www-data
