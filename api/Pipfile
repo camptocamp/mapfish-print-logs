@@ -11,7 +11,7 @@ pyramid = "==2.0"
 sqlalchemy = "==1.4.23"
 
 [dev-packages]
-prospector = {version = "==1.5.0.1", extras = ["with_bandit", "with_mypy"]}
+prospector = {version = "==1.5.1", extras = ["with_bandit", "with_mypy"]}
 flake8 = "==3.8.4"
 types-setuptools = "==57.0.2"
 types-pyyaml = "==5.4.10"
