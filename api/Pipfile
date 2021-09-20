@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-humanfriendly = "==9.2"
+humanfriendly = "==10.0"
 pyramid-mako = "==1.1.0"
 c2cwsgiutils = {version = "==4.1.4", extras = ["broadcast", "standard"]}
 pyramid = "==2.0"
