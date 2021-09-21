@@ -1,6 +1,6 @@
 import os
 
-from setuptools import find_packages, setup  # type: ignore
+from setuptools import find_packages, setup
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(HERE, "requirements.txt"), encoding="utf-8") as requirements:
