@@ -1,3 +1,4 @@
+import os
 from typing import Any, Dict, List, cast
 
 import sqlalchemy as sa  # type: ignore
@@ -21,7 +22,7 @@ def monthly_all(config: Dict[str, Any]) -> List[Dict[str, Any]]:
     query = DBSession.query(
         PrintAccounting.app_id, PrintAccounting.completion_time, PrintAccounting.stats
     ).filter(PrintAccounting.status == "FINISHED")
-    a4price = config["accounting"]["a4price"]
+    a4price = float(os.environ["PRINT_A4PRICE"])
     months: Dict[str, Dict[str, float]] = {}
     details: Dict[str, Any] = {}
     for app_id, completion_time, stats in query:
@@ -36,7 +37,7 @@ def monthly_all(config: Dict[str, Any]) -> List[Dict[str, Any]]:
     )
 
 
-def monthly(config: Dict[str, Any], app_id: str) -> List[Dict[str, Any]]:
+def monthly(app_id: str) -> List[Dict[str, Any]]:
     assert DBSession is not None
     query = DBSession.query(PrintAccounting.completion_time, PrintAccounting.stats).filter(
         PrintAccounting.status == "FINISHED",
@@ -44,7 +45,7 @@ def monthly(config: Dict[str, Any], app_id: str) -> List[Dict[str, Any]]:
             PrintAccounting.app_id == app_id, PrintAccounting.app_id.like(utils.quote_like(app_id) + ":%")
         ),
     )
-    a4price = cast(float, config["accounting"]["a4price"])
+    a4price = float(os.environ["PRINT_A4PRICE"])
     months: Dict[str, float] = {}
     details: Dict[str, Dict[str, str]] = {}
     for completion_time, stats in query:

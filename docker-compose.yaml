@@ -17,6 +17,7 @@ services:
       OTHER_LOG_LEVEL: INFO
       GUNICORN_LOG_LEVEL: INFO
       ALEMBIC_LOG_LEVEL: INFO
+      PRINT_A4PRICE: 0.05
 
       # SCM_URL: http://scm:8080/scm
       # SCM_URL_EXTERNAL: http://scm:8080/scm
