@@ -12,7 +12,7 @@ sqlalchemy = "==1.4.29"
 setuptools = "==59.8.0"
 
 [dev-packages]
-prospector = {version = "==1.5.3.1", extras = ["with_bandit", "with_mypy"]}
+prospector = {version = "==1.6.0", extras = ["with_bandit", "with_mypy"]}
 flake8 = "==3.9.2"
 types-setuptools = "==57.4.7"
 types-pyyaml = "==6.0.3"
