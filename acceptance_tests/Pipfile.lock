@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "42875498ef6a7a8569f4897c27df8c7562c21e8ec72ec4984104f90aa8ff6c03"
+            "sha256": "0c0970b62fbb3dd3ad5568c30b63ebcae2aaf9a6db07031d440d70c56bf1a163"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -487,11 +487,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:5c89b1a14a67ac5f0956f1cb0aeb7d1d3f4c8ba4e4e1ab7bf1af4933f9a2f0fe",
-                "sha256:675fcebecb43c32eb930481abf907619137547f4336206e4d673180242e1a278"
+                "sha256:316484eebff54cc18f322dea09ed031b7e3eb00811b19dcedb09bc09bba7d93d",
+                "sha256:89c6e6011ec2f6d57d43a3f9296c4ef022c2cbf49bab26b407fe67992ae3397f"
             ],
-            "markers": "python_version >= '3.7'",
-            "version": "==60.2.0"
+            "index": "pypi",
+            "version": "==45.2.0"
         },
         "six": {
             "hashes": [
@@ -614,11 +614,11 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:2f4da4594db7e1e110a944bb1b551fdf4e6c136ad42e4234131391e21eb5b0df",
-                "sha256:e7b021f7241115872f92f43c6508082facffbd1c048e3c6e2bb9c2a157e28937"
+                "sha256:000ca7f471a233c2251c6c7023ee85305721bfdf18621ebff4fd17a8653427ed",
+                "sha256:0e7c33d9a63e7ddfcb86780aac87befc2fbddf46c58dbb487e0855f7ceec283c"
             ],
             "index": "pypi",
-            "version": "==1.26.4"
+            "version": "==1.26.8"
         },
         "venusian": {
             "hashes": [
