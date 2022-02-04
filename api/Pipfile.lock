@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "99e949aaae395a24f7e2dbaa9b481142760975329329d94403cd7bde4ef425f1"
+            "sha256": "bd26ec539c1bce7a68831c176b01ce823723ba4ffba2da04de5b16aa92d9b296"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,10 +18,10 @@
     "default": {
         "alembic": {
             "hashes": [
-                "sha256:7c328694a2e68f03ee971e63c3bd885846470373a5b532cf2c9f1601c413b153",
-                "sha256:a9dde941534e3d7573d9644e8ea62a2953541e27bc1793e166f60b777ae098b4"
+                "sha256:6c0c05e9768a896d804387e20b299880fe01bc56484246b0dffe8075d6d3d847",
+                "sha256:ad842f2c3ab5c5d4861232730779c05e33db4ba880a08b85eb505e87c01095bc"
             ],
-            "version": "==1.7.5"
+            "version": "==1.7.6"
         },
         "boltons": {
             "hashes": [
@@ -550,11 +550,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:09980778aa734c3037a47997f28d6db5ab18bdf2af0e49f719bfc53967fd2e82",
-                "sha256:608a7885b664342ae9fafc43840b29d219c5a578876f6f7e00c4e2612160587f"
+                "sha256:a4dc3af29a67e7a45620aba43dde2c1af2dd6bc49726d78168f0cc6c4fb0c01b",
+                "sha256:c9097cbcdefe88a64da966a764f2d95feb1cfaff77cc304528a23cefe3359d9a"
             ],
             "index": "pypi",
-            "version": "==59.8.0"
+            "version": "==60.7.1"
         },
         "simplejson": {
             "hashes": [
@@ -1205,11 +1205,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:09980778aa734c3037a47997f28d6db5ab18bdf2af0e49f719bfc53967fd2e82",
-                "sha256:608a7885b664342ae9fafc43840b29d219c5a578876f6f7e00c4e2612160587f"
+                "sha256:a4dc3af29a67e7a45620aba43dde2c1af2dd6bc49726d78168f0cc6c4fb0c01b",
+                "sha256:c9097cbcdefe88a64da966a764f2d95feb1cfaff77cc304528a23cefe3359d9a"
             ],
             "index": "pypi",
-            "version": "==59.8.0"
+            "version": "==60.7.1"
         },
         "smmap": {
             "hashes": [
@@ -1275,10 +1275,10 @@
         },
         "types-urllib3": {
             "hashes": [
-                "sha256:a929c68a57b24eee8f7003357b935b802e17767e752d9237266f799ca48ee326",
-                "sha256:aa0de26893f138523d5552bbb023826c0cc7ea5749d80c1693c57aab7b55f469"
+                "sha256:4a54f6274ab1c80968115634a55fb9341a699492b95e32104a7c513db9fe02e9",
+                "sha256:abd2d4857837482b1834b4817f0587678dcc531dbc9abe4cde4da28cef3f522c"
             ],
-            "version": "==1.26.8"
+            "version": "==1.26.9"
         },
         "typing-extensions": {
             "hashes": [
