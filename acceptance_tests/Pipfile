@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 pytest = "==7.0.0"
 junit2html = "==30.0.6"
-c2cwsgiutils = {version = "==4.1.4", extras = ["standard"]}
+c2cwsgiutils = {version = "==5.0.0", extras = ["standard"]}
 
 [dev-packages]
 
