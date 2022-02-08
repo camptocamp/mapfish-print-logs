@@ -11,7 +11,7 @@ from c2cwsgiutils.health_check import HealthCheck
 from pyramid.config import Configurator  # type: ignore
 from pyramid.httpexceptions import HTTPMovedPermanently  # type: ignore
 
-from mapfish_print_logs import models, security
+from mapfish_print_logs import security
 from mapfish_print_logs.config import SCM_URL
 from mapfish_print_logs.elastic_search import SEARCH_HEADERS, SEARCH_URL
 
@@ -30,11 +30,11 @@ def main(_: Any, **settings: Dict[str, Any]) -> Any:
     config.include(c2cwsgiutils.pyramid.includeme)
     config.include(security.includeme)
     config.include("pyramid_mako")
-    models.init(config)
+    dbsession = c2cwsgiutils.db.init(config, "sqlalchemy", "sqlalchemy_slave")
 
     health_check = HealthCheck(config)
     health_check.add_db_session_check(
-        models.DBSession, query_cb=lambda session: session.execute("SELECT 1").fetchall()[0][0]
+        dbsession, query_cb=lambda session: session.execute("SELECT 1").fetchall()[0][0]
     )
     if SCM_URL is not None:
         health_check.add_url_check(SCM_URL + "c2c/health_check", name="scm", level=3)

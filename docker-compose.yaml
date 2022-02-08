@@ -5,14 +5,15 @@ services:
     image: camptocamp/mapfish-print-logs:latest
     environment:
       SQLALCHEMY_URL: &db_url postgresql://www-data:www-data@db:5432/print
+      SQLALCHEMY_SLAVE_URL: *db_url
       STATS_VIEW: 1
       # STATSD_ADDRESS: 172.17.0.1:8125
       # STATSD_PREFIX: suissealpine.dev.api
       DEVELOPMENT: 1
       C2C_SECRET: toto
       SOURCES_KEY: toto
-      MAPFISH_LOG_LEVEL: DEBUG
-      C2CWSGI_LOG_LEVEL: DEBUG
+      LOG_LEVEL: DEBUG
+      C2CWSGIUTILS_LOG_LEVEL: DEBUG
       SQL_LOG_LEVEL: INFO
       OTHER_LOG_LEVEL: INFO
       GUNICORN_LOG_LEVEL: INFO
@@ -21,7 +22,7 @@ services:
 
       # SCM_URL: http://scm:8080/scm
       # SCM_URL_EXTERNAL: http://scm:8080/scm
-      GUNICORN_PARAMS: '--bind=:8080 --threads=10 --reload' # only one process in order to get consistent stats
+      GUNICORN_CMD_ARGS: '--reload' # only one process in order to get consistent stats
       ES_URL: http://elasticsearch:9200/elasticsearch
       ES_INDEXES: 'print-1'
       LOG_LIMIT: 3

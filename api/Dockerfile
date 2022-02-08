@@ -20,7 +20,7 @@ RUN apt remove --assume-yes --auto-remove python3-dev gcc
 
 # From c2cwsgiutils
 
-CMD ["c2cwsgiutils-run"]
+CMD ["gunicorn", "--paste=production.ini"]
 
 ENV TERM=linux \
   LANG=C.UTF-8 \
@@ -35,7 +35,6 @@ ENV TERM=linux \
 
 ENV C2C_BASE_PATH=/logs/c2c \
   C2C_SECRET= \
-  C2CWSGIUTILS_CONFIG=/app/production.ini \
   C2C_REDIS_URL= \
   C2C_REDIS_SENTINELS= \
   C2C_REDIS_TIMEOUT=3 \
@@ -53,13 +52,18 @@ ENV C2C_BASE_PATH=/logs/c2c \
   C2C_REQUESTS_DEFAULT_TIMEOUT=10
 # End from c2cwsgiutils
 
-ENV MAPFISH_LOG_LEVEL=INFO \
-    C2CWSGI_LOG_LEVEL=INFO \
+ENV LOG_LEVEL=INFO \
+    C2CWSGIUTILS_LOG_LEVEL=INFO \
     ALEMBIC_LOG_LEVEL=INFO \
+    GUNICORN_LOG_LEVEL=WARN \
+    GUNICORN_ACCESS_LOG_LEVEL=INFO \
     SQLALCHEMY_POOL_SIZE=5 \
     SQLALCHEMY_MAX_OVERFLOW=25 \
-    SQLALCHEMY_WARN_20=true \
-    GUNICORN_PARAMS="--bind=:8080 --worker-class=gthread --threads=10 --workers=2"
+    SQLALCHEMY_POOL_RECYCLE=30 \
+    SQLALCHEMY_SLAVE_POOL_SIZE=5 \
+    SQLALCHEMY_SLAVE_MAX_OVERFLOW=25 \
+    SQLALCHEMY_SLAVE_POOL_RECYCLE=30 \
+    SQLALCHEMY_WARN_20=true
 
 
 FROM base as checker

@@ -1,22 +1,14 @@
 import os
 from typing import Any, Dict
 
-import pyramid.config  # type: ignore
 import sqlalchemy as sa  # type: ignore
 import sqlalchemy.ext.declarative  # type: ignore
-from c2cwsgiutils import db
 from sqlalchemy.dialects.postgresql import JSONB  # type: ignore
 
 from mapfish_print_logs import utils
 
-DBSession = None  # pylint: disable=invalid-name
 Base = sqlalchemy.ext.declarative.declarative_base()
 SCHEMA = os.environ.get("DB_SCHEMA", "public")
-
-
-def init(config: pyramid.config.Configurator) -> None:
-    global DBSession  # pylint: disable=global-statement,invalid-name
-    DBSession = db.setup_session(config, "sqlalchemy")[0]
 
 
 class PrintAccounting(Base):  # type: ignore
