@@ -18,7 +18,7 @@ global_accounting_service = services.create("accounting_global", "/logs/accounti
 def get_accounting(request: pyramid.request.Request) -> Dict[str, Any]:
     config, key, source = auth_source(request)
     del key
-    monthly = accounting.monthly(utils.get_app_id(config, source))
+    monthly = accounting.monthly(request, utils.get_app_id(config, source))
     return {
         "source": source,
         "accounting": monthly,
@@ -30,7 +30,7 @@ def get_accounting(request: pyramid.request.Request) -> Dict[str, Any]:
 def get_accounting_csv(request: pyramid.request.Request) -> pyramid.response.Response:
     config, key, source = auth_source(request)
     del key
-    monthly = accounting.monthly(utils.get_app_id(config, source))
+    monthly = accounting.monthly(request, utils.get_app_id(config, source))
     details_cols = accounting.get_details_cols(monthly)
     request.response.content_type = "text/csv"
     writer = csv.writer(request.response.body_file)
@@ -52,7 +52,7 @@ def global_accounting_csv(request: pyramid.request.Request) -> pyramid.response.
         raise HTTPForbidden("Invalid secret")
     config = utils.read_shared_config()
 
-    monthly = accounting.monthly_all(config)
+    monthly = accounting.monthly_all(request, config)
     details_cols = accounting.get_details_cols(monthly)
     request.response.content_type = "text/csv"
     writer = csv.writer(request.response.body_file)

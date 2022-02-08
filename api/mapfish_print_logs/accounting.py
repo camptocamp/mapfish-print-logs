@@ -1,10 +1,11 @@
 import os
 from typing import Any, Dict, List, cast
 
+import pyramid.request  # type: ignore
 import sqlalchemy as sa  # type: ignore
 
 from mapfish_print_logs import utils
-from mapfish_print_logs.models import DBSession, PrintAccounting
+from mapfish_print_logs.models import PrintAccounting
 
 PDF2M = 1 / 72 * 2.54 / 100
 A4_SURFACE = 595 * 842
@@ -17,9 +18,8 @@ def _add_dict(dico: Dict[str, Any], key: str, value: int = 1) -> None:
         dico[key] = value
 
 
-def monthly_all(config: Dict[str, Any]) -> List[Dict[str, Any]]:
-    assert DBSession is not None
-    query = DBSession.query(
+def monthly_all(request: pyramid.request.Request, config: Dict[str, Any]) -> List[Dict[str, Any]]:
+    query = request.dbsession.query(
         PrintAccounting.app_id, PrintAccounting.completion_time, PrintAccounting.stats
     ).filter(PrintAccounting.status == "FINISHED")
     a4price = float(os.environ["PRINT_A4PRICE"])
@@ -37,9 +37,8 @@ def monthly_all(config: Dict[str, Any]) -> List[Dict[str, Any]]:
     )
 
 
-def monthly(app_id: str) -> List[Dict[str, Any]]:
-    assert DBSession is not None
-    query = DBSession.query(PrintAccounting.completion_time, PrintAccounting.stats).filter(
+def monthly(request: pyramid.request.Request, app_id: str) -> List[Dict[str, Any]]:
+    query = request.dbsession.query(PrintAccounting.completion_time, PrintAccounting.stats).filter(
         PrintAccounting.status == "FINISHED",
         sa.or_(
             PrintAccounting.app_id == app_id, PrintAccounting.app_id.like(utils.quote_like(app_id) + ":%")

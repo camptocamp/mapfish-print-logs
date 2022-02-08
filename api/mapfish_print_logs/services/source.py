@@ -6,7 +6,7 @@ from c2cwsgiutils import services
 
 from mapfish_print_logs import utils
 from mapfish_print_logs.config import JOB_LIMIT, SCM_URL_EXTERNAL
-from mapfish_print_logs.models import DBSession, PrintAccounting
+from mapfish_print_logs.models import PrintAccounting
 from mapfish_print_logs.services import auth_source, get_config_info
 
 source_service = services.create("source_auth", "/logs/source/{source}")
@@ -18,8 +18,7 @@ def get_source(request: pyramid.request.Request) -> Dict[str, Any]:
     del key
     pos = int(request.params.get("pos", "0"))
     only_errors = request.params.get("only_errors", "0") == "1"
-    assert DBSession is not None
-    query = DBSession.query(PrintAccounting)
+    query = request.dbsession.query(PrintAccounting)
     if source != "all":
         app_id = utils.get_app_id(config, source)
         query = query.filter(

@@ -6,7 +6,7 @@ from pyramid.httpexceptions import HTTPNotFound  # type: ignore
 
 from mapfish_print_logs import elastic_search
 from mapfish_print_logs.config import LOG_LIMIT, MAX_LOGS
-from mapfish_print_logs.models import DBSession, PrintAccounting
+from mapfish_print_logs.models import PrintAccounting
 from mapfish_print_logs.utils import app_id2source
 
 ref_service = services.create("ref", "/logs/ref")
@@ -22,8 +22,7 @@ def get_ref(request: pyramid.request.Request) -> Dict[str, Any]:
         filter_loggers = filter_loggers.split(",")
     else:
         filter_loggers = []
-    assert DBSession is not None
-    accounting = DBSession.query(PrintAccounting).get(ref)  # type: PrintAccounting
+    accounting = request.dbsession.query(PrintAccounting).get(ref)  # type: PrintAccounting
     if accounting is None:
         raise HTTPNotFound("No such ref")
     logs, total = elastic_search.get_logs(ref, min_level, pos, LOG_LIMIT, filter_loggers)
