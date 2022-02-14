@@ -7,7 +7,6 @@ checks:
   codespell:
     ignore_re:
       - configs/print-apps/simple/countries\.geojson
-  versions: false
 
 publish:
   pypi:
