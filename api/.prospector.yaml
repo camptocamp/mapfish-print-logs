@@ -6,7 +6,7 @@ pylint:
   disable:
     - wrong-import-order
 
-pep8:
+pycodestyle:
   disable:
     - E501 # line too long
 
