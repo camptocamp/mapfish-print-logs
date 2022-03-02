@@ -13,7 +13,7 @@ setuptools = "==59.8.0"
 
 [dev-packages]
 prospector = {version = "==1.7.4", extras = ["with_bandit", "with_mypy"]}
-flake8 = "==3.9.2"
+flake8 = "==4.0.1"
 types-setuptools = "==57.4.9"
 types-pyyaml = "==6.0.4"
 types-requests = "==2.27.11"
