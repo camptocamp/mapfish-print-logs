@@ -2,6 +2,7 @@
 Setup of the Pyramid application
 """
 import logging
+import os
 from typing import Any, Dict
 
 import c2cwsgiutils.pyramid
@@ -21,7 +22,8 @@ LOG = logging.getLogger(__name__)
 def _redirect_home(request: pyramid.request.Request) -> pyramid.response.Response:
     del request
 
-    return HTTPMovedPermanently(location="/logs/")
+    entry_point = os.environ.get("VISIBLE_ENTRY_POINT", "/")
+    return HTTPMovedPermanently(location=f"{entry_point}logs/")
 
 
 def main(_: Any, **settings: Dict[str, Any]) -> Any:
