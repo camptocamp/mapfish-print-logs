@@ -1,10 +1,10 @@
 FROM ubuntu:20.04 AS base
 LABEL maintainer "info@camptocamp.org"
 
-RUN apt update && \
-  DEBIAN_FRONTEND=noninteractive apt install --assume-yes --no-install-recommends \
-  python3-pip python3-dev gcc libpq-dev postgresql-client && \
-  apt clean && \
+RUN apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes --no-install-recommends \
+  curl python3-pip python3-dev gcc libpq-dev postgresql-client && \
+  apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache/*
 
 # Doing things in two steps to avoid needing to re-install everything when we do a rebuild
@@ -15,8 +15,8 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN python3 -m pip install --disable-pip-version-check --no-cache-dir --requirement=requirements.txt
 COPY Pipfile Pipfile.lock /app/
-RUN pipenv sync --system --clear
-RUN apt remove --assume-yes --auto-remove python3-dev gcc
+RUN pipenv sync --system --clear \
+    apt-get remove --assume-yes --auto-remove python3-dev gcc
 
 # From c2cwsgiutils
 
@@ -81,9 +81,8 @@ FROM base as runner
 COPY . /app
 
 ARG GIT_HASH
-RUN python3 -m pip install --no-cache-dir --no-deps --editable=.
-
-RUN c2cwsgiutils-genversion $GIT_HASH && \
+RUN python3 -m pip install --no-cache-dir --no-deps --editable=. && \
+    c2cwsgiutils-genversion $GIT_HASH && \
     python3 -m compileall -q . /usr/local/lib/python3.* \
     -x /usr/local/lib/python3.*/dist-packages/pipenv/
 
