@@ -15,7 +15,7 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN python3 -m pip install --disable-pip-version-check --no-cache-dir --requirement=requirements.txt
 COPY Pipfile Pipfile.lock /app/
-RUN pipenv sync --system --clear \
+RUN pipenv sync --system --clear && \
     apt-get remove --assume-yes --auto-remove python3-dev gcc
 
 # From c2cwsgiutils
