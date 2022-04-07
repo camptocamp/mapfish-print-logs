@@ -9,7 +9,7 @@ pyramid-mako = "==1.1.0"
 c2cwsgiutils = {version = "==5.0.0", extras = ["broadcast", "standard"]}
 pyramid = "==2.0"
 sqlalchemy = "==1.4.35"
-setuptools = "==59.8.0"
+setuptools = "==62.0.0"
 
 [dev-packages]
 prospector = {version = "==1.7.7", extras = ["with_bandit", "with_mypy"]}
