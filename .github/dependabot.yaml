@@ -5,21 +5,21 @@ updates:
   - package-ecosystem: pip
     directory: '/'
     schedule:
-      interval: daily
+      interval: monthly
       time: '02:00'
     ignore:
       - dependency-name: none
   - package-ecosystem: pip
     directory: '/api'
     schedule:
-      interval: daily
+      interval: monthly
       time: '02:00'
     ignore:
       - dependency-name: none
   - package-ecosystem: pip
     directory: '/acceptance_tests'
     schedule:
-      interval: daily
+      interval: monthly
       time: '02:00'
     ignore:
       - dependency-name: none
@@ -27,21 +27,21 @@ updates:
   - package-ecosystem: docker
     directory: '/configs'
     schedule:
-      interval: daily
+      interval: monthly
       time: '02:00'
     ignore:
       - dependency-name: none
   - package-ecosystem: docker
     directory: '/api'
     schedule:
-      interval: daily
+      interval: monthly
       time: '02:00'
     ignore:
       - dependency-name: none
   - package-ecosystem: docker
     directory: '/acceptance_tests'
     schedule:
-      interval: daily
+      interval: monthly
       time: '02:00'
     ignore:
       - dependency-name: none
