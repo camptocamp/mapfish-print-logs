@@ -47,8 +47,8 @@ jobs:
         run: make acceptance
       - run: docker-compose exec -T run junit2html /reports/acceptance.xml /reports/acceptance.html
         if: always()
-      - run: docker-compose logs
-        if: failure()
+      - run: c2cciutils-docker-logs || docker-compose logs
+        if: always()
 
       - name: Publish
         run: c2cciutils-publish --type=rebuild --branch=${{ matrix.branch }}
