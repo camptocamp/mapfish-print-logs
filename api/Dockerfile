@@ -1,21 +1,45 @@
-FROM ubuntu:22.04 AS base
-LABEL maintainer "info@camptocamp.org"
+FROM ubuntu:22.04 AS base-all
+LABEL maintainer Camptocamp "info@camptocamp.com"
+SHELL ["/bin/bash", "-o", "pipefail", "-cux"]
 
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes --no-install-recommends \
-        curl python3-pip python3-dev gcc libpq-dev postgresql-client \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache/*
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+    --mount=type=cache,target=/var/cache,sharing=locked \
+    apt-get update \
+    && apt-get upgrade --assume-yes \
+    && apt-get install --assume-yes --no-install-recommends python3-pip
+
+# Used to convert the locked packages by poetry to pip requirements format
+# We don't directly use `poetry install` because it force to use a virtual environment.
+FROM base-all as poetry
+
+# Install Poetry
+WORKDIR /tmp
+COPY requirements.txt ./
+RUN --mount=type=cache,target=/root/.cache \
+    python3 -m pip install --disable-pip-version-check --requirement=requirements.txt
+
+# Do the conversion
+COPY poetry.lock pyproject.toml ./
+RUN poetry export --output=requirements.txt \
+    && poetry export --dev --output=requirements-dev.txt
+
+# Base, the biggest thing is to install the Python packages
+FROM base-all as base
+
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+    --mount=type=cache,target=/var/cache,sharing=locked \
+    apt-get update \
+    && apt-get install --assume-yes --no-install-recommends \
+        curl python3-dev gcc libpq-dev postgresql-client
 
 # Doing things in two steps to avoid needing to re-install everything when we do a rebuild
 # after changing code
 
 # Step #1 copy only the stuff needed to install the dependencies and run the script
 WORKDIR /app
-COPY requirements.txt /app/
-RUN python3 -m pip install --disable-pip-version-check --no-cache-dir --requirement=requirements.txt
-COPY Pipfile Pipfile.lock /app/
-RUN pipenv sync --system --clear \
+RUN --mount=type=cache,target=/root/.cache \
+    --mount=type=bind,from=poetry,source=/tmp,target=/poetry \
+    python3 -m pip install --disable-pip-version-check --no-deps --requirement=/poetry/requirements.txt \
     && apt-get remove --assume-yes --auto-remove python3-dev gcc
 
 # From c2cwsgiutils
@@ -68,21 +92,21 @@ ENV LOG_LEVEL=INFO \
 
 FROM base as checker
 
-RUN pipenv sync --dev --system --clear
+RUN --mount=type=cache,target=/root/.cache \
+    --mount=type=bind,from=poetry,source=/tmp,target=/poetry \
+    python3 -m pip install --disable-pip-version-check --no-deps --requirement=/poetry/requirements-dev.txt
 
 COPY . /app
-
-RUN prospector --output=pylint
 
 FROM base as runner
 
 COPY . /app
 
 ARG GIT_HASH
-RUN python3 -m pip install --no-cache-dir --no-deps --editable=. \
+RUN --mount=type=cache,target=/root/.cache \
+    python3 -m pip install --no-deps --editable=. \
     && c2cwsgiutils-genversion $GIT_HASH \
-    && python3 -m compileall -q . /usr/local/lib/python3.* \
-        -x /usr/local/lib/python3.*/dist-packages/pipenv/
+    && python3 -m compileall -q . /usr/local/lib/python3.*
 
 EXPOSE 8080
 # www-data

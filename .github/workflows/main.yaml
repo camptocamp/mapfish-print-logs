@@ -45,6 +45,8 @@ jobs:
 
       - name: Build
         run: make build
+      - name: Checks
+        run: make checks
 
       - run: make run
       - name: Acceptance
