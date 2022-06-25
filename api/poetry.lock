@@ -1080,7 +1080,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-requests"
-version = "2.27.30"
+version = "2.28.0"
 description = "Typing stubs for requests"
 category = "dev"
 optional = false
@@ -1222,7 +1222,7 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<3.11"
-content-hash = "3295c59c57f9f1303d5d6f6a48f4beabeedcae3124a7b751d884da149a07d35b"
+content-hash = "b0932b02e1965215284d3681c5fbe6f1e5a554f0425b5f214f249a875b7aaf46"
 
 [metadata.files]
 alembic = [
@@ -1867,8 +1867,8 @@ types-pyyaml = [
     {file = "types_PyYAML-6.0.8-py3-none-any.whl", hash = "sha256:56a7b0e8109602785f942a11ebfbd16e97d5d0e79f5fbb077ec4e6a0004837ff"},
 ]
 types-requests = [
-    {file = "types-requests-2.27.30.tar.gz", hash = "sha256:ca8d7cc549c3d10dbcb3c69c1b53e3ffd1270089c1001a65c1e9e1017eb5e704"},
-    {file = "types_requests-2.27.30-py3-none-any.whl", hash = "sha256:b9b6cd0a6e5d500e56419b79f44ec96f316e9375ff6c8ee566c39d25e9612621"},
+    {file = "types-requests-2.28.0.tar.gz", hash = "sha256:9863d16dfbb3fa55dcda64fa3b989e76e8859033b26c1e1623e30465cfe294d3"},
+    {file = "types_requests-2.28.0-py3-none-any.whl", hash = "sha256:85383b4ef0535f639c3f06c5bbb6494bbf59570c4cd88bbcf540f0b2ac1b49ab"},
 ]
 types-setuptools = [
     {file = "types-setuptools-57.4.17.tar.gz", hash = "sha256:9d556fcaf6808a1cead4aaa41e5c07a61f0152a875811e1239738eba4e0b7b16"},
