@@ -23,7 +23,7 @@ jobs:
     steps:
       - run: docker --version
       - run: docker pull docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.3-amd64
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
