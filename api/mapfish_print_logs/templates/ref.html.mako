@@ -13,7 +13,7 @@
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="/logs/style.css">
+    <link rel="stylesheet" href="${request.static_url('/app/mapfish_print_logs/static/style.css')}">
     <title>Mapfish print logs - ref</title>
   </head>
   <body>
@@ -21,12 +21,12 @@
       <div class="card">
         <div class="card-header">
           %if min_level > 10000:
-          <a class="btn btn-primary float-right" href="ref?ref=${ref}&min_level=10000&filter_loggers=${','.join(filter_loggers)}">Show debug</a>
+          <a class="btn btn-primary float-right" href="${request.route_url('ref', _query={'ref': ref, 'min_level': 10000, 'filter_loggers': ','.join(filter_loggers)})}">Show debug</a>
           %else:
-          <a class="btn btn-primary float-right" href="ref?ref=${ref}&min_level=20000&filter_loggers=${','.join(filter_loggers)}">Hide debug</a>
+          <a class="btn btn-primary float-right" href="${request.route_url('ref', _query={'ref': ref, 'min_level': 20000, 'filter_loggers': ','.join(filter_loggers)})}">Hide debug</a>
           %endif
           %if source is not None:
-          <a class="btn btn-secondary float-right mr-2" href="/logs/source/${source | u}">Back to source</a>
+          <a class="btn btn-secondary float-right mr-2" href="${request.route_url('source')}">Back to source</a>
           %endif
           <h3>Logs for one print job</h3>
           <small>
@@ -34,7 +34,7 @@
           </small>
           %if filter_loggers:
             <br>
-            filters: ${', '.join(filter_loggers)} (<a href="ref?ref=${ref}&min_level=${min_level}">clear</a>)
+            filters: ${', '.join(filter_loggers) | h} (<a href="${request.route_url('ref', _query={'ref': ref, 'min_level': min_level})}">clear</a>)
           %endif
         </div>
         <div class="card-body">
@@ -105,7 +105,7 @@
                     % if 'logger_name' in log['json']:
                     <dt class="col-lg-2">
                       logger
-                      <a title="hide this logger" href="ref?ref=${ref}&min_level=${min_level}&pos=${cur_pos}&filter_loggers=${','.join(filter_loggers + [log['json']['logger_name']])}">✂</a>
+                      <a title="hide this logger" href="${request.route_url('ref', _query={'ref': ref, 'min_level': min_level, 'pos': cur_pos, 'filter_loggers': ','.join(filter_loggers + [log['json']['logger_name']])})}">✂</a>
                     </dt>
                     <dd class="col-lg-10">${log['json']['logger_name'] | h}</dd>
                     % endif
@@ -139,18 +139,18 @@
           <nav>
             <ul class="pagination justify-content-center">
               <li class="page-item ${'disabled' if prev_pos is None else ''}">
-                <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=0&filter_loggers=${','.join(filter_loggers)}">
+                <a class="page-link" href="${request.route_url('ref', _query={'ref': ref, 'min_level': min_level, 'pos': 0, 'filter_loggers': ','.join(filter_loggers)})}">
                   &lt;&lt;
                 </a>
               </li>
               <li class="page-item ${'disabled' if prev_pos is None else ''}">
-                <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${prev_pos}&filter_loggers=${','.join(filter_loggers)}">
+                <a class="page-link" href="${request.route_url('ref', _query={'ref': ref, 'min_level': min_level, 'pos': prev_pos, 'filter_loggers': ','.join(filter_loggers)})}">
                   &lt;
                 </a>
               </li>
               %for i, pos in enumerate(range(0, min(total, max_logs), limit)):
               <li class="page-item ${'active' if pos == cur_pos else ''}">
-                <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${pos}&filter_loggers=${','.join(filter_loggers)}">
+                <a class="page-link" href="${request.route_url('ref', _query={'ref': ref, 'min_level': min_level, 'pos': pos, 'filter_loggers': ','.join(filter_loggers)})}">
                   ${i}
                 </a>
               </li>
@@ -161,12 +161,12 @@
                 </li>
               %endif
               <li class="page-item ${'disabled' if next_pos is None else ''}">
-                <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${next_pos}&filter_loggers=${','.join(filter_loggers)}">
+                <a class="page-link" href="${request.route_url('ref', _query={'ref': ref, 'min_level': min_level, 'pos': next_pos, 'filter_loggers': ','.join(filter_loggers)})}">
                   &gt;
                 </a>
               </li>
               <li class="page-item ${'disabled' if last_pos is None else ''}">
-                <a class="page-link" href="ref?ref=${ref}&min_level=${min_level}&pos=${last_pos}&filter_loggers=${','.join(filter_loggers)}">
+                <a class="page-link" href="${request.route_url('ref', _query={'ref': ref, 'min_level': min_level, 'pos': last_pos, 'filter_loggers': ','.join(filter_loggers)})}">
                   &gt;&gt;
                 </a>
               </li>

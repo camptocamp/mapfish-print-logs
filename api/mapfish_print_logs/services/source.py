@@ -10,7 +10,7 @@ from mapfish_print_logs.models import PrintAccounting
 from mapfish_print_logs.security import auth_source
 from mapfish_print_logs.services import get_config_info
 
-source_service = services.create("source_auth", "/logs/source/{source}")
+source_service = services.create("source_auth", "/source/{source}")
 
 
 @source_service.get(renderer="../templates/source.html.mako")  # type: ignore

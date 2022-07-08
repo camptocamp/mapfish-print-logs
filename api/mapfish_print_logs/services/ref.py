@@ -10,7 +10,7 @@ from mapfish_print_logs.config import LOG_LIMIT, MAX_LOGS
 from mapfish_print_logs.models import PrintAccounting
 from mapfish_print_logs.utils import app_id2source
 
-ref_service = services.create("ref", "/logs/ref")
+ref_service = services.create("ref", "/ref")
 
 
 @ref_service.get(renderer="../templates/ref.html.mako")  # type: ignore

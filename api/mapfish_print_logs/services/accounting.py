@@ -9,9 +9,9 @@ from pyramid.security import Denied  # type: ignore
 from mapfish_print_logs import accounting, utils
 from mapfish_print_logs.security import auth_source
 
-accounting_service = services.create("accounting", "/logs/source/{source}/accounting")
-accounting_csv_service = services.create("accounting_csv", "/logs/source/{source}/accounting.csv")
-global_accounting_service = services.create("accounting_global", "/logs/accounting.csv")
+accounting_service = services.create("accounting", "/source/{source}/accounting")
+accounting_csv_service = services.create("accounting_csv", "/source/{source}/accounting.csv")
+global_accounting_service = services.create("accounting_global", "/accounting.csv")
 
 
 @accounting_service.get(renderer="../templates/accounting.html.mako")  # type: ignore

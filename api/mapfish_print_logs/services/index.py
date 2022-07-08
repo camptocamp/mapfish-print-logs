@@ -7,7 +7,7 @@ from c2cwsgiutils import services
 from mapfish_print_logs import utils
 from mapfish_print_logs.configuration import SourceConfig
 
-login_service = services.create("index", "/logs/")
+login_service = services.create("index", "/")
 
 
 @login_service.get(renderer="../templates/index.html.mako")  # type: ignore
