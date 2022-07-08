@@ -4,6 +4,8 @@ pylint:
   options:
     max-line-length: 110
   disable:
+    - too-many-arguments
+    - too-few-public-methods
     - wrong-import-order
 
 pycodestyle:

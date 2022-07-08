@@ -3,6 +3,7 @@ from typing import Any, Dict, Optional, Tuple, cast
 import yaml
 
 from mapfish_print_logs.config import SHARED_CONFIG_MASTER
+from mapfish_print_logs.configuration import Config
 
 PAGE_SIZE2NAME = {
     # taken from:
@@ -28,10 +29,10 @@ PAGE_SIZE2NAME = {
 }
 
 
-def read_shared_config() -> Dict[str, Any]:
+def read_shared_config() -> Config:
     with open(SHARED_CONFIG_MASTER, encoding="utf-8") as file:
         config = cast(Dict[str, Any], yaml.load(file, Loader=yaml.SafeLoader))
-    return config
+    return cast(Config, config)
 
 
 def page_size2fullname(dico: Dict[str, Any]) -> str:
@@ -56,12 +57,12 @@ def quote_like(text: str) -> str:
     return text.replace("%", r"\%").replace("_", r"\_")
 
 
-def get_app_id(config: Dict[str, Any], source: str) -> str:
+def get_app_id(config: Config, source: str) -> str:
     source_config = config["sources"][source]
     return cast(str, source_config.get("app_id", source))
 
 
-def app_id2source(app_id: str, config: Optional[Dict[str, Any]] = None) -> str:
+def app_id2source(app_id: str, config: Optional[Config] = None) -> str:
     app_id = app_id.split(":")[0]
     if config is None:
         config = read_shared_config()
@@ -71,6 +72,6 @@ def app_id2source(app_id: str, config: Optional[Dict[str, Any]] = None) -> str:
 
     for source, source_config in config["sources"].items():
         if source_config.get("app_id") == app_id:
-            return cast(str, source)
+            return source
 
     return app_id

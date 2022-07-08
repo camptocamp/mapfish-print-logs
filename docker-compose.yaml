@@ -4,29 +4,35 @@ services:
   api:
     image: camptocamp/mapfish-print-logs:latest
     environment:
-      SQLALCHEMY_URL: &db_url postgresql://www-data:www-data@db:5432/print
-      SQLALCHEMY_SLAVE_URL: *db_url
-      STATS_VIEW: 1
-      # STATSD_ADDRESS: 172.17.0.1:8125
-      # STATSD_PREFIX: suissealpine.dev.api
-      DEVELOPMENT: 1
-      C2C_SECRET: toto
-      SOURCES_KEY: toto
-      LOG_LEVEL: DEBUG
-      C2CWSGIUTILS_LOG_LEVEL: DEBUG
-      SQL_LOG_LEVEL: INFO
-      OTHER_LOG_LEVEL: INFO
-      GUNICORN_LOG_LEVEL: INFO
-      ALEMBIC_LOG_LEVEL: INFO
-      PRINT_A4PRICE: 0.05
+      - SQLALCHEMY_URL=postgresql://www-data:www-data@db:5432/print
+      - SQLALCHEMY_SLAVE_URL=postgresql://www-data:www-data@db:5432/print
+      - STATS_VIEW=1
+      # - STATSD_ADDRESS=172.17.0.1:8125
+      # - STATSD_PREFIX=suissealpine.dev.api
+      - DEVELOPMENT=1
+      - LOG_LEVEL=DEBUG
+      - C2CWSGIUTILS_LOG_LEVEL=DEBUG
+      - SQL_LOG_LEVEL=INFO
+      - OTHER_LOG_LEVEL=INFO
+      - GUNICORN_LOG_LEVEL=INFO
+      - ALEMBIC_LOG_LEVEL=INFO
+      - PRINT_A4PRICE=0.05
 
-      # SCM_URL: http://scm:8080/scm
-      # SCM_URL_EXTERNAL: http://scm:8080/scm
-      GUNICORN_CMD_ARGS: '--reload' # only one process in order to get consistent stats
-      ES_URL: http://elasticsearch:9200/elasticsearch
-      ES_INDEXES: 'print-1'
-      LOG_LIMIT: 3
-      SHARED_CONFIG_MASTER: /master_config/master/shared_config_manager.yaml
+      # - SCM_URL=http://scm:8080/scm
+      # - SCM_URL_EXTERNAL=http://scm:8080/scm
+      - GUNICORN_CMD_ARGS=--reload # only one process in order to get consistent stats
+      - ES_URL=http://elasticsearch:9200/elasticsearch
+      - ES_INDEXES=print-1
+      - LOG_LIMIT=3
+      - SHARED_CONFIG_MASTER=/master_config/master/shared_config_manager.yaml
+      - GITHUB_TOKEN
+
+      - C2C_AUTH_GITHUB_CLIENT_ID=an-id
+      - C2C_AUTH_GITHUB_CLIENT_SECRET=a-secret
+      - C2C_AUTH_GITHUB_REPOSITORY=camptocamp/mapfish-print-logs
+      - C2C_AUTH_GITHUB_ACCESS_TYPE=pull
+      - C2C_AUTH_GITHUB_SECRET=a-secret-long-a-secret
+
     volumes:
       - ./api/mapfish_print_logs:/app/mapfish_print_logs:ro
       # - ../c2cwsgiutils/c2cwsgiutils:/usr/local/lib/python3.8/dist-packages/c2cwsgiutils:ro
@@ -88,6 +94,8 @@ services:
 
   run:
     image: camptocamp/mapfish-print-logs-acceptance:latest
+    environment:
+      - GITHUB_TOKEN
     volumes:
       - ./reports:/reports
       - ./acceptance_tests/acceptance:/acceptance_tests/acceptance:ro

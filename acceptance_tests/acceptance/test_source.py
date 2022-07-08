@@ -17,4 +17,8 @@ def test_only_errors(api_connection, print_job):
 
 def test_no_login(api_connection):
     r = api_connection.get_raw("logs/source/simple", expected_status=302, allow_redirects=False)
-    assert r.headers["Location"] == api_connection.base_url + "logs/login?back=/logs/source/simple"
+    assert (
+        r.headers["Location"]
+        == api_connection.base_url
+        + "logs/c2c/github-login?came_from=http%3A%2F%2Fapi%3A8080%2Flogs%2Fsource%2Fsimple"
+    )

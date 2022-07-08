@@ -1,9 +1,11 @@
 import functools
 import json
 import logging
+import os
 import time
 from typing import Any, Callable, Dict, Mapping, Optional
 
+import jwt
 import pytest
 import requests
 from c2cwsgiutils.acceptance import connection, utils
@@ -174,17 +176,21 @@ class PrintLogConnection(PrintConnection):
 
 
 class MyConnection(Connection):
-    def login(self, key="toto"):
-        r = self.session.post(
-            self.base_url + "logs/login",
-            data=dict(key=key),
-            allow_redirects=False,
+    def login(self):
+        self.session.cookies["c2c-auth-jwt"] = jwt.encode(
+            {
+                "login": "testlogin",
+                "name": "Test user",
+                "url": "http://example.com",
+                "token": {"access_token": os.environ["GITHUB_TOKEN"]},
+            },
+            "a-secret-long-a-secret",
+            algorithm="HS256",
         )
-        assert r.status_code == 302
-        assert r.headers["Location"] == self.base_url + "logs/"
 
     def logout(self):
-        self.get_raw("logs/logout", expected_status=302, allow_redirects=False)
+        if "c2c-auth-jwt" in self.session.cookies:
+            del self.session.cookies["c2c-auth-jwt"]
 
 
 @pytest.fixture
