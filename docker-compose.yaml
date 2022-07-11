@@ -39,7 +39,7 @@ services:
     image: camptocamp/mapfish-print-logs-configs:latest
 
   db:
-    image: camptocamp/postgres:11
+    image: camptocamp/postgres:12
     environment:
       POSTGRES_USER: www-data
       POSTGRES_PASSWORD: www-data
