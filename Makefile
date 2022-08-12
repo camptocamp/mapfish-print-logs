@@ -24,7 +24,7 @@ pull: ## pull the images
 	.venv/bin/pip install --upgrade -r api/requirements.txt
 	touch $@
 
-build: build-api build-configs ## Build the Docker images
+build: build-api build-configs build-acceptance ## Build the Docker images
 
 .PHONY: build-api
 build-api: ## Build the Docker checher and api images
@@ -44,13 +44,14 @@ run: build build-acceptance
 	rm -rf reports/coverage/api reports/acceptance*.xml
 	mkdir -p reports/coverage/api
 	chmod o+rw reports
-	docker-compose up -d
+	GITHUB_TOKEN=$(shell gopass show gs/ci/github/token/gopass) docker-compose up -d
 
 .PHONY: acceptance
 acceptance: ## Run the acceptance tests
 	rm -rf reports/coverage/api reports/acceptance*.xml
 	mkdir -p reports/coverage/api
 	# Run the tests
+	docker-compose exec $(DOCKER_COMPOSE_TTY) api proutes c2c://production.ini || true
 	docker-compose exec $(DOCKER_COMPOSE_TTY) run py.test --verbosity=2 --color=yes --junitxml /reports/acceptance.xml $(PYTEST_OPTS) acceptance
 	docker-compose exec $(DOCKER_COMPOSE_TTY) run junit2html /reports/acceptance.xml /reports/acceptance.html
 
@@ -59,4 +60,10 @@ checks: prospector ## Run the checks
 
 .PHONY: prospector
 prospector: build-api ## Run Prospector
-	docker run --rm --volume=${PWD}:/app $(DOCKER_BASE)-checker:$(DOCKER_TAG) prospector --output=pylint --die-on-tool-error
+	docker run --rm --volume=${PWD}/api:/app $(DOCKER_BASE)-checker:$(DOCKER_TAG) prospector --output=pylint --die-on-tool-error
+	docker run --rm --volume=${PWD}/acceptance_tests:/app $(DOCKER_BASE)-checker:$(DOCKER_TAG) prospector --output=pylint --die-on-tool-error
+
+.PHONY: prospector-fast
+prospector-fast: ## Run Prospector without rebuilding the images
+	docker run --rm --volume=${PWD}/api:/app $(DOCKER_BASE)-checker:$(DOCKER_TAG) prospector --output=pylint --die-on-tool-error
+	docker run --rm --volume=${PWD}/acceptance_tests:/app $(DOCKER_BASE)-checker:$(DOCKER_TAG) prospector --output=pylint --die-on-tool-error

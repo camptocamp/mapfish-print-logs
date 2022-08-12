@@ -3,6 +3,7 @@ from typing import Any, Dict
 import pyramid.request  # type: ignore
 from c2cwsgiutils import services
 from pyramid.httpexceptions import HTTPNotFound  # type: ignore
+from pyramid.security import Allowed  # type: ignore
 
 from mapfish_print_logs import elastic_search
 from mapfish_print_logs.config import LOG_LIMIT, MAX_LOGS
@@ -26,6 +27,7 @@ def get_ref(request: pyramid.request.Request) -> Dict[str, Any]:
     if accounting is None:
         raise HTTPNotFound("No such ref")
     logs, total = elastic_search.get_logs(ref, min_level, pos, LOG_LIMIT, filter_loggers)
+    is_admin = isinstance(request.has_permission("all", {}), Allowed)
     return {
         "ref": ref,
         "min_level": min_level,
@@ -41,5 +43,5 @@ def get_ref(request: pyramid.request.Request) -> Dict[str, Any]:
         "total": total,
         "max_logs": MAX_LOGS,
         "filter_loggers": filter_loggers,
-        "source": app_id2source(accounting.app_id) if request.key is not None else None,
+        "source": app_id2source(accounting.app_id) if is_admin else None,
     }

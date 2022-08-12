@@ -12,11 +12,24 @@ from c2cwsgiutils.health_check import HealthCheck
 from pyramid.config import Configurator  # type: ignore
 from pyramid.httpexceptions import HTTPMovedPermanently  # type: ignore
 
-from mapfish_print_logs import security
+import mapfish_print_logs.security
 from mapfish_print_logs.config import SCM_URL
 from mapfish_print_logs.elastic_search import SEARCH_HEADERS, SEARCH_URL
 
 LOG = logging.getLogger(__name__)
+
+
+def forbidden(request: pyramid.request.Request) -> pyramid.response.Response:
+    is_auth = c2cwsgiutils.auth.is_auth(request)
+
+    if is_auth:
+        return pyramid.httpexceptions.HTTPForbidden(request.exception.message)
+    return pyramid.httpexceptions.HTTPFound(
+        location=request.route_url(
+            "c2c_github_login",
+            _query={"came_from": request.current_route_url()},
+        )
+    )
 
 
 def _redirect_home(request: pyramid.request.Request) -> pyramid.response.Response:
@@ -30,9 +43,10 @@ def main(_: Any, **settings: Dict[str, Any]) -> Any:
     """This function returns a Pyramid WSGI application."""
     config = Configurator(settings=settings)
     config.include(c2cwsgiutils.pyramid.includeme)
-    config.include(security.includeme)
     config.include("pyramid_mako")
     dbsession = c2cwsgiutils.db.init(config, "sqlalchemy", "sqlalchemy_slave")
+    config.set_security_policy(mapfish_print_logs.security.SecurityPolicy())
+    config.add_forbidden_view(forbidden)
 
     health_check = HealthCheck(config)
     health_check.add_db_session_check(
