@@ -1,8 +1,8 @@
 """
 Setup of the Pyramid application
 """
+
 import logging
-import os
 from typing import Any, Dict
 
 import c2cwsgiutils.pyramid
@@ -10,7 +10,6 @@ import pyramid.request  # type: ignore
 import pyramid.response  # type: ignore
 from c2cwsgiutils.health_check import HealthCheck
 from pyramid.config import Configurator  # type: ignore
-from pyramid.httpexceptions import HTTPMovedPermanently  # type: ignore
 
 import mapfish_print_logs.security
 from mapfish_print_logs.config import SCM_URL
@@ -30,13 +29,6 @@ def forbidden(request: pyramid.request.Request) -> pyramid.response.Response:
             _query={"came_from": request.current_route_url()},
         )
     )
-
-
-def _redirect_home(request: pyramid.request.Request) -> pyramid.response.Response:
-    del request
-
-    entry_point = os.environ.get("VISIBLE_ENTRY_POINT", "/")
-    return HTTPMovedPermanently(location=f"{entry_point}logs/")
 
 
 def main(_: Any, **settings: Dict[str, Any]) -> Any:
@@ -64,8 +56,8 @@ def main(_: Any, **settings: Dict[str, Any]) -> Any:
     )
 
     config.scan("mapfish_print_logs.services")
-    config.add_static_view(name="/logs", path="/app/mapfish_print_logs/static", cache_max_age=0)
-    config.add_route(name="index_redir", path="/logs")
-    config.add_view(view=_redirect_home, route_name="index_redir")
+    config.add_static_view(
+        name="/", path="/app/mapfish_print_logs/static", cache_max_age=0
+    )
 
     return config.make_wsgi_app()

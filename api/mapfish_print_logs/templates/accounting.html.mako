@@ -10,14 +10,14 @@
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="/logs/style.css">
+    <link rel="stylesheet" href="${request.static_url('/app/mapfish_print_logs/static/style.css')}">
     <title>Mapfish print logs - ${source | h} - accounting</title>
   </head>
   <body>
     <div class="container">
       <div class="card">
         <div class="card-header">
-          <a role="button" class="btn btn-primary float-right" href="/logs/source/${source | u}/accounting.csv">
+          <a role="button" class="btn btn-primary float-right" href="${request.route_url('accounting_csv', source=source) | u}">
             CSV
           </a>
           <h3 style="display: inline">Accounting for ${source | h}</h3>

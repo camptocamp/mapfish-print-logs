@@ -22,18 +22,18 @@
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="/logs/style.css">
+    <link rel="stylesheet" href="${request.static_url('/app/mapfish_print_logs/static/style.css')}">
     <title>Mapfish print logs - ${source | h}</title>
   </head>
   <body>
     <div class="container">
       <div class="card">
         <div class="card-header">
-          <a role="button" class="btn btn-primary float-right" href="/logs/source/${source | u}">
+          <a role="button" class="btn btn-primary float-right" href="${request.route_url('source_auth', source=source)}">
             Refresh
           </a>
           <a role="button" class="btn btn-secondary float-right mr-2"
-            href="/logs/source/${source | u}?only_errors=${'0' if only_errors else '1'}">
+            href="${request.route_url('source_auth', source=source, _query={'only_errors': '0' if only_errors else '1'})}">
             %if only_errors:
               Show all
             %else:
@@ -41,17 +41,17 @@
             %endif
           </a>
 
-          <a class="btn btn-secondary float-right mr-2" href="/logs/">Back to sources</a>
+          <a class="btn btn-secondary float-right mr-2" href="${request.route_url('index')}">Back to sources</a>
           <h3 style="display: inline">Logs for ${source | h}</h3>
           <nav style="display: inline-block" class="ml-4">
             <ul class="pagination justify-content-center mb-0">
               <li class="page-item ${'disabled' if next_pos is None else ''}">
-                <a role="button" class="page-link" href="/logs/source/${source| u}?pos=${next_pos}">
+                <a role="button" class="page-link" href="${request.route_url('source_auth', source=source, _query={'pos': next_pos})}">
                   older
                 </a>
               </li>
               <li class="page-item ${'disabled' if prev_pos is None else ''}">
-                <a role="button" class="page-link" href="/logs/source/${source | u}?pos=${prev_pos}">
+                <a role="button" class="page-link" href="${request.route_url('source_auth', source=source, _query={'pos': prev_pos})}">
                   younger
                 </a>
               </li>
@@ -73,7 +73,7 @@
               %for job in jobs:
                 <tr>
                   <td>
-                    <a href="/logs/ref?ref=${job.reference_id | u}">
+                    <a href="${request.route_url('ref', _query={'ref': job.reference_id})}">
                       ${job.completion_time.isoformat().split('.')[0] | h}
                     </a>
                   </td>
@@ -92,7 +92,7 @@
         <div class="card mt-8">
           <div class="card-header">
             %if scm_refresh_url is not None:
-              <a class="btn btn-primary float-right" href="/logs/source/${source | u}/accounting">
+              <a class="btn btn-primary float-right" href="${request.route_url('accounting', source=source)}">
                 Accounting
               </a>
               <a class="btn btn-secondary float-right mr-2" href="${scm_refresh_url}" target="_blank">

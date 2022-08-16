@@ -44,7 +44,10 @@ run: build build-acceptance
 	rm -rf reports/coverage/api reports/acceptance*.xml
 	mkdir -p reports/coverage/api
 	chmod o+rw reports
-	GITHUB_TOKEN=$(shell gopass show gs/ci/github/token/gopass) docker-compose up -d
+	GITHUB_TOKEN=$(shell gopass show gs/ci/github/token/gopass) \
+	C2C_AUTH_GITHUB_CLIENT_ID=$(shell gopass show gs/projects/github/oauth-apps/geoservices-int/client-id) \
+	C2C_AUTH_GITHUB_CLIENT_SECRET=$(shell gopass show gs/projects/github/oauth-apps/geoservices-int/client-secret) \
+	docker-compose up -d
 
 .PHONY: acceptance
 acceptance: ## Run the acceptance tests
@@ -54,6 +57,11 @@ acceptance: ## Run the acceptance tests
 	docker-compose exec $(DOCKER_COMPOSE_TTY) api proutes c2c://production.ini || true
 	docker-compose exec $(DOCKER_COMPOSE_TTY) run py.test --verbosity=2 --color=yes --junitxml /reports/acceptance.xml $(PYTEST_OPTS) acceptance
 	docker-compose exec $(DOCKER_COMPOSE_TTY) run junit2html /reports/acceptance.xml /reports/acceptance.html
+
+.PHONY: acceptance-exitfirst
+acceptance-exitfirst: ## Run the acceptance tests, exit on first error
+	# Run the tests
+	docker-compose exec $(DOCKER_COMPOSE_TTY) run py.test --verbosity=2 --color=yes --exitfirst $(PYTEST_OPTS) acceptance
 
 .PHONY: checks
 checks: prospector ## Run the checks

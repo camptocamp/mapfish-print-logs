@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+  api:
+    environment:
+      - C2C_AUTH_GITHUB_CLIENT_ID
+      - C2C_AUTH_GITHUB_CLIENT_SECRET

@@ -32,6 +32,8 @@ services:
       - C2C_AUTH_GITHUB_REPOSITORY=camptocamp/mapfish-print-logs
       - C2C_AUTH_GITHUB_ACCESS_TYPE=pull
       - C2C_AUTH_GITHUB_SECRET=a-secret-long-a-secret
+      - C2C_AUTH_GITHUB_PROXY_URL=https://mutualize-int.apps.gs-ch-dev.camptocamp.com/redirect
+      - OAUTHLIB_INSECURE_TRANSPORT=1
 
     volumes:
       - ./api/mapfish_print_logs:/app/mapfish_print_logs:ro
