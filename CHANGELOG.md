@@ -10,7 +10,7 @@
 
 #### :bug: Bug Fixes
 
-- Move the /logs to the proxy-prefix, use route\_url [\#346](https://github.com/camptocamp/mapfish-print-logs/pull/346) ([sbrunner](https://github.com/sbrunner))
+- Move the /logs to the proxy-prefix, use route_url [\#346](https://github.com/camptocamp/mapfish-print-logs/pull/346) ([sbrunner](https://github.com/sbrunner))
 
 #### :books: Documentation
 
@@ -20,6 +20,7 @@
 
 - Use the latest version of c2cciutils in the audit [\#364](https://github.com/camptocamp/mapfish-print-logs/pull/364) ([sbrunner](https://github.com/sbrunner))
 - Fix the changelog generation [\#353](https://github.com/camptocamp/mapfish-print-logs/pull/353) ([sbrunner](https://github.com/sbrunner))
+- Update the changelog [\#348](https://github.com/camptocamp/mapfish-print-logs/pull/348) ([github-actions[bot]](https://github.com/apps/github-actions))
 
 #### :package: Dependencies update
 
@@ -48,7 +49,7 @@
 - Bump c2cciutils from 1.2.dev20220601085126 to 1.2.dev20220607092206 [\#324](https://github.com/camptocamp/mapfish-print-logs/pull/324) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump pipenv from 2022.5.2 to 2022.6.7 [\#323](https://github.com/camptocamp/mapfish-print-logs/pull/323) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.2.dev20220527115520 to 1.2.dev20220601085126 [\#322](https://github.com/camptocamp/mapfish-print-logs/pull/322) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump waitress from 2.1.1 to 2.1.2 in /acceptance\_tests [\#321](https://github.com/camptocamp/mapfish-print-logs/pull/321) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waitress from 2.1.1 to 2.1.2 in /acceptance_tests [\#321](https://github.com/camptocamp/mapfish-print-logs/pull/321) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-pyyaml from 6.0.7 to 6.0.8 in /api [\#319](https://github.com/camptocamp/mapfish-print-logs/pull/319) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.27.29 to 2.27.30 in /api [\#318](https://github.com/camptocamp/mapfish-print-logs/pull/318) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump sqlalchemy from 1.4.36 to 1.4.37 in /api [\#316](https://github.com/camptocamp/mapfish-print-logs/pull/316) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -56,7 +57,7 @@
 - Bump types-setuptools from 57.4.16 to 57.4.17 in /api [\#314](https://github.com/camptocamp/mapfish-print-logs/pull/314) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.27.27 to 2.27.29 in /api [\#313](https://github.com/camptocamp/mapfish-print-logs/pull/313) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-setuptools from 57.4.15 to 57.4.16 in /api [\#312](https://github.com/camptocamp/mapfish-print-logs/pull/312) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pyjwt from 2.3.0 to 2.4.0 in /acceptance\_tests [\#311](https://github.com/camptocamp/mapfish-print-logs/pull/311) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pyjwt from 2.3.0 to 2.4.0 in /acceptance_tests [\#311](https://github.com/camptocamp/mapfish-print-logs/pull/311) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-setuptools from 57.4.14 to 57.4.15 in /api [\#310](https://github.com/camptocamp/mapfish-print-logs/pull/310) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.27.26 to 2.27.27 in /api [\#309](https://github.com/camptocamp/mapfish-print-logs/pull/309) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump setuptools from 59.8.0 to 62.3.2 in /api [\#308](https://github.com/camptocamp/mapfish-print-logs/pull/308) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -69,11 +70,11 @@
 - Bump types-requests from 2.27.22 to 2.27.24 in /api [\#294](https://github.com/camptocamp/mapfish-print-logs/pull/294) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.27.20 to 2.27.22 in /api [\#293](https://github.com/camptocamp/mapfish-print-logs/pull/293) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump sqlalchemy from 1.4.35 to 1.4.36 in /api [\#292](https://github.com/camptocamp/mapfish-print-logs/pull/292) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump junit2html from 30.0.6 to 30.1.3 in /acceptance\_tests [\#291](https://github.com/camptocamp/mapfish-print-logs/pull/291) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pytest from 7.1.1 to 7.1.2 in /acceptance\_tests [\#290](https://github.com/camptocamp/mapfish-print-logs/pull/290) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pipenv from 2022.4.20 to 2022.4.21 in /acceptance\_tests [\#287](https://github.com/camptocamp/mapfish-print-logs/pull/287) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump junit2html from 30.0.6 to 30.1.3 in /acceptance_tests [\#291](https://github.com/camptocamp/mapfish-print-logs/pull/291) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pytest from 7.1.1 to 7.1.2 in /acceptance_tests [\#290](https://github.com/camptocamp/mapfish-print-logs/pull/290) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pipenv from 2022.4.20 to 2022.4.21 in /acceptance_tests [\#287](https://github.com/camptocamp/mapfish-print-logs/pull/287) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump ubuntu from 20.04 to 22.04 in /api [\#284](https://github.com/camptocamp/mapfish-print-logs/pull/284) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump ubuntu from 20.04 to 22.04 in /acceptance\_tests [\#283](https://github.com/camptocamp/mapfish-print-logs/pull/283) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump ubuntu from 20.04 to 22.04 in /acceptance_tests [\#283](https://github.com/camptocamp/mapfish-print-logs/pull/283) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump ubuntu from 20.04 to 22.04 in /configs [\#282](https://github.com/camptocamp/mapfish-print-logs/pull/282) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump pipenv from 2022.4.8 to 2022.4.20 [\#281](https://github.com/camptocamp/mapfish-print-logs/pull/281) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.27.19 to 2.27.20 in /api [\#280](https://github.com/camptocamp/mapfish-print-logs/pull/280) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -94,13 +95,13 @@
 - Bump pipenv from 2022.1.8 to 2022.3.24 [\#250](https://github.com/camptocamp/mapfish-print-logs/pull/250) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.27.13 to 2.27.14 in /api [\#249](https://github.com/camptocamp/mapfish-print-logs/pull/249) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.2.dev20220314145935 to 1.2.dev20220317100006 [\#248](https://github.com/camptocamp/mapfish-print-logs/pull/248) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pytest from 7.1.0 to 7.1.1 in /acceptance\_tests [\#247](https://github.com/camptocamp/mapfish-print-logs/pull/247) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pytest from 7.1.0 to 7.1.1 in /acceptance_tests [\#247](https://github.com/camptocamp/mapfish-print-logs/pull/247) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-pyyaml from 6.0.4 to 6.0.5 in /api [\#246](https://github.com/camptocamp/mapfish-print-logs/pull/246) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-setuptools from 57.4.10 to 57.4.11 in /api [\#244](https://github.com/camptocamp/mapfish-print-logs/pull/244) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.27.12 to 2.27.13 in /api [\#243](https://github.com/camptocamp/mapfish-print-logs/pull/243) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.2.dev20220309162621 to 1.2.dev20220314145935 [\#242](https://github.com/camptocamp/mapfish-print-logs/pull/242) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.27.11 to 2.27.12 in /api [\#241](https://github.com/camptocamp/mapfish-print-logs/pull/241) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pytest from 7.0.1 to 7.1.0 in /acceptance\_tests [\#240](https://github.com/camptocamp/mapfish-print-logs/pull/240) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pytest from 7.0.1 to 7.1.0 in /acceptance_tests [\#240](https://github.com/camptocamp/mapfish-print-logs/pull/240) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump prospector from 1.7.6 to 1.7.7 in /api [\#239](https://github.com/camptocamp/mapfish-print-logs/pull/239) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.2.dev20220304093002 to 1.2.dev20220309162621 [\#238](https://github.com/camptocamp/mapfish-print-logs/pull/238) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-setuptools from 57.4.9 to 57.4.10 in /api [\#235](https://github.com/camptocamp/mapfish-print-logs/pull/235) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -115,7 +116,7 @@
 - Bump types-requests from 2.27.9 to 2.27.10 in /api [\#220](https://github.com/camptocamp/mapfish-print-logs/pull/220) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.2.dev20220214124120 to 1.2.dev20220215091734 [\#219](https://github.com/camptocamp/mapfish-print-logs/pull/219) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.2.dev20220209105112 to 1.2.dev20220214124120 [\#218](https://github.com/camptocamp/mapfish-print-logs/pull/218) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pytest from 7.0.0 to 7.0.1 in /acceptance\_tests [\#216](https://github.com/camptocamp/mapfish-print-logs/pull/216) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pytest from 7.0.0 to 7.0.1 in /acceptance_tests [\#216](https://github.com/camptocamp/mapfish-print-logs/pull/216) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 **Merged pull requests:**
 
@@ -137,9 +138,9 @@
 - Bump c2cciutils from 1.2.dev20220208134628 to 1.2.dev20220209105112 [\#212](https://github.com/camptocamp/mapfish-print-logs/pull/212) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20220203110559 to 1.2.dev20220208134628 [\#211](https://github.com/camptocamp/mapfish-print-logs/pull/211) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cwsgiutils from 4.1.4 to 5.0.0 in /api [\#210](https://github.com/camptocamp/mapfish-print-logs/pull/210) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump c2cwsgiutils from 4.1.4 to 5.0.0 in /acceptance\_tests [\#209](https://github.com/camptocamp/mapfish-print-logs/pull/209) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump c2cwsgiutils from 4.1.4 to 5.0.0 in /acceptance_tests [\#209](https://github.com/camptocamp/mapfish-print-logs/pull/209) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-setuptools from 57.4.8 to 57.4.9 in /api [\#207](https://github.com/camptocamp/mapfish-print-logs/pull/207) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pytest from 6.2.5 to 7.0.0 in /acceptance\_tests [\#206](https://github.com/camptocamp/mapfish-print-logs/pull/206) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pytest from 6.2.5 to 7.0.0 in /acceptance_tests [\#206](https://github.com/camptocamp/mapfish-print-logs/pull/206) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20220202080326 to 1.1.dev20220203110559 [\#204](https://github.com/camptocamp/mapfish-print-logs/pull/204) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20220131090250 to 1.1.dev20220202080326 [\#202](https://github.com/camptocamp/mapfish-print-logs/pull/202) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.27.7 to 2.27.8 in /api [\#200](https://github.com/camptocamp/mapfish-print-logs/pull/200) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -147,7 +148,7 @@
 - Bump c2cciutils from 1.1.dev20220124152826 to 1.1.dev20220131090250 [\#197](https://github.com/camptocamp/mapfish-print-logs/pull/197) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-setuptools from 57.4.7 to 57.4.8 in /api [\#196](https://github.com/camptocamp/mapfish-print-logs/pull/196) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20220120144445 to 1.1.dev20220124152826 [\#195](https://github.com/camptocamp/mapfish-print-logs/pull/195) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump ujson from 4.3.0 to 5.1.0 in /acceptance\_tests [\#194](https://github.com/camptocamp/mapfish-print-logs/pull/194) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump ujson from 4.3.0 to 5.1.0 in /acceptance_tests [\#194](https://github.com/camptocamp/mapfish-print-logs/pull/194) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump sqlalchemy from 1.4.30 to 1.4.31 in /api [\#193](https://github.com/camptocamp/mapfish-print-logs/pull/193) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20220119105226 to 1.1.dev20220120144445 [\#192](https://github.com/camptocamp/mapfish-print-logs/pull/192) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump sqlalchemy from 1.4.29 to 1.4.30 in /api [\#191](https://github.com/camptocamp/mapfish-print-logs/pull/191) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -167,7 +168,7 @@
 - Bump sqlalchemy from 1.4.28 to 1.4.29 in /api [\#168](https://github.com/camptocamp/mapfish-print-logs/pull/168) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.26.1 to 2.26.2 in /api [\#167](https://github.com/camptocamp/mapfish-print-logs/pull/167) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20211209145632 to 1.1.dev20211215101636 [\#166](https://github.com/camptocamp/mapfish-print-logs/pull/166) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump lxml from 4.6.3 to 4.6.5 in /acceptance\_tests [\#165](https://github.com/camptocamp/mapfish-print-logs/pull/165) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump lxml from 4.6.3 to 4.6.5 in /acceptance_tests [\#165](https://github.com/camptocamp/mapfish-print-logs/pull/165) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump lxml from 4.6.4 to 4.6.5 in /api [\#164](https://github.com/camptocamp/mapfish-print-logs/pull/164) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump sqlalchemy from 1.4.27 to 1.4.28 in /api [\#163](https://github.com/camptocamp/mapfish-print-logs/pull/163) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20211125140927 to 1.1.dev20211209145632 [\#162](https://github.com/camptocamp/mapfish-print-logs/pull/162) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -218,7 +219,7 @@
 - Bump types-pyyaml from 5.4.9 to 5.4.10 in /api [\#103](https://github.com/camptocamp/mapfish-print-logs/pull/103) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210810100526 to 1.1.dev20210901090041 [\#102](https://github.com/camptocamp/mapfish-print-logs/pull/102) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-pyyaml from 5.4.8 to 5.4.9 in /api [\#101](https://github.com/camptocamp/mapfish-print-logs/pull/101) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pytest from 6.2.4 to 6.2.5 in /acceptance\_tests [\#100](https://github.com/camptocamp/mapfish-print-logs/pull/100) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pytest from 6.2.4 to 6.2.5 in /acceptance_tests [\#100](https://github.com/camptocamp/mapfish-print-logs/pull/100) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-pyyaml from 5.4.7 to 5.4.8 in /api [\#99](https://github.com/camptocamp/mapfish-print-logs/pull/99) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump prospector from 1.4.0 to 1.5.0.1 in /api [\#98](https://github.com/camptocamp/mapfish-print-logs/pull/98) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump prospector from 1.3.1 to 1.4.0 in /api [\#97](https://github.com/camptocamp/mapfish-print-logs/pull/97) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -232,8 +233,8 @@
 - Bump c2cciutils from 1.1.dev20210701074602 to 1.1.dev20210709152623 [\#89](https://github.com/camptocamp/mapfish-print-logs/pull/89) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210629154910 to 1.1.dev20210701074602 [\#88](https://github.com/camptocamp/mapfish-print-logs/pull/88) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cwsgiutils from 4.1.3 to 4.1.4 in /api [\#87](https://github.com/camptocamp/mapfish-print-logs/pull/87) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump c2cwsgiutils from 4.1.3 to 4.1.4 in /acceptance\_tests [\#86](https://github.com/camptocamp/mapfish-print-logs/pull/86) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump c2cwsgiutils from 4.1.2 to 4.1.3 in /acceptance\_tests [\#85](https://github.com/camptocamp/mapfish-print-logs/pull/85) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump c2cwsgiutils from 4.1.3 to 4.1.4 in /acceptance_tests [\#86](https://github.com/camptocamp/mapfish-print-logs/pull/86) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump c2cwsgiutils from 4.1.2 to 4.1.3 in /acceptance_tests [\#85](https://github.com/camptocamp/mapfish-print-logs/pull/85) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cwsgiutils from 4.1.2 to 4.1.3 in /api [\#84](https://github.com/camptocamp/mapfish-print-logs/pull/84) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210623154317 to 1.1.dev20210629154910 [\#83](https://github.com/camptocamp/mapfish-print-logs/pull/83) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump sqlalchemy from 1.4.19 to 1.4.20 in /api [\#82](https://github.com/camptocamp/mapfish-print-logs/pull/82) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -246,14 +247,14 @@
 - Bump sqlalchemy from 1.4.17 to 1.4.18 in /api [\#75](https://github.com/camptocamp/mapfish-print-logs/pull/75) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210511092229 to 1.1.dev20210604063451 [\#74](https://github.com/camptocamp/mapfish-print-logs/pull/74) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump urllib3 from 1.26.4 to 1.26.5 in /api [\#73](https://github.com/camptocamp/mapfish-print-logs/pull/73) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump urllib3 from 1.26.4 to 1.26.5 in /acceptance\_tests [\#72](https://github.com/camptocamp/mapfish-print-logs/pull/72) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump urllib3 from 1.26.4 to 1.26.5 in /acceptance_tests [\#72](https://github.com/camptocamp/mapfish-print-logs/pull/72) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump pipenv from 2020.11.15 to 2021.5.29 in /api [\#71](https://github.com/camptocamp/mapfish-print-logs/pull/71) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump sqlalchemy from 1.3.22 to 1.4.17 in /api [\#70](https://github.com/camptocamp/mapfish-print-logs/pull/70) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump pipenv from 2020.11.15 to 2021.5.29 [\#68](https://github.com/camptocamp/mapfish-print-logs/pull/68) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump c2cwsgiutils from 4.1.1 to 4.1.2 in /acceptance\_tests [\#67](https://github.com/camptocamp/mapfish-print-logs/pull/67) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump c2cwsgiutils from 4.1.1 to 4.1.2 in /acceptance_tests [\#67](https://github.com/camptocamp/mapfish-print-logs/pull/67) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cwsgiutils from 4.1.1 to 4.1.2 in /api [\#66](https://github.com/camptocamp/mapfish-print-logs/pull/66) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210504062412 to 1.1.dev20210511092229 [\#64](https://github.com/camptocamp/mapfish-print-logs/pull/64) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pytest from 6.2.3 to 6.2.4 in /acceptance\_tests [\#61](https://github.com/camptocamp/mapfish-print-logs/pull/61) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pytest from 6.2.3 to 6.2.4 in /acceptance_tests [\#61](https://github.com/camptocamp/mapfish-print-logs/pull/61) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210428132049 to 1.1.dev20210504062412 [\#60](https://github.com/camptocamp/mapfish-print-logs/pull/60) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210427101151 to 1.1.dev20210428132049 [\#55](https://github.com/camptocamp/mapfish-print-logs/pull/55) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210422085804 to 1.1.dev20210427101151 [\#54](https://github.com/camptocamp/mapfish-print-logs/pull/54) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -262,11 +263,11 @@
 - Bump c2cciutils from 1.1.dev20210416145645 to 1.1.dev20210419145517 [\#47](https://github.com/camptocamp/mapfish-print-logs/pull/47) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump urllib3 from 1.26.2 to 1.26.4 in /api [\#44](https://github.com/camptocamp/mapfish-print-logs/pull/44) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210401100258 to 1.1.dev20210416145645 [\#42](https://github.com/camptocamp/mapfish-print-logs/pull/42) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pytest from 6.2.2 to 6.2.3 in /acceptance\_tests [\#39](https://github.com/camptocamp/mapfish-print-logs/pull/39) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pytest from 6.2.2 to 6.2.3 in /acceptance_tests [\#39](https://github.com/camptocamp/mapfish-print-logs/pull/39) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210315182348 to 1.1.dev20210401100258 [\#38](https://github.com/camptocamp/mapfish-print-logs/pull/38) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump pytest from 6.2.1 to 6.2.2 in /acceptance\_tests [\#36](https://github.com/camptocamp/mapfish-print-logs/pull/36) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump junit2html from 26 to 30.0.6 in /acceptance\_tests [\#35](https://github.com/camptocamp/mapfish-print-logs/pull/35) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump urllib3 from 1.26.2 to 1.26.3 in /acceptance\_tests [\#34](https://github.com/camptocamp/mapfish-print-logs/pull/34) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pytest from 6.2.1 to 6.2.2 in /acceptance_tests [\#36](https://github.com/camptocamp/mapfish-print-logs/pull/36) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump junit2html from 26 to 30.0.6 in /acceptance_tests [\#35](https://github.com/camptocamp/mapfish-print-logs/pull/35) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump urllib3 from 1.26.2 to 1.26.3 in /acceptance_tests [\#34](https://github.com/camptocamp/mapfish-print-logs/pull/34) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210308113838 to 1.1.dev20210315182348 [\#33](https://github.com/camptocamp/mapfish-print-logs/pull/33) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.0.dev20210305083859 to 1.1.dev20210308113838 [\#32](https://github.com/camptocamp/mapfish-print-logs/pull/32) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.0.dev20210304083613 to 1.0.dev20210305083859 [\#31](https://github.com/camptocamp/mapfish-print-logs/pull/31) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -276,7 +277,7 @@
 **Merged pull requests:**
 
 - Move the a4price to an environment variable [\#158](https://github.com/camptocamp/mapfish-print-logs/pull/158) ([sbrunner](https://github.com/sbrunner))
-- \[Backport master\] Also ignore the CVE in API and in acceptance\_tests [\#144](https://github.com/camptocamp/mapfish-print-logs/pull/144) ([c2c-bot-gis-ci](https://github.com/c2c-bot-gis-ci))
+- \[Backport master\] Also ignore the CVE in API and in acceptance_tests [\#144](https://github.com/camptocamp/mapfish-print-logs/pull/144) ([c2c-bot-gis-ci](https://github.com/c2c-bot-gis-ci))
 - \[Backport master\] Ignore CVE: 42194, unfixed upstream [\#141](https://github.com/camptocamp/mapfish-print-logs/pull/141) ([c2c-bot-gis-ci](https://github.com/c2c-bot-gis-ci))
 - Fix for sqlalchemy-utils re-upload [\#57](https://github.com/camptocamp/mapfish-print-logs/pull/57) ([sbrunner](https://github.com/sbrunner))
 - Use pipenv sync [\#29](https://github.com/camptocamp/mapfish-print-logs/pull/29) ([sbrunner](https://github.com/sbrunner))
@@ -319,6 +320,4 @@
 - Adapted to the new log format [\#5](https://github.com/camptocamp/mapfish-print-logs/pull/5) ([pvalsecc](https://github.com/pvalsecc))
 - \[requires.io\] dependency update on master branch [\#3](https://github.com/camptocamp/mapfish-print-logs/pull/3) ([pvalsecc](https://github.com/pvalsecc))
 
-
-
-\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
+\* _This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)_
