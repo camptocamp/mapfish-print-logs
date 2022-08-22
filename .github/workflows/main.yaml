@@ -51,7 +51,7 @@ jobs:
       - run: make run
       - name: Acceptance
         run: make acceptance
-      - run: docker-compose exec -T run junit2html /reports/acceptance.xml /reports/acceptance.html
+      - run: docker-compose exec -T run junit2html /reports/acceptance.xml /reports/acceptance.html || true
         if: always()
       - run: c2cciutils-docker-logs
         if: always()

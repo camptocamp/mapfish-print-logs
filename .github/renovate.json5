@@ -7,7 +7,7 @@
   separateMinorPatch: true,
   lockFileMaintenance: { enabled: true, automerge: true },
   packageRules: [
-    /** Docker images versionning */
+    /** Docker images versioning */
     {
       matchFiles: ['api/Dockerfile', 'configs/Dockerfile'],
       matchDatasources: ['docker'],
@@ -15,7 +15,12 @@
     },
     {
       matchDatasources: ['docker'],
-      versioning: 'regex:^.*(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?.*$',
+      matchPackageNames: ['docker.elastic.co/elasticsearch/elasticsearch-oss'],
+      versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-amd64$',
+    },
+    {
+      matchDatasources: ['docker'],
+      versioning: 'loose',
     },
     /** Automerge the patch, the minor and the dev dependency */
     {
