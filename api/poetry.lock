@@ -117,8 +117,8 @@ waitress = {version = "*", optional = true, markers = "extra == \"standard\""}
 "zope.sqlalchemy" = {version = "*", optional = true, markers = "extra == \"standard\""}
 
 [package.extras]
-standard = ["zope.sqlalchemy", "zope.interface", "waitress", "ujson", "sqlalchemy-utils", "sqlalchemy", "sentry-sdk", "requests-oauthlib", "requests", "pyyaml", "pyramid-tm", "pyramid", "pyjwt", "psycopg2", "pipfile", "objgraph", "netifaces", "lxml", "gunicorn", "cornice", "cee-syslog-handler", "boltons", "alembic"]
 broadcast = ["redis"]
+standard = ["alembic", "boltons", "cee-syslog-handler", "cornice", "gunicorn", "lxml", "netifaces", "objgraph", "pipfile", "psycopg2", "pyjwt", "pyramid", "pyramid-tm", "pyyaml", "requests", "requests-oauthlib", "sentry-sdk", "sqlalchemy", "sqlalchemy-utils", "ujson", "waitress", "zope.interface", "zope.sqlalchemy"]
 
 [[package]]
 name = "cee-syslog-handler"
@@ -255,9 +255,9 @@ optional = false
 python-versions = ">=3.7"
 
 [package.extras]
-test = ["coverage", "pytest-cov", "mock (>=4)", "pytest-mock (>=3)", "pytest (>=7)"]
-docs = ["sphinx-rtd-theme", "sphinx-autodoc-typehints", "sphinx (>=5)"]
-dev = ["twine", "wheel", "pep8-naming", "flake8", "tox (>=3)"]
+dev = ["tox (>=3)", "flake8", "pep8-naming", "wheel", "twine"]
+docs = ["sphinx (>=5)", "sphinx-autodoc-typehints", "sphinx-rtd-theme"]
+test = ["pytest (>=7)", "pytest-mock (>=3)", "mock (>=4)", "pytest-cov", "coverage"]
 
 [[package]]
 name = "greenlet"
@@ -783,8 +783,8 @@ pyramid = ">=1.5"
 transaction = ">=2.0"
 
 [package.extras]
-testing = ["coverage (>=5.0)", "pytest-cov", "pytest", "webtest"]
-docs = ["pylons-sphinx-themes (>=1.0.9)", "Sphinx (>=1.8.1)"]
+docs = ["Sphinx (>=1.8.1)", "pylons-sphinx-themes (>=1.0.9)"]
+testing = ["webtest", "pytest", "pytest-cov", "coverage (>=5.0)"]
 
 [[package]]
 name = "pyreadline3"
@@ -837,8 +837,8 @@ deprecated = ">=1.2.3"
 packaging = ">=20.4"
 
 [package.extras]
-ocsp = ["requests (>=2.26.0)", "pyopenssl (==20.0.1)", "cryptography (>=36.0.1)"]
 hiredis = ["hiredis (>=1.0.0)"]
+ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
 
 [[package]]
 name = "requests"
@@ -1086,7 +1086,7 @@ types-urllib3 = "<1.27"
 
 [[package]]
 name = "types-setuptools"
-version = "63.4.1"
+version = "65.1.0"
 description = "Typing stubs for setuptools"
 category = "dev"
 optional = false
@@ -1162,8 +1162,8 @@ optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*"
 
 [package.extras]
-testing = ["pytest-xdist", "pytest-cov", "coverage", "pytest (>=3.1.0)"]
-docs = ["pylons-sphinx-themes", "Sphinx (>=1.7.5)"]
+docs = ["Sphinx (>=1.7.5)", "pylons-sphinx-themes"]
+testing = ["pytest (>=3.1.0)", "coverage", "pytest-cov", "pytest-xdist"]
 
 [[package]]
 name = "wrapt"
@@ -1217,7 +1217,7 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<3.11"
-content-hash = "a6ad92ef8d48dc7d232d1ca9980b4becc0fe11e5d23f46e6c6b5bec5797280d9"
+content-hash = "20151d21de5b4e628284c2567aaa5f8fb8e3088e3eeb983d6341b79afd714d4b"
 
 [metadata.files]
 alembic = [
@@ -1868,8 +1868,8 @@ types-requests = [
     {file = "types_requests-2.28.9-py3-none-any.whl", hash = "sha256:86cb66d3de2f53eac5c09adc42cf6547eefbd0c7e1210beca1ee751c35d96083"},
 ]
 types-setuptools = [
-    {file = "types-setuptools-63.4.1.tar.gz", hash = "sha256:6aad80dd16bb5ee5c78260d7b5536ddbb95470ed8cc3dab19027802a7f8dc362"},
-    {file = "types_setuptools-63.4.1-py3-none-any.whl", hash = "sha256:8781e2fe71fd2885b085f2eeaad099468cda791b383ccbc735d9aad0c44f5355"},
+    {file = "types-setuptools-65.1.0.tar.gz", hash = "sha256:57f7d89eaa52a40ccb97f2cbe6178c6ad90f843afb67680933f8ef1472da53f8"},
+    {file = "types_setuptools-65.1.0-py3-none-any.whl", hash = "sha256:050ccaff1d0fecc1b1269168fe4da396c2a0743f0d287af391a9312c18a8b095"},
 ]
 types-urllib3 = [
     {file = "types-urllib3-1.26.22.tar.gz", hash = "sha256:b05af90e73889e688094008a97ca95788db8bf3736e2776fd43fb6b171485d94"},
