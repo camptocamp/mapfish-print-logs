@@ -13,7 +13,7 @@
       versioning: 'loose',
     },
     {
-      matchFiles: ['api/Dockerfile', 'configs/Dockerfile'],
+      matchFiles: ['api/Dockerfile', 'configs/Dockerfile', 'acceptance_tests/Dockerfile'],
       matchDatasources: ['docker'],
       versioning: 'ubuntu',
     },
