@@ -22,6 +22,11 @@
       matchPackageNames: ['docker.elastic.co/elasticsearch/elasticsearch-oss'],
       versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-amd64$',
     },
+    {
+      matchDatasources: ['docker'],
+      matchPackageNames: ['camptocamp/mapfish_print'],
+      versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)$',
+    },
     /** Automerge the patch, the minor and the dev dependency */
     {
       matchDepTypes: ['devDependencies'],
