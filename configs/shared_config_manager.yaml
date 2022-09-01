@@ -2,7 +2,6 @@ sources:
   simple:
     type: git
     repo: https://github.com/mapfish/mapfish-print.git
-    key: tutu
     sub_dir: examples/src/test/resources/examples/simple
     template_engines:
       - type: shell

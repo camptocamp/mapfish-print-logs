@@ -79,7 +79,6 @@ services:
   #     MASTER_CONFIG: &master_config |
   #       type: rsync
   #       id: master
-  #       key: changeme
   #       source: /master_config/master
   #   ports:
   #     - 8580:8080

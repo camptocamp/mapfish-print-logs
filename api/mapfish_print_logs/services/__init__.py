@@ -8,10 +8,10 @@ from mapfish_print_logs.config import SCM_URL
 LOG = logging.getLogger(__name__)
 
 
-def get_config_info(source: str, key: str) -> Optional[Dict[str, Any]]:
+def get_config_info(source: str) -> Optional[Dict[str, Any]]:
     if SCM_URL is None:
         return None
-    url = f"{SCM_URL}1/status/{source}/{key}"
+    url = f"{SCM_URL}1/status/{source}"
     try:
         response = requests.get(url)
     except Exception:  # pylint: disable=broad-except
