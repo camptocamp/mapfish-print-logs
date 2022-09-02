@@ -6,7 +6,21 @@ RUN --mount=type=cache,target=/var/lib/apt/lists \
     --mount=type=cache,target=/var/cache,sharing=locked \
     apt-get update \
     && apt-get upgrade --assume-yes \
-    && apt-get install --assume-yes --no-install-recommends python3-pip
+    && apt-get install --assume-yes --no-install-recommends python3-pip git curl gnupg \
+        libglib2.0-0 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 \
+        libxdamage1 libxfixes3 libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2
+
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+    --mount=type=cache,target=/var/cache,sharing=locked \
+    . /etc/os-release \
+    && echo "deb https://deb.nodesource.com/node_18.x ${VERSION_CODENAME} main" > /etc/apt/sources.list.d/nodesource.list \
+    && curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
+    && apt-get update \
+    && apt-get install --assume-yes --no-install-recommends 'nodejs=18.*'
+
+WORKDIR /acceptance_tests
+COPY package.json package-lock.json ./
+RUN npm install
 
 # Used to convert the locked packages by poetry to pip requirements format
 # We don't directly use `poetry install` because it force to use a virtual environment.

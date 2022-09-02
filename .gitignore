@@ -1,4 +1,7 @@
-/reports/
+__pycache__/
+/.github/changelog-generator-cache
 /.venv/
 /api/mapfish_print_logs.egg-info/
-/.github/changelog-generator-cache
+/acceptance_tests/node_modules/
+/reports/
+/results/

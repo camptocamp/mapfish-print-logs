@@ -42,8 +42,8 @@
           </a>
 
           <a class="btn btn-secondary float-right mr-2" href="${request.route_url('index')}">Back to sources</a>
-          <h3 style="display: inline">Logs for ${source | h}</h3>
-          <nav style="display: inline-block" class="ml-4">
+          <h3 style="display: inline; vertical-align: middle;">Logs for ${source | h}</h3>
+          <nav style="display: inline-block; position: absolute; right: 1rem;" class="ml-4">
             <ul class="pagination justify-content-center mb-0">
               <li class="page-item ${'disabled' if next_pos is None else ''}">
                 <a role="button" class="page-link" href="${request.route_url('source_auth', source=source, _query={'pos': next_pos})}">
