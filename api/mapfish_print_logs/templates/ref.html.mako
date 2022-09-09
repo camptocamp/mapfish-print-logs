@@ -28,7 +28,7 @@
           %if source is not None:
           <a class="btn btn-secondary float-right mr-2" href="${request.route_url('source_auth', source=source)}">Back to source</a>
           %endif
-          <h3>Logs for one print job</h3>
+          <h3 style="margin-top: 0.3rem">Logs for one print job</h3>
           <small>
             ${ref}
           </small>
@@ -83,8 +83,8 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col" style="width: 1rem;"></th>
-                <th scope="col" style="width: 16rem;">When</th>
+                <th scope="col" style="width: 1.5rem;"></th>
+                <th scope="col" style="width: 17rem;">When</th>
                 <th scope="col" style="width: 6rem;">Level</th>
                 <th scope="col">Message</th>
               </tr>
@@ -92,7 +92,7 @@
             <tbody>
               %for i, log in enumerate(logs):
               <tr class="level-${log['log']['level'] | h}">
-                <td><a data-toggle="collapse" href="#collapse-${i}"></a></td>
+                <td><a data-toggle="collapse" style="text-decoration: none;" href="#collapse-${i}"></a></td>
                 <td>${log['@timestamp'] | h}</td>
                 <td>${log['log']['level'] | h}</td>
                 <td class="text-truncate">${log['message'] | h}</td>

@@ -5,6 +5,8 @@ pylint:
     max-line-length: 110
   disable:
     - too-many-arguments
+    - too-many-instance-attributes
+    - too-many-return-statements
     - too-few-public-methods
     - wrong-import-order
     - missing-timeout # Default timeout set by c2cwsgiutils

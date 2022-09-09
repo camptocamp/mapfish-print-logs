@@ -16,7 +16,7 @@ def index(request: pyramid.request.Request) -> Dict[str, Any]:
     if request.identity is not None and request.identity.is_auth:
         full_config = utils.read_shared_config()
         for name, config in full_config["sources"].items():
-            if request.identity.is_admin or request.identity.has_access(config):
+            if request.has_permission("all", config):
                 source = copy.deepcopy(config)
                 source["id"] = name
                 sources.append(source)

@@ -20,6 +20,7 @@ class User:
 
     def __init__(
         self,
+        auth_type: str,
         login: Optional[str],
         name: Optional[str],
         url: Optional[str],
@@ -27,17 +28,14 @@ class User:
         token: Optional[str],
         request: pyramid.request.Request,
     ) -> None:
+        self.auth_type = auth_type
         self.login = login
         self.name = name
         self.url = url
         self.is_auth = is_auth
         self.token = token
         self.request = request
-        self.is_admin = c2cwsgiutils.auth.check_access(
-            self.request,
-            os.environ["C2C_AUTH_GITHUB_REPOSITORY"],
-            os.environ.get("C2C_AUTH_GITHUB_ACCESS_TYPE", "admin"),
-        )
+        self.is_admin = c2cwsgiutils.auth.check_access(self.request)
 
     def has_access(self, source_config: SourceConfig) -> bool:
         if self.is_admin:
@@ -45,14 +43,7 @@ class User:
 
         auth_config = source_config.get("auth", {})
         if "github_repository" in auth_config:
-            return (
-                c2cwsgiutils.auth.check_access(
-                    self.request,
-                    auth_config["github_repository"],
-                    auth_config.get("github_access_type", "push"),
-                )
-                or self.is_admin
-            )
+            return c2cwsgiutils.auth.check_access_config(self.request, auth_config) or self.is_admin
 
         return False
 
@@ -62,14 +53,28 @@ class SecurityPolicy:
         """Return app-specific user object."""
 
         if not hasattr(request, "user"):
-            is_auth, user = c2cwsgiutils.auth.is_auth_user(request)
-            setattr(
-                request,
-                "user",
-                User(
-                    user.get("login"), user.get("name"), user.get("url"), is_auth, user.get("token"), request
-                ),
-            )
+            if "TEST_USER" in os.environ:
+                user = User(
+                    auth_type="test_user",
+                    login=os.environ["TEST_USER"],
+                    name=os.environ["TEST_USER"],
+                    url="https://example.com/user",
+                    is_auth=True,
+                    token=None,
+                    request=request,
+                )
+            else:
+                is_auth, c2cuser = c2cwsgiutils.auth.is_auth_user(request)
+                user = User(
+                    "github_oauth",
+                    c2cuser.get("login"),
+                    c2cuser.get("name"),
+                    c2cuser.get("url"),
+                    is_auth,
+                    c2cuser.get("token"),
+                    request,
+                )
+            setattr(request, "user", user)
         return request.user  # type: ignore
 
     def authenticated_userid(self, request: pyramid.request.Request) -> Optional[str]:
@@ -91,6 +96,8 @@ class SecurityPolicy:
 
         if identity is None:
             return Denied("User is not signed in.")
+        if identity.auth_type in ("test_user",):
+            return Allowed(f"All access auth type: {identity.auth_type}")
         if identity.is_admin:
             return Allowed("The User is admin.")
         if permission == "all":
@@ -102,8 +109,8 @@ class SecurityPolicy:
         return Denied(f"The User has no access to source {permission}.")
 
 
-def auth_source(request: pyramid.request.Request) -> Tuple[Config, str]:
-    source = request.matchdict.get("source")
+def auth_source(request: pyramid.request.Request, source: Optional[str] = None) -> Tuple[Config, str]:
+    source = request.matchdict.get("source") if source is None else source
     if source is None:
         raise pyramid.httpexceptions.HTTPBadRequest("This route has no source segment.")
     config = read_shared_config()

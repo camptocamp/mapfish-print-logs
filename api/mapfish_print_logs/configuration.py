@@ -1,9 +1,6 @@
 from typing import Dict, Optional, TypedDict
 
-
-class AuthConfig(TypedDict, total=False):
-    github_repository: str
-    github_access_type: str
+from c2cwsgiutils.auth import AuthConfig
 
 
 class SourceConfig(TypedDict, total=False):

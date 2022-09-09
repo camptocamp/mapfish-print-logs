@@ -1,13 +1,15 @@
 from typing import Any, Dict
 
 import pyramid.request  # type: ignore
+import sqlalchemy  # type: ignore
 from c2cwsgiutils import services
 from pyramid.httpexceptions import HTTPNotFound  # type: ignore
 from pyramid.security import Allowed  # type: ignore
 
-from mapfish_print_logs import elastic_search
+from mapfish_print_logs import elastic_search, utils
 from mapfish_print_logs.config import LOG_LIMIT, MAX_LOGS
 from mapfish_print_logs.models import PrintAccounting
+from mapfish_print_logs.security import auth_source
 from mapfish_print_logs.utils import app_id2source
 
 ref_service = services.create("ref", "/ref")
@@ -23,11 +25,26 @@ def get_ref(request: pyramid.request.Request) -> Dict[str, Any]:
         filter_loggers = filter_loggers.split(",")
     else:
         filter_loggers = []
+
+    if ref == "latest" and "source" in request.params:
+        config, source = auth_source(request, request.params["source"])
+        app_id = utils.get_app_id(config, source)
+        query = request.dbsession.query(PrintAccounting.reference_id)
+        query = query.filter(
+            sqlalchemy.or_(
+                PrintAccounting.app_id == app_id, PrintAccounting.app_id.like(utils.quote_like(app_id) + ":%")
+            )
+        )
+        log = query.order_by(PrintAccounting.completion_time.desc()).limit(1).one_or_none()
+        if log is not None:
+            ref = log.reference_id
+
     accounting = request.dbsession.query(PrintAccounting).get(ref)  # type: PrintAccounting
     if accounting is None:
         raise HTTPNotFound("No such ref")
     logs, total = elastic_search.get_logs(ref, min_level, pos, LOG_LIMIT, filter_loggers)
     is_admin = isinstance(request.has_permission("all", {}), Allowed)
+
     return {
         "ref": ref,
         "min_level": min_level,

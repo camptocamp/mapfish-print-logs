@@ -15,19 +15,18 @@
   </head>
   <body>
     <div class="container">
-      <div class="card">
+      <div class="card" style="margin-bottom: 1rem;">
         <div class="card-header">
           <h3>Logs for one print job</h3>
         </div>
         <div class="card-body">
           <form role="form" action="ref">
             <div class="form-group row">
-              <div class="col-lg-12">
-                <label for="ref">Ref</label>
-                <input id="ref" type="text" name="ref" class="form-control">
+              <div class="col-lg-12 input-group">
+                <input id="ref" type="text" name="ref" class="form-control" placeholder="Ref" aria-label="Ref" aria-describedby="button-get">
+                <button type="submit" class="btn btn-outline-primary" id="button-get">Get</button>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary float-right">Get</button>
           </form>
         </div>
       </div>
@@ -66,14 +65,17 @@
           %endfor
         </div>
       </div>
+      <div>
       %if request.identity.is_admin:
         <a role="button" class="btn btn-primary mt-4 mr-3" href="${request.route_url('accounting_global')}">Accounting</a>
       %endif
       Logged as: <a href="${request.identity.url}">${request.identity.name}</a>, <a role="button" class="btn btn-secondary mt-4"
+        style="vertical-align: baseline;"
         href="${request.route_url('c2c_github_logout', _query={'came_from': request.current_route_url()})}">Logout</a>
       %else:
         <a class="btn btn-primary" href="${request.route_url('c2c_github_login', _query={'came_from': request.current_route_url()})}">Login with GitHub</a>
       %endif
+      </div>
     </div>
   </body>
 </html>

@@ -56,8 +56,6 @@ def main(_: Any, **settings: Dict[str, Any]) -> Any:
     )
 
     config.scan("mapfish_print_logs.services")
-    config.add_static_view(
-        name="/", path="/app/mapfish_print_logs/static", cache_max_age=0
-    )
+    config.add_static_view(name="/", path="/app/mapfish_print_logs/static", cache_max_age=0)
 
     return config.make_wsgi_app()

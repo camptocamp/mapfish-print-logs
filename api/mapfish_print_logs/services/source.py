@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional
 
 import pyramid.request  # type: ignore
-import sqlalchemy as sa  # type: ignore
+import sqlalchemy  # type: ignore
 from c2cwsgiutils import services
 
 from mapfish_print_logs import utils
@@ -23,7 +23,7 @@ def get_source(request: pyramid.request.Request) -> Dict[str, Any]:
     if source != "all":
         app_id = utils.get_app_id(config, source)
         query = query.filter(
-            sa.or_(
+            sqlalchemy.or_(
                 PrintAccounting.app_id == app_id, PrintAccounting.app_id.like(utils.quote_like(app_id) + ":%")
             )
         )
