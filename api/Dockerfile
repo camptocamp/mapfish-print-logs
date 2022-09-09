@@ -98,6 +98,7 @@ COPY . /app
 ARG GIT_HASH
 RUN --mount=type=cache,target=/root/.cache \
     python3 -m pip install --no-deps --editable=. \
+    && python3 -m pip freeze > /requirements.txt \
     && c2cwsgiutils-genversion $GIT_HASH \
     && python3 -m compileall -q . /usr/local/lib/python3.*
 
