@@ -4,7 +4,7 @@
 
 [Full Changelog](https://github.com/camptocamp/mapfish-print-logs/compare/1.2.0...1.3.0)
 
-#### :package: Dependencies update
+**Merged pull requests:**
 
 - Bump types-requests from 2.27.8 to 2.27.9 in /api [\#214](https://github.com/camptocamp/mapfish-print-logs/pull/214) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.2.dev20220208134628 to 1.2.dev20220209105112 [\#212](https://github.com/camptocamp/mapfish-print-logs/pull/212) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -47,6 +47,7 @@
 - Bump prospector from 1.5.3 to 1.5.3.1 in /api [\#161](https://github.com/camptocamp/mapfish-print-logs/pull/161) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump prospector from 1.5.2 to 1.5.3 in /api [\#160](https://github.com/camptocamp/mapfish-print-logs/pull/160) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump prospector from 1.5.1 to 1.5.2 in /api [\#159](https://github.com/camptocamp/mapfish-print-logs/pull/159) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Move the a4price to an environment variable [\#158](https://github.com/camptocamp/mapfish-print-logs/pull/158) ([sbrunner](https://github.com/sbrunner))
 - Bump types-setuptools from 57.4.3 to 57.4.4 in /api [\#157](https://github.com/camptocamp/mapfish-print-logs/pull/157) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-requests from 2.26.0 to 2.26.1 in /api [\#156](https://github.com/camptocamp/mapfish-print-logs/pull/156) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20211122024433 to 1.1.dev20211125140927 [\#155](https://github.com/camptocamp/mapfish-print-logs/pull/155) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -56,7 +57,9 @@
 - Bump types-pyyaml from 6.0.0 to 6.0.1 in /api [\#149](https://github.com/camptocamp/mapfish-print-logs/pull/149) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump pipenv from 2021.11.9 to 2021.11.15 [\#146](https://github.com/camptocamp/mapfish-print-logs/pull/146) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump sqlalchemy from 1.4.26 to 1.4.27 in /api [\#145](https://github.com/camptocamp/mapfish-print-logs/pull/145) ([dependabot[bot]](https://github.com/apps/dependabot))
+- \[Backport master\] Also ignore the CVE in API and in acceptance_tests [\#144](https://github.com/camptocamp/mapfish-print-logs/pull/144) ([c2c-bot-gis-ci](https://github.com/c2c-bot-gis-ci))
 - Bump types-requests from 2.25.12 to 2.26.0 in /api [\#142](https://github.com/camptocamp/mapfish-print-logs/pull/142) ([dependabot[bot]](https://github.com/apps/dependabot))
+- \[Backport master\] Ignore CVE: 42194, unfixed upstream [\#141](https://github.com/camptocamp/mapfish-print-logs/pull/141) ([c2c-bot-gis-ci](https://github.com/c2c-bot-gis-ci))
 - Bump types-requests from 2.25.11 to 2.25.12 in /api [\#138](https://github.com/camptocamp/mapfish-print-logs/pull/138) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump pipenv from 2021.5.29 to 2021.11.9 [\#136](https://github.com/camptocamp/mapfish-print-logs/pull/136) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump types-pyyaml from 5.4.12 to 6.0.0 in /api [\#132](https://github.com/camptocamp/mapfish-print-logs/pull/132) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -128,6 +131,7 @@
 - Bump c2cciutils from 1.1.dev20210504062412 to 1.1.dev20210511092229 [\#64](https://github.com/camptocamp/mapfish-print-logs/pull/64) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump pytest from 6.2.3 to 6.2.4 in /acceptance_tests [\#61](https://github.com/camptocamp/mapfish-print-logs/pull/61) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210428132049 to 1.1.dev20210504062412 [\#60](https://github.com/camptocamp/mapfish-print-logs/pull/60) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Fix for sqlalchemy-utils re-upload [\#57](https://github.com/camptocamp/mapfish-print-logs/pull/57) ([sbrunner](https://github.com/sbrunner))
 - Bump c2cciutils from 1.1.dev20210427101151 to 1.1.dev20210428132049 [\#55](https://github.com/camptocamp/mapfish-print-logs/pull/55) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210422085804 to 1.1.dev20210427101151 [\#54](https://github.com/camptocamp/mapfish-print-logs/pull/54) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.1.dev20210419145517 to 1.1.dev20210422085804 [\#51](https://github.com/camptocamp/mapfish-print-logs/pull/51) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -144,41 +148,23 @@
 - Bump c2cciutils from 1.0.dev20210305083859 to 1.1.dev20210308113838 [\#32](https://github.com/camptocamp/mapfish-print-logs/pull/32) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.0.dev20210304083613 to 1.0.dev20210305083859 [\#31](https://github.com/camptocamp/mapfish-print-logs/pull/31) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.0.dev20210302092543 to 1.0.dev20210304083613 [\#30](https://github.com/camptocamp/mapfish-print-logs/pull/30) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump c2cciutils from 1.0.dev20210212123011 to 1.0.dev20210302092543 [\#28](https://github.com/camptocamp/mapfish-print-logs/pull/28) ([dependabot[bot]](https://github.com/apps/dependabot))
-
-**Merged pull requests:**
-
-- Move the a4price to an environment variable [\#158](https://github.com/camptocamp/mapfish-print-logs/pull/158) ([sbrunner](https://github.com/sbrunner))
-- \[Backport master\] Also ignore the CVE in API and in acceptance_tests [\#144](https://github.com/camptocamp/mapfish-print-logs/pull/144) ([c2c-bot-gis-ci](https://github.com/c2c-bot-gis-ci))
-- \[Backport master\] Ignore CVE: 42194, unfixed upstream [\#141](https://github.com/camptocamp/mapfish-print-logs/pull/141) ([c2c-bot-gis-ci](https://github.com/c2c-bot-gis-ci))
-- Fix for sqlalchemy-utils re-upload [\#57](https://github.com/camptocamp/mapfish-print-logs/pull/57) ([sbrunner](https://github.com/sbrunner))
 - Use pipenv sync [\#29](https://github.com/camptocamp/mapfish-print-logs/pull/29) ([sbrunner](https://github.com/sbrunner))
+- Bump c2cciutils from 1.0.dev20210212123011 to 1.0.dev20210302092543 [\#28](https://github.com/camptocamp/mapfish-print-logs/pull/28) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Do the release 1.2 [\#27](https://github.com/camptocamp/mapfish-print-logs/pull/27) ([sbrunner](https://github.com/sbrunner))
 
 ## [1.2.0](https://github.com/camptocamp/mapfish-print-logs/tree/1.2.0) (2021-02-15)
 
 [Full Changelog](https://github.com/camptocamp/mapfish-print-logs/compare/1.1.0...1.2.0)
 
-#### :package: Dependencies update
+**Merged pull requests:**
 
 - Bump c2cciutils from 1.0.dev20210208135331 to 1.0.dev20210212123011 [\#25](https://github.com/camptocamp/mapfish-print-logs/pull/25) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump c2cciutils from 1.0.dev20210111121829 to 1.0.dev20210208135331 [\#24](https://github.com/camptocamp/mapfish-print-logs/pull/24) ([dependabot[bot]](https://github.com/apps/dependabot))
-
-**Merged pull requests:**
-
 - Do the release 1.1 [\#22](https://github.com/camptocamp/mapfish-print-logs/pull/22) ([sbrunner](https://github.com/sbrunner))
 
 ## [1.1.0](https://github.com/camptocamp/mapfish-print-logs/tree/1.1.0) (2021-01-12)
 
 [Full Changelog](https://github.com/camptocamp/mapfish-print-logs/compare/88f1101372f42fbd0ffa99804278a49a7161666f...1.1.0)
-
-#### :package: Dependencies update
-
-- Bump c2cciutils from 1.0.dev20201222122805 to 1.0.dev20210111121829 [\#21](https://github.com/camptocamp/mapfish-print-logs/pull/21) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump humanfriendly from 7.1.1 to 9.1 in /api [\#17](https://github.com/camptocamp/mapfish-print-logs/pull/17) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump humanfriendly from 5.0 to 7.1.1 in /api [\#10](https://github.com/camptocamp/mapfish-print-logs/pull/10) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump humanfriendly from 4.18 to 5.0 in /api [\#6](https://github.com/camptocamp/mapfish-print-logs/pull/6) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump pyramid-mako from 1.0.2 to 1.1.0 in /api [\#4](https://github.com/camptocamp/mapfish-print-logs/pull/4) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 **Closed issues:**
 
@@ -187,9 +173,14 @@
 
 **Merged pull requests:**
 
+- Bump c2cciutils from 1.0.dev20201222122805 to 1.0.dev20210111121829 [\#21](https://github.com/camptocamp/mapfish-print-logs/pull/21) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Fix for elasticsearch version 6.8.3 [\#20](https://github.com/camptocamp/mapfish-print-logs/pull/20) ([sbrunner](https://github.com/sbrunner))
 - Use C2C CI utils [\#18](https://github.com/camptocamp/mapfish-print-logs/pull/18) ([sbrunner](https://github.com/sbrunner))
+- Bump humanfriendly from 7.1.1 to 9.1 in /api [\#17](https://github.com/camptocamp/mapfish-print-logs/pull/17) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump humanfriendly from 5.0 to 7.1.1 in /api [\#10](https://github.com/camptocamp/mapfish-print-logs/pull/10) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump humanfriendly from 4.18 to 5.0 in /api [\#6](https://github.com/camptocamp/mapfish-print-logs/pull/6) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Adapted to the new log format [\#5](https://github.com/camptocamp/mapfish-print-logs/pull/5) ([pvalsecc](https://github.com/pvalsecc))
+- Bump pyramid-mako from 1.0.2 to 1.1.0 in /api [\#4](https://github.com/camptocamp/mapfish-print-logs/pull/4) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - \[requires.io\] dependency update on master branch [\#3](https://github.com/camptocamp/mapfish-print-logs/pull/3) ([pvalsecc](https://github.com/pvalsecc))
 
 \* _This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)_
