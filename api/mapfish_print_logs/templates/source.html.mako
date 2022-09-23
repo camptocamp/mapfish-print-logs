@@ -66,7 +66,7 @@
               <th scope="col">Status</th>
               <th scope="col">App ID</th>
               <th scope="col">Layout</th>
-              <th scope="col">Referer</th>
+              <th scope="col">Referrer</th>
             </tr>
             </thead>
             <tbody>

@@ -7,7 +7,9 @@ checks:
   codespell:
     ignore_re:
       - configs/print-apps/simple/countries\.geojson
-      - api/poetry.lock
+      - api/poetry\.lock
+      - acceptance_tests/poetry\.lock
+      - acceptance_tests/package-lock\.json
 
 publish:
   pypi:
