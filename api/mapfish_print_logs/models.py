@@ -37,7 +37,7 @@ class PrintAccounting(Base):  # type: ignore
             map_export=self.mapexport,
             output_format=self.output_format,
             processing_time_ms=self.processing_time_ms,
-            referer=self.referer,
+            referrr=self.referer,
             stats=self.stats,
             status=self.status,
             total_time_ms=self.total_time_ms,

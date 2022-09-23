@@ -44,7 +44,7 @@
             <dt class="col-lg-2">layout</dt>
             <dd class="col-lg-4">${accounting.layout | h}</dd>
 
-            <dt class="col-lg-2">referer</dt>
+            <dt class="col-lg-2">referrer</dt>
             <dd class="col-lg-4">${accounting.referer | h}</dd>
             <dt class="col-lg-2">status</dt>
             <dd class="col-lg-4">${accounting.status | h}</dd>
