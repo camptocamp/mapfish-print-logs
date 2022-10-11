@@ -23,6 +23,20 @@
         referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="${request.static_url('/app/mapfish_print_logs/static/style.css')}">
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="${request.static_url('/app/mapfish_print_logs/static/favicon-32x32.png')}"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="${request.static_url('/app/mapfish_print_logs/static/favicon-16x16.png')}"
+      referrerpolicy="no-referrer"
+    />
     <title>Mapfish print logs - ${source | h}</title>
   </head>
   <body>
