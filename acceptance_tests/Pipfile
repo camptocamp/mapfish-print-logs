@@ -7,7 +7,6 @@ name = "pypi"
 pytest = "==7.0.0"
 junit2html = "==30.0.6"
 c2cwsgiutils = {version = "==5.0.0", extras = ["standard"]}
-
 # Lock dependencies
 alembic = "==1.7.6"
 attrs = "==21.4.0"
@@ -29,7 +28,7 @@ lxml = "==4.9.1"
 mako = "==1.2.2"
 markupsafe = "==2.0.1"
 netifaces = "==0.11.0"
-oauthlib = "==3.2.0"
+oauthlib = "==3.2.1"
 objgraph = "==3.5.0"
 packaging = "==21.3"
 pastedeploy = "==2.1.1"
