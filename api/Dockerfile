@@ -1,6 +1,9 @@
 FROM ubuntu:20.04 AS base
 LABEL maintainer "info@camptocamp.org"
 
+# Fix for newer version of setuptools
+ENV SETUPTOOLS_USE_DISTUTILS=stdlib
+
 RUN apt update && \
   DEBIAN_FRONTEND=noninteractive apt install --assume-yes --no-install-recommends \
   python3-pip python3-dev gcc libpq-dev postgresql-client && \
