@@ -46,16 +46,13 @@ RUN --mount=type=cache,target=/root/.cache \
 
 CMD ["gunicorn", "--paste=production.ini"]
 
-ENV TERM=linux \
-    LANG=C.UTF-8 \
-    LOG_TYPE=console \
+ENV LOG_TYPE=console \
     LOG_HOST=localhost \
     LOG_PORT=514 \
     SQL_LOG_LEVEL=WARN \
     GUNICORN_LOG_LEVEL=WARN \
     OTHER_LOG_LEVEL=WARN \
-    DEVELOPMENT=0 \
-    PKG_CONFIG_ALLOW_SYSTEM_LIBS=OHYESPLEASE
+    DEVELOPMENT=0
 
 ENV C2C_BASE_PATH=/c2c \
     C2C_REDIS_TIMEOUT=3 \
