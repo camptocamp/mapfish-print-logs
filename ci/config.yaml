@@ -19,3 +19,7 @@ version:
 publish:
   pypi:
     packages: []
+
+audit:
+  pipfile: false
+  pipfile_lock: false
