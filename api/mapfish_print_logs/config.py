@@ -21,3 +21,7 @@ ES_URL = _ensure_slash(os.environ.get("ES_URL"))
 ES_INDEXES = os.environ["ES_INDEXES"]
 ES_AUTH = os.environ.get("ES_AUTH")
 ES_FILTERS = os.environ.get("ES_FILTERS", "")
+
+LOKI_URL = _ensure_slash(os.environ.get("LOKI_URL"))
+LOKI_AUTH = os.environ.get("LOKI_AUTH")
+LOKI_FILTERS = os.environ.get("LOKI_FILTERS", "")

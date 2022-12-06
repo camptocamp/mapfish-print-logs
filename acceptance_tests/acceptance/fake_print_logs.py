@@ -7,13 +7,12 @@ import requests
 # flake8: noqa: E501
 
 
-ES_URL = os.environ.get("ES_URL", "http://elasticsearch:9200/elasticsearch")
-INDEX = os.environ.get("ES_INDEX", "print-1")
+LOKI_URL = os.environ.get("LOKI_URL", "http://loki:3100/")
 OFFSET = 0
 LEVEL_VALUE = {"DEBUG": 10000, "INFO": 20000, "WARN": 30000}
 
 
-def _log_message(es_url, ref, level, message, **kwargs):
+def _log_message(loki_url, ref, level, message, **kwargs):
     global OFFSET
     OFFSET += 1
     data = {
@@ -28,15 +27,15 @@ def _log_message(es_url, ref, level, message, **kwargs):
     }
     data["json"].update(kwargs)
     headers = {"Content-Type": "application/json;charset=UTF-8", "Accept": "application/json"}
-    r = requests.post(f"{es_url}/{INDEX}?refresh=wait_for", json=data, headers=headers, timeout=30)
+    r = requests.post(f"{loki_url}/{INDEX}?refresh=wait_for", json=data, headers=headers, timeout=30)
     r.raise_for_status()
 
 
-def gen_fake_print_logs(ref, es_url=ES_URL):
-    _log_message(es_url, ref, "INFO", f"Starting job {ref}", logger_name="org.mapfish.print")
-    _log_message(es_url, ref, "DEBUG", "Some <b>debug</b>", logger_name="org.mapfish.print.map")
+def gen_fake_print_logs(ref, loki_url=LOKI_URL):
+    _log_message(loki_url, ref, "INFO", f"Starting job {ref}", logger_name="org.mapfish.print")
+    _log_message(loki_url, ref, "DEBUG", "Some <b>debug</b>", logger_name="org.mapfish.print.map")
     _log_message(
-        es_url,
+        loki_url,
         ref,
         "WARN",
         "Some warning with stacktrace",
@@ -88,7 +87,7 @@ java.net.SocketTimeoutException: connect timed out
 """,
     )
     _log_message(
-        es_url,
+        loki_url,
         ref,
         "INFO",
         f"Finished job {ref} with some very long message",

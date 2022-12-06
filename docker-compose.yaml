@@ -21,8 +21,7 @@ services:
       # - SCM_URL=http://scm:8080/scm
       # - SCM_URL_EXTERNAL=http://scm:8080/scm
       - GUNICORN_CMD_ARGS=--reload # only one process in order to get consistent stats
-      - ES_URL=http://elasticsearch:9200/elasticsearch
-      - ES_INDEXES=print-1
+      - LOKI_URL=http://loki:3100/
       - LOG_LIMIT=3
       - SHARED_CONFIG_MASTER=/master_config/master/shared_config_manager.yaml
       - GITHUB_TOKEN
@@ -65,8 +64,7 @@ services:
       # - SCM_URL=http://scm:8080/scm
       # - SCM_URL_EXTERNAL=http://scm:8080/scm
       - GUNICORN_CMD_ARGS=--reload # only one process in order to get consistent stats
-      - ES_URL=http://elasticsearch:9200/elasticsearch
-      - ES_INDEXES=print-1
+      - LOKI_URL=http://loki:3100/
       - LOG_LIMIT=3
       - SHARED_CONFIG_MASTER=/master_config/master/shared_config_manager.yaml
       - GITHUB_TOKEN

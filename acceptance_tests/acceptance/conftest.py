@@ -14,7 +14,7 @@ from .fake_print_logs import gen_fake_print_logs
 
 API_URL = "http://api:8080/"
 PRINT_URL = "http://print:8080/print"
-ES_URL = "http://elasticsearch:9200/elasticsearch"
+LOKI_URL = "http://loki:3100/"
 LOG = logging.getLogger(__name__)
 
 
@@ -171,7 +171,7 @@ class PrintLogConnection(PrintConnection):
         examples = self.get_example_requests("simple")
         report = self.get_pdf("simple", examples["requestData"])
         ref = report.url.split("/")[-1]
-        gen_fake_print_logs(ref, es_url=ES_URL)
+        gen_fake_print_logs(ref, loki_url=LOKI_URL)
         return ref
 
 
