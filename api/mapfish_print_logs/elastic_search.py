@@ -12,7 +12,9 @@ if ES_AUTH is not None:
 SEARCH_URL = f"{ES_URL}{ES_INDEXES}/_search"
 
 
-def get_logs(ref: str, min_level: int, pos: int, limit: int, filter_loggers: str) -> Tuple[List[str], int]:
+def get_logs(
+    ref: str, min_level: int, pos: int, limit: int, filter_loggers: List[str]
+) -> Tuple[List[str], int]:
     if ES_URL is None:
         return [], 0
     query: Dict[str, Any] = {

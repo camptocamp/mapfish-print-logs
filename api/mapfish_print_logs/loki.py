@@ -1,3 +1,4 @@
+import logging
 from typing import Dict, List, Tuple, Union
 
 import requests
@@ -11,8 +12,12 @@ if LOKI_AUTH is not None:
 
 SEARCH_URL = f"{LOKI_URL}loki/api/v1/query_range"
 
+_LOG = logging.getLogger(__name__)
 
-def get_logs(ref: str, min_level: int, pos: int, limit: int, filter_loggers: str) -> Tuple[List[str], int]:
+
+def get_logs(
+    ref: str, min_level: int, pos: int, limit: int, filter_loggers: List[str]
+) -> Tuple[List[str], int]:
     if LOKI_URL is None:
         return [], 0
     log_query = [f'json.job_id="{ref}"', f"json.level_value>={min_level}"]
@@ -20,13 +25,15 @@ def get_logs(ref: str, min_level: int, pos: int, limit: int, filter_loggers: str
     if LOKI_FILTERS != "":
         log_query.append(LOKI_FILTERS)
     if filter_loggers:
-        log_query.append(filter_loggers)
+        log_query.append(f'json.logger_name=~"{"|".join(filter_loggers)}"')
 
+    _LOG.error(log_query)
     params: Dict[str, Union[str, int]] = {
         "start": pos,
         "limit": limit,
         "query": f"{{{','.join(log_query)}}}",
     }
+    _LOG.error(params)
     response = requests.get(
         SEARCH_URL,
         params=params,

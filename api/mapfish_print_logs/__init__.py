@@ -60,7 +60,7 @@ def main(_: Any, **settings: Dict[str, Any]) -> Any:
     if "LOKI_URL" in os.environ:
         health_check.add_url_check(
             mapfish_print_logs.loki.SEARCH_URL,
-            params={"limit": "0", "query": '{host=~".*"}'},
+            params={"limit": "1", "query": '{host=~".+"}'},
             headers=mapfish_print_logs.loki.SEARCH_HEADERS,
             check_cb=lambda _, response: response.json(),
             name="loki",
