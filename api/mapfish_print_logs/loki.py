@@ -21,6 +21,7 @@ def get_logs(
     if LOKI_URL is None:
         return [], 0
     log_query = [f'json.job_id="{ref}"', f"json.level_value>={min_level}"]
+    log_query = [f'json.job_id="{ref}"']
 
     if LOKI_FILTERS != "":
         log_query.append(LOKI_FILTERS)
