@@ -1,3 +1,4 @@
+import os
 from typing import Any, Dict
 
 import pyramid.request  # type: ignore
@@ -6,7 +7,7 @@ from c2cwsgiutils import services
 from pyramid.httpexceptions import HTTPNotFound  # type: ignore
 from pyramid.security import Allowed  # type: ignore
 
-from mapfish_print_logs import elastic_search, utils
+from mapfish_print_logs import elastic_search, loki, utils
 from mapfish_print_logs.config import LOG_LIMIT, MAX_LOGS
 from mapfish_print_logs.models import PrintAccounting
 from mapfish_print_logs.security import auth_source
@@ -42,7 +43,10 @@ def get_ref(request: pyramid.request.Request) -> Dict[str, Any]:
     accounting = request.dbsession.query(PrintAccounting).get(ref)  # type: PrintAccounting
     if accounting is None:
         raise HTTPNotFound("No such ref")
-    logs, total = elastic_search.get_logs(ref, min_level, pos, LOG_LIMIT, filter_loggers)
+    if "ES_URL" in os.environ:
+        logs, total = elastic_search.get_logs(ref, min_level, pos, LOG_LIMIT, filter_loggers)
+    else:
+        logs, total = loki.get_logs(ref, min_level, pos, LOG_LIMIT, filter_loggers)
     is_admin = isinstance(request.has_permission("all", {}), Allowed)
 
     return {

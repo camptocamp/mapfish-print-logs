@@ -3,6 +3,7 @@ Setup of the Pyramid application
 """
 
 import logging
+import os
 from typing import Any, Dict
 
 import c2cwsgiutils.pyramid
@@ -11,9 +12,10 @@ import pyramid.response  # type: ignore
 from c2cwsgiutils.health_check import HealthCheck
 from pyramid.config import Configurator  # type: ignore
 
+import mapfish_print_logs.elastic_search
+import mapfish_print_logs.loki
 import mapfish_print_logs.security
 from mapfish_print_logs.config import SCM_URL
-from mapfish_print_logs.elastic_search import SEARCH_HEADERS, SEARCH_URL
 
 LOG = logging.getLogger(__name__)
 
@@ -46,14 +48,24 @@ def main(_: Any, **settings: Dict[str, Any]) -> Any:
     )
     if SCM_URL is not None:
         health_check.add_url_check(SCM_URL + "c2c/health_check", name="scm", level=3)
-    health_check.add_url_check(
-        SEARCH_URL,
-        params=dict(size="0"),
-        headers=SEARCH_HEADERS,
-        check_cb=lambda request, response: response.json(),
-        name="elasticsearch",
-        level=3,
-    )
+    if "ES_URL" in os.environ:
+        health_check.add_url_check(
+            mapfish_print_logs.elastic_search.SEARCH_URL,
+            params=dict(size="0"),
+            headers=mapfish_print_logs.elastic_search.SEARCH_HEADERS,
+            check_cb=lambda _, response: response.json(),
+            name="elasticsearch",
+            level=3,
+        )
+    if "LOKI_URL" in os.environ:
+        health_check.add_url_check(
+            mapfish_print_logs.loki.SEARCH_URL,
+            params=dict(size="0"),
+            headers=mapfish_print_logs.loki.SEARCH_HEADERS,
+            check_cb=lambda _, response: response.json(),
+            name="loki",
+            level=3,
+        )
 
     config.scan("mapfish_print_logs.services")
     config.add_static_view(name="/", path="/app/mapfish_print_logs/static", cache_max_age=0)
