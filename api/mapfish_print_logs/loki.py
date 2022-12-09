@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple, Union
+from typing import Dict, List, Tuple, Union
 
 import requests
 from pyramid.httpexceptions import HTTPInternalServerError  # type: ignore
@@ -22,13 +22,14 @@ def get_logs(ref: str, min_level: int, pos: int, limit: int, filter_loggers: str
     if filter_loggers:
         log_query.append(filter_loggers)
 
+    params: Dict[str, Union[str, int]] = {
+        "start": pos,
+        "limit": limit,
+        "query": f"{{{','.join(log_query)}}}",
+    }
     response = requests.get(
         SEARCH_URL,
-        params={
-            "start": pos,
-            "limit": limit,
-            "query": f"{{{','.join(log_query)}}}",
-        },
+        params=params,
         headers=SEARCH_HEADERS,
     )
     if response.status_code != 200:

@@ -39,7 +39,7 @@ def _log_message_loki(loki_url, ref, level, message, **kwargs):
     data = {
         "streams": [
             {
-                "stream": {**kwargs, "job_id": ref, "log_level": level},
+                "stream": {**kwargs, "job_id": ref, "log_level": level, "host": "localhost"},
                 "values": [
                     [str(int(time.time() * 1000000000)), message],
                 ],
