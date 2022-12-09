@@ -166,7 +166,7 @@ java.net.SocketTimeoutException: connect timed out
     at java.lang.Thread.run(Thread.java:748)
 """,
     )
-    _log_message_es(
+    _log_message_loki(
         loki_url,
         ref,
         "INFO",

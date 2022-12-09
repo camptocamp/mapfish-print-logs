@@ -168,6 +168,8 @@ class PrintConnection(Connection):
 
 class PrintLogConnection(PrintConnection):
     def print(self):
+        utils.wait_url(LOKI_URL + "/ready")
+
         examples = self.get_example_requests("simple")
         report = self.get_pdf("simple", examples["requestData"])
         ref = report.url.split("/")[-1]
