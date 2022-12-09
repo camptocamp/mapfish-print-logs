@@ -51,7 +51,7 @@ def main(_: Any, **settings: Dict[str, Any]) -> Any:
     if "ES_URL" in os.environ:
         health_check.add_url_check(
             mapfish_print_logs.elastic_search.SEARCH_URL,
-            params=dict(size="0"),
+            params={"size": "0"},
             headers=mapfish_print_logs.elastic_search.SEARCH_HEADERS,
             check_cb=lambda _, response: response.json(),
             name="elasticsearch",
@@ -60,7 +60,7 @@ def main(_: Any, **settings: Dict[str, Any]) -> Any:
     if "LOKI_URL" in os.environ:
         health_check.add_url_check(
             mapfish_print_logs.loki.SEARCH_URL,
-            params=dict(size="0"),
+            params={"limit": "0"},
             headers=mapfish_print_logs.loki.SEARCH_HEADERS,
             check_cb=lambda _, response: response.json(),
             name="loki",
