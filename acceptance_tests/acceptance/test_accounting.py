@@ -2,6 +2,8 @@ from datetime import datetime
 
 
 def test_ok(api_connection, print_job):
+    del print_job
+
     api_connection.login()
     page = api_connection.get("logs/source/simple/accounting")
     print(page)
@@ -20,6 +22,8 @@ def test_no_login(api_connection):
 
 
 def test_csv(api_connection, print_job):
+    del print_job
+
     api_connection.login()
     page = api_connection.get("logs/source/simple/accounting.csv")
     print(page)
@@ -28,6 +32,8 @@ def test_csv(api_connection, print_job):
 
 
 def test_global_csv(api_connection, print_job):
+    del print_job
+
     api_connection.login()
     page = api_connection.get("logs/accounting.csv")
     print(page)
