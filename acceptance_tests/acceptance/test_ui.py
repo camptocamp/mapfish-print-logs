@@ -2,7 +2,7 @@ import os
 import subprocess
 
 import pytest
-import skimage.io
+import skimage.io  # pylint: disable=import-error
 from c2cwsgiutils.acceptance.image import check_image
 
 REGENERATE = False

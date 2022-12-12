@@ -28,18 +28,18 @@ def _log_message(es_url, ref, level, message, **kwargs):
     }
     data["json"].update(kwargs)
     headers = {"Content-Type": "application/json;charset=UTF-8", "Accept": "application/json"}
-    r = requests.post(f"{es_url}/{INDEX}?refresh=wait_for", json=data, headers=headers)
+    r = requests.post(f"{es_url}/{INDEX}?refresh=wait_for", json=data, headers=headers, timeout=30)
     r.raise_for_status()
 
 
 def gen_fake_print_logs(ref, es_url=ES_URL):
     _log_message(es_url, ref, "INFO", f"Starting job {ref}", logger_name="org.mapfish.print")
-    _log_message(es_url, ref, "DEBUG", f"Some <b>debug</b>", logger_name="org.mapfish.print.map")
+    _log_message(es_url, ref, "DEBUG", "Some <b>debug</b>", logger_name="org.mapfish.print.map")
     _log_message(
         es_url,
         ref,
         "WARN",
-        f"Some warning with stacktrace",
+        "Some warning with stacktrace",
         logger_name="unknown.jul.logger",
         thread_name="Post result to registry",
         stack_trace="""\
