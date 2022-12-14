@@ -20,8 +20,8 @@ def get_logs(
 ) -> Tuple[List[str], int]:
     if LOKI_URL is None:
         return [], 0
-    log_query = [f'json.job_id="{ref}"', f"json.level_value>={min_level}"]
-    log_query = [f'json.job_id=~"{ref.replace("@", ".")}"']
+    log_query = [f'json_job_id="{ref}"', f"json.level_value>={min_level}"]
+    log_query = [f'json_job_id=~"{ref.replace("@", ".")}"']
 
     if LOKI_FILTERS != "":
         log_query.append(LOKI_FILTERS)
