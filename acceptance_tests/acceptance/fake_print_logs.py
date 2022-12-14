@@ -1,6 +1,7 @@
 import datetime
 import os
 import sys
+import time
 
 import requests
 
@@ -31,10 +32,6 @@ def _log_message_es(es_url, ref, level, message, **kwargs):
     r.raise_for_status()
 
 
-import json
-import time
-
-
 def _log_message_loki(loki_url, ref, level, message, **kwargs):
     data = {
         "streams": [
@@ -57,12 +54,12 @@ def _log_message_loki(loki_url, ref, level, message, **kwargs):
 
 def gen_fake_print_logs_es(ref, es_url=LOKI_URL):
     _log_message_es(es_url, ref, "INFO", f"Starting job {ref}", logger_name="org.mapfish.print")
-    _log_message_es(es_url, ref, "DEBUG", f"Some <b>debug</b>", logger_name="org.mapfish.print.map")
+    _log_message_es(es_url, ref, "DEBUG", "Some <b>debug</b>", logger_name="org.mapfish.print.map")
     _log_message_es(
         es_url,
         ref,
         "WARN",
-        f"Some warning with stacktrace",
+        "Some warning with stacktrace",
         logger_name="unknown.jul.logger",
         thread_name="Post result to registry",
         stack_trace="""\
