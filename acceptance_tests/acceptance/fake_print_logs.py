@@ -47,7 +47,7 @@ def _log_message_loki(loki_url, ref, level, message, **kwargs):
     print(loki_url)
     print(data)
 
-    r = requests.post(f"{loki_url}loki/api/v1/push", json=data, headers=headers)
+    r = requests.post(f"{loki_url}loki/api/v1/push", json=data, headers=headers, timeout=30)
     print(r.text)
     r.raise_for_status()
 
