@@ -28,19 +28,20 @@ def get_logs(
     if filter_loggers:
         log_query.append(f'json.logger_name=~"{"|".join(filter_loggers)}"')
 
-    _LOG.error(log_query)
+    _LOG.debug(log_query)
     params: Dict[str, Union[str, int]] = {
         "start": pos,
         "limit": limit,
         "query": f"{{{','.join(log_query)}}}",
     }
-    _LOG.error(params)
+    _LOG.debug(params)
     response = requests.get(
         SEARCH_URL,
         params=params,
         headers=SEARCH_HEADERS,
     )
     if response.status_code != 200:
+        _LOG.error("Error while getting logs from loki on URL '%s' with params %s:\n%s", SEARCH_URL, params, response.text)
         raise HTTPInternalServerError(response.text)
     json = response.json()
     return json["data"]["result"][0]["values"], json["data"]["stats"]["decompressedLines"]
