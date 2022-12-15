@@ -32,7 +32,7 @@ def get_logs(
     _LOG.debug(log_query)
     params: Dict[str, Union[str, int]] = {
         "start": int((time.time() - 60 * 60 * 700) * 10000000),
-        "limit": limit,
+        "limit": limit * pos,
         "query": f"{{{','.join(log_query)}}}",
     }
     _LOG.debug(params)
