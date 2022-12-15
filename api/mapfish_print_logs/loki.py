@@ -21,14 +21,13 @@ def get_logs(
 ) -> Tuple[List[str], int]:
     if LOKI_URL is None:
         return [], 0
-    log_query = [f'json_job_id="{ref}"', f"json.level_value>={min_level}"]
-    log_query = [f'json_job_id=~"{ref.replace("@", ".")}"']
-    # log_query = [f'json.job_id="{ref}"']
+    #log_query = [f'json_job_id=~"{ref.replace("@", ".")}"', f"json_level_value>={min_level}"]
+    log_query = [f'json_job_id="{ref}"']
 
     if LOKI_FILTERS != "":
         log_query.append(LOKI_FILTERS)
     if filter_loggers:
-        log_query.append(f'json.logger_name=~"{"|".join(filter_loggers)}"')
+        log_query.append(f'json_logger_name=~"{"|".join(filter_loggers)}"')
 
     _LOG.debug(log_query)
     params: Dict[str, Union[str, int]] = {
@@ -37,11 +36,7 @@ def get_logs(
         "query": f"{{{','.join(log_query)}}}",
     }
     _LOG.debug(params)
-    response = requests.get(
-        SEARCH_URL,
-        params=params,
-        headers=SEARCH_HEADERS,
-    )
+    response = requests.get(SEARCH_URL, params=params, headers=SEARCH_HEADERS)
     if response.status_code != 200:
         _LOG.error(
             "Error while getting logs from loki on URL '%s' with params %s:\n%s",
