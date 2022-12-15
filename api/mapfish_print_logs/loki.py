@@ -41,7 +41,12 @@ def get_logs(
         headers=SEARCH_HEADERS,
     )
     if response.status_code != 200:
-        _LOG.error("Error while getting logs from loki on URL '%s' with params %s:\n%s", SEARCH_URL, params, response.text)
+        _LOG.error(
+            "Error while getting logs from loki on URL '%s' with params %s:\n%s",
+            SEARCH_URL,
+            params,
+            response.text,
+        )
         raise HTTPInternalServerError(response.text)
     json = response.json()
     return json["data"]["result"][0]["values"], json["data"]["stats"]["decompressedLines"]
