@@ -28,7 +28,7 @@ def _log_message_es(es_url, ref, level, message, **kwargs):
     }
     data["json"].update(kwargs)
     headers = {"Content-Type": "application/json;charset=UTF-8", "Accept": "application/json"}
-    r = requests.post(f"{es_url}/?refresh=wait_for", json=data, headers=headers, timeout=30)
+    r = requests.post(f"{es_url}/{INDEX}?refresh=wait_for", json=data, headers=headers, timeout=30)
     r.raise_for_status()
 
 
@@ -116,7 +116,7 @@ java.net.SocketTimeoutException: connect timed out
     )
 
 
-def gen_fake_print_logs(ref, loki_url=LOKI_URL):
+def gen_fake_print_logs_loki(ref, loki_url=LOKI_URL):
     _log_message_loki(loki_url, ref, "INFO", f"Starting job {ref}", logger_name="org.mapfish.print")
     _log_message_loki(loki_url, ref, "DEBUG", "Some <b>debug</b>", logger_name="org.mapfish.print.map")
     _log_message_loki(

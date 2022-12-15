@@ -10,17 +10,24 @@ import pytest
 import requests
 from c2cwsgiutils.acceptance import connection, utils
 
-from .fake_print_logs import gen_fake_print_logs
+from .fake_print_logs import gen_fake_print_logs_es, gen_fake_print_logs_loki
 
-API_URL = "http://api:8080/"
+API_ES_URL = "http://api_es:8080/"
+API_LOKI_URL = "http://api_loki:8080/"
 PRINT_URL = "http://print:8080/print"
+ES_URL = "http://elasticsearch:9200/elasticsearch"
 LOKI_URL = "http://loki:3100/"
 LOG = logging.getLogger(__name__)
 
 
 @pytest.fixture(scope="session")
-def wait():
-    utils.wait_url(API_URL + "logs/c2c/health_check?secret=toto")
+def wait_es():
+    utils.wait_url(API_ES_URL + "logs/c2c/health_check?secret=toto")
+
+
+@pytest.fixture(scope="session")
+def wait_loki():
+    utils.wait_url(API_LOKI_URL + "logs/c2c/health_check?secret=toto")
 
 
 class Connection:
@@ -166,14 +173,23 @@ class PrintConnection(Connection):
         return self.get_json("apps.json")
 
 
-class PrintLogConnection(PrintConnection):
+class PrintLogConnectionES(PrintConnection):
+    def print(self):
+        examples = self.get_example_requests("simple")
+        report = self.get_pdf("simple", examples["requestData"])
+        ref = report.url.split("/")[-1]
+        gen_fake_print_logs_es(ref, es_url=ES_URL)
+        return ref
+
+
+class PrintLogConnectionLoki(PrintConnection):
     def print(self):
         utils.wait_url(LOKI_URL + "/ready")
 
         examples = self.get_example_requests("simple")
         report = self.get_pdf("simple", examples["requestData"])
         ref = report.url.split("/")[-1]
-        gen_fake_print_logs(ref, loki_url=LOKI_URL)
+        gen_fake_print_logs_loki(ref, loki_url=LOKI_URL)
         return ref
 
 
@@ -196,22 +212,41 @@ class MyConnection(Connection):
 
 
 @pytest.fixture
-def api_connection(wait):
+def api_connection_es(wait):
     del wait
-    return MyConnection(base_url=API_URL)
+    return MyConnection(base_url=API_ES_URL)
+
+
+@pytest.fixture
+def api_connection_loki(wait):
+    del wait
+    return MyConnection(base_url=API_LOKI_URL)
 
 
 @pytest.fixture(scope="session")
-def print_connection(wait):
+def print_connection_es(wait):
     del wait
-    connection = PrintLogConnection(PRINT_URL)
+    connection = PrintLogConnectionES(PRINT_URL)
     connection.wait_ready()
     return connection
 
 
 @pytest.fixture(scope="session")
-def print_job(print_connection):
-    return print_connection.print()
+def print_connection_loki(wait):
+    del wait
+    connection = PrintLogConnectionLoki(PRINT_URL)
+    connection.wait_ready()
+    return connection
+
+
+@pytest.fixture_es(scope="session")
+def print_job(print_connection_es):
+    return print_connection_es.print()
+
+
+@pytest.fixture(scope="session")
+def print_job_loki(print_connection_loki):
+    return print_connection_loki.print()
 
 
 def retry_timeout(what: Callable[[], Any], timeout: float = 60, interval: float = 0.5) -> Any:
