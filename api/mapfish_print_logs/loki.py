@@ -22,7 +22,8 @@ def get_logs(
     if LOKI_URL is None:
         return [], 0
     log_query = [f'json_job_id="{ref}"', f"json.level_value>={min_level}"]
-    log_query = [f'json_job_id=~"{ref.replace("@", ".")}"']
+    #log_query = [f'json_job_id=~"{ref.replace("@", ".")}"']
+    log_query = [f'json.job_id="{ref}"']
 
     if LOKI_FILTERS != "":
         log_query.append(LOKI_FILTERS)
@@ -31,7 +32,7 @@ def get_logs(
 
     _LOG.debug(log_query)
     params: Dict[str, Union[str, int]] = {
-        "start": int((time.time() - 60 * 60 * 700) * 1000000000),
+        "start": int((time.time() - 60 * 60 * 700) * 1000**3),
         "limit": limit * (pos + 1),
         "query": f"{{{','.join(log_query)}}}",
     }
@@ -50,4 +51,9 @@ def get_logs(
         )
         raise HTTPInternalServerError(response.text)
     json = response.json()
-    return json["data"]["result"][0]["values"], json["data"]["stats"]["decompressedLines"]
+    _LOG.debug(json)
+    result = []
+    for res in json["data"]["result"]:
+        result += res['values']
+    _LOG.debug(result)
+    return result, json["data"]["stats"]["decompressedLines"]
