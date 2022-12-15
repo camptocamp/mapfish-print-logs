@@ -56,4 +56,4 @@ def get_logs(
     for res in json["data"]["result"]:
         result += res["values"]
     _LOG.debug(result)
-    return result, json["data"]["stats"]["decompressedLines"]
+    return result, json["data"]["stats"]["querier"]["store"]["chunk"]["decompressedLines"]
