@@ -1,4 +1,5 @@
 import logging
+import time
 from typing import Dict, List, Tuple, Union
 
 import requests
@@ -30,7 +31,7 @@ def get_logs(
 
     _LOG.debug(log_query)
     params: Dict[str, Union[str, int]] = {
-        "start": pos,
+        "start": int((time.time() - 60 * 60 * 700) * 10000000),
         "limit": limit,
         "query": f"{{{','.join(log_query)}}}",
     }
