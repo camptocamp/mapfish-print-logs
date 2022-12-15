@@ -23,7 +23,7 @@ def get_logs(
         return [], 0
     log_query = [f'json_job_id="{ref}"', f"json.level_value>={min_level}"]
     log_query = [f'json_job_id=~"{ref.replace("@", ".")}"']
-    #log_query = [f'json.job_id="{ref}"']
+    # log_query = [f'json.job_id="{ref}"']
 
     if LOKI_FILTERS != "":
         log_query.append(LOKI_FILTERS)
