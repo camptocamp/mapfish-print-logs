@@ -8,6 +8,8 @@ import requests
 # flake8: noqa: E501
 
 
+ES_URL = os.environ.get("ES_URL", "http://elasticsearch:9200/elasticsearch")
+INDEX = os.environ.get("ES_INDEX", "print-1")
 LOKI_URL = os.environ.get("LOKI_URL", "http://loki:3100/")
 OFFSET = 0
 LEVEL_VALUE = {"DEBUG": 10000, "INFO": 20000, "WARN": 30000}
@@ -181,7 +183,8 @@ def gen_fake_print_logs_loki(ref, loki_url=LOKI_URL):
 
 
 def main():
-    gen_fake_print_logs(sys.argv[1])
+    gen_fake_print_logs_es(sys.argv[1])
+    gen_fake_print_logs_loki(sys.argv[1])
 
 
 if __name__ == "__main__":
