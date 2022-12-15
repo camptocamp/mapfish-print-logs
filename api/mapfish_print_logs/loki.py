@@ -22,7 +22,7 @@ def get_logs(
     if LOKI_URL is None:
         return [], 0
     log_query = [f'json_job_id="{ref}"', f"json.level_value>={min_level}"]
-    #log_query = [f'json_job_id=~"{ref.replace("@", ".")}"']
+    # log_query = [f'json_job_id=~"{ref.replace("@", ".")}"']
     log_query = [f'json.job_id="{ref}"']
 
     if LOKI_FILTERS != "":
@@ -54,6 +54,6 @@ def get_logs(
     _LOG.debug(json)
     result = []
     for res in json["data"]["result"]:
-        result += res['values']
+        result += res["values"]
     _LOG.debug(result)
     return result, json["data"]["stats"]["decompressedLines"]
