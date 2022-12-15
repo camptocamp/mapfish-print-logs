@@ -13,7 +13,9 @@ def test_ok(api_connection_loki, print_job):
 
 
 def test_no_login(api_connection_loki):
-    r = api_connection_loki.get_raw("logs/source/simple/accounting", expected_status=302, allow_redirects=False)
+    r = api_connection_loki.get_raw(
+        "logs/source/simple/accounting", expected_status=302, allow_redirects=False
+    )
     assert (
         r.headers["Location"]
         == api_connection_loki.base_url
