@@ -29,7 +29,7 @@ def test_filter(api_connection_es, print_job_es):
         params={
             "ref": print_job_es,
             "filter_loggers": "org.mapfish.print",
-            "min_level": "10000",
+            "debug": "true",
         },
     )
     print(page)
