@@ -20,5 +20,5 @@ def test_no_login(api_connection_loki):
     assert (
         r.headers["Location"]
         == api_connection_loki.base_url
-        + "logs/c2c/github-login?came_from=http%3A%2F%2Fapi%3A8080%2Flogs%2Fsource%2Fsimple"
+        + "logs/c2c/github-login?came_from=http%3A%2F%2Fapi_loki%3A8080%2Flogs%2Fsource%2Fsimple"
     )

@@ -15,7 +15,7 @@ def test_should_not_commit():
 @pytest.mark.parametrize(
     "url,expected_file_name,height,width",
     [
-        pytest.param("http://api:8080/logs", "not-login", 300, 800, id="not-login"),
+        pytest.param("http://api_loki:8080/logs", "not-login", 300, 800, id="not-login"),
         pytest.param("http://api_test_user:8080/logs", "index", 600, 800, id="index"),
         pytest.param("http://api_test_user:8080/logs/source/simple", "source", 195, 1200, id="source"),
         pytest.param(
