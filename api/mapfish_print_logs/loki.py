@@ -25,12 +25,12 @@ def get_logs(
 ) -> Tuple[List[str], int]:
     if LOKI_URL is None:
         return [], 0
-    log_query = [f'json_job_id="{escape(ref)}"', f"json_level_value>={min_level}"]
+    log_query = [f'job_id="{escape(ref)}"', f"log_level>={min_level}"]
 
     if LOKI_FILTERS != "":
         log_query.append(LOKI_FILTERS)
     if filter_loggers:
-        log_query.append(f'json_logger_name=~"{escape("|".join(filter_loggers))}"')
+        log_query.append(f'logger_name=~"{escape("|".join(filter_loggers))}"')
 
     _LOG.debug(log_query)
     params: Dict[str, Union[str, int]] = {
