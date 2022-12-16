@@ -112,6 +112,8 @@ services:
       - C2C_AUTH_GITHUB_SECRET=a-secret-long-a-secret
       - C2C_AUTH_GITHUB_PROXY_URL=https://mutualize-int.apps.gs-ch-dev.camptocamp.com/redirect
       - OAUTHLIB_INSECURE_TRANSPORT=1
+    ports:
+      - 8482:8080
 
   configs:
     image: camptocamp/mapfish-print-logs-configs:latest
