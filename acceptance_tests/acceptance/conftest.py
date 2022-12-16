@@ -212,35 +212,35 @@ class MyConnection(Connection):
 
 
 @pytest.fixture
-def api_connection_es(wait):
-    del wait
+def api_connection_es(wait_es):
+    del wait_es
     return MyConnection(base_url=API_ES_URL)
 
 
 @pytest.fixture
-def api_connection_loki(wait):
-    del wait
+def api_connection_loki(wait_loki):
+    del wait_loki
     return MyConnection(base_url=API_LOKI_URL)
 
 
 @pytest.fixture(scope="session")
-def print_connection_es(wait):
-    del wait
+def print_connection_es(wait_es):
+    del wait_es
     connection = PrintLogConnectionES(PRINT_URL)
     connection.wait_ready()
     return connection
 
 
 @pytest.fixture(scope="session")
-def print_connection_loki(wait):
-    del wait
+def print_connection_loki(wait_loki):
+    del wait_loki
     connection = PrintLogConnectionLoki(PRINT_URL)
     connection.wait_ready()
     return connection
 
 
-@pytest.fixture_es(scope="session")
-def print_job(print_connection_es):
+@pytest.fixture(scope="session")
+def print_job_es(print_connection_es):
     return print_connection_es.print()
 
 
