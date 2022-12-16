@@ -20,7 +20,7 @@ ref_service = services.create("ref", "/ref")
 def get_ref(request: pyramid.request.Request) -> Dict[str, Any]:
     ref = request.params["ref"]
     pos = int(request.params.get("pos", "0"))
-    min_level = int(request.params.get("min_level", "20000"))
+    debug = request.params.get("debug", "false").lower() in ("true", "yes", "1")
     filter_loggers = request.params.get("filter_loggers", "")
     if filter_loggers != "":
         filter_loggers = filter_loggers.split(",")
@@ -44,14 +44,14 @@ def get_ref(request: pyramid.request.Request) -> Dict[str, Any]:
     if accounting is None:
         raise HTTPNotFound("No such ref")
     if "ES_URL" in os.environ:
-        logs, total = elastic_search.get_logs(ref, min_level, pos, LOG_LIMIT, filter_loggers)
+        logs, total = elastic_search.get_logs(ref, 10000 if debug else 20000, pos, LOG_LIMIT, filter_loggers)
     else:
-        logs, total = loki.get_logs(ref, min_level, pos, LOG_LIMIT, filter_loggers)
+        logs, total = loki.get_logs(ref, debug, pos, LOG_LIMIT, filter_loggers)
     is_admin = isinstance(request.has_permission("all", {}), Allowed)
 
     return {
         "ref": ref,
-        "min_level": min_level,
+        "debug": debug,
         "logs": logs,
         "accounting": accounting,
         "cur_pos": pos,

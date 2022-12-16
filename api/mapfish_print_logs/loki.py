@@ -21,11 +21,13 @@ def escape(string: str) -> str:
 
 
 def get_logs(
-    ref: str, min_level: int, pos: int, limit: int, filter_loggers: List[str]
+    ref: str, debug: bool, pos: int, limit: int, filter_loggers: List[str]
 ) -> Tuple[List[str], int]:
     if LOKI_URL is None:
         return [], 0
-    log_query = [f'job_id="{escape(ref)}"', f"log_level>={min_level}"]
+    log_query = [f'job_id="{escape(ref)}"']
+    if not debug:
+        log_query.append('log_level="DEBUG"')
 
     if LOKI_FILTERS != "":
         log_query.append(LOKI_FILTERS)
