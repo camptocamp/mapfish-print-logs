@@ -1,18 +1,18 @@
 import urllib.parse
 
 
-def test_ok(api_connection_loki, print_job):
+def test_ok(api_connection_loki, print_job_loki):
     api_connection_loki.login()
     page = api_connection_loki.get("logs/source/simple")
     print(page)
-    assert urllib.parse.quote_plus(print_job) in page
+    assert urllib.parse.quote_plus(print_job_loki) in page
 
 
-def test_only_errors(api_connection_loki, print_job):
+def test_only_errors(api_connection_loki, print_job_loki):
     api_connection_loki.login()
     page = api_connection_loki.get("logs/source/simple?only_errors=1")
     print(page)
-    assert urllib.parse.quote_plus(print_job) not in page
+    assert urllib.parse.quote_plus(print_job_loki) not in page
 
 
 def test_no_login(api_connection_loki):

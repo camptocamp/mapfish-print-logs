@@ -1,8 +1,8 @@
 from datetime import datetime
 
 
-def test_ok(api_connection_loki, print_job):
-    del print_job
+def test_ok(api_connection_loki, print_job_loki):
+    del print_job_loki
 
     api_connection_loki.login()
     page = api_connection_loki.get("logs/source/simple/accounting")
@@ -23,8 +23,8 @@ def test_no_login(api_connection_loki):
     )
 
 
-def test_csv(api_connection_loki, print_job):
-    del print_job
+def test_csv(api_connection_loki, print_job_loki):
+    del print_job_loki
 
     api_connection_loki.login()
     page = api_connection_loki.get("logs/source/simple/accounting.csv")
@@ -33,8 +33,8 @@ def test_csv(api_connection_loki, print_job):
     assert f"month,cost,A4\r\n{now.year}/{now.month:02d},0.05,1\r\n" == page
 
 
-def test_global_csv(api_connection_loki, print_job):
-    del print_job
+def test_global_csv(api_connection_loki, print_job_loki):
+    del print_job_loki
 
     api_connection_loki.login()
     page = api_connection_loki.get("logs/accounting.csv")
