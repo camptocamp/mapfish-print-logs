@@ -20,9 +20,7 @@ def escape(string: str) -> str:
     return string.replace("\\", '\\\\"').replace('"', '\\"')
 
 
-def get_logs(
-    ref: str, debug: bool, pos: int, limit: int, filter_loggers: List[str]
-) -> Tuple[List[str], int]:
+def get_logs(ref: str, debug: bool, pos: int, limit: int, filter_loggers: List[str]) -> Tuple[List[str], int]:
     if LOKI_URL is None:
         return [], 0
     log_query = [f'job_id="{escape(ref)}"']
