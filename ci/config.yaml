@@ -8,8 +8,6 @@ checks:
       - api/poetry\.lock
       - acceptance_tests/poetry\.lock
       - acceptance_tests/package-lock\.json
-  versions:
-    audit: False
 
 publish:
   pypi:
