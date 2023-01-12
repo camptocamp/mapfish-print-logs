@@ -10,5 +10,7 @@ checks:
       - acceptance_tests/package-lock\.json
 
 publish:
+  docker:
+    dispatch: {}
   pypi:
     packages: []
