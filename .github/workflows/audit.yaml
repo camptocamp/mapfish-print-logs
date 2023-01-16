@@ -19,6 +19,8 @@ jobs:
           - '1.3'
 
     steps:
+      - run: sudo apt-get remove python3-distro-info
+
       - uses: actions/checkout@v3
         with:
           ref: ${{ matrix.branch }}
