@@ -21,5 +21,7 @@ publish:
     packages: []
 
 audit:
-  pipfile: false
-  pipfile_lock: false
+  snyk:
+    pip_install_arguments:
+      - --user
+      - --ignore-installed
