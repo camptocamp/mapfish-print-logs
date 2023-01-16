@@ -15,7 +15,7 @@ jobs:
       - run: dpkg -l
       - run: dpkg -l|grep 0.23ubuntu1
       - run: pip freeze|grep 0.23ubuntu1
-      - run: apt-get remove python3-distro-info
+      - run: sudo apt-get remove python3-distro-info
       - run: docker --version
       - run: docker pull docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.3-amd64
       - uses: actions/checkout@v2
