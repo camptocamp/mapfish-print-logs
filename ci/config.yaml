@@ -25,5 +25,3 @@ audit:
     pip_install_arguments:
       - --user
       - --ignore-installed
-    pipenv_sync_arguments:
-      - --extra-pip-args=--ignore-installed
