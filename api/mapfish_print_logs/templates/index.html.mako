@@ -81,13 +81,18 @@
       </div>
       <div>
       %if request.identity.is_admin:
-        <a role="button" class="btn btn-primary mt-4 mr-3" href="${request.route_url('accounting_global')}">Accounting</a>
+        <a role="button" class="btn btn-primary mt-4 mr-3" style="vertical-align: baseline;"
+          href="${request.route_url('accounting_global')}">Accounting</a>
       %endif
-      Logged as: <a href="${request.identity.url}">${request.identity.name}</a>, <a role="button" class="btn btn-secondary mt-4"
+      Logged as: <a href="${request.identity.url}">${request.identity.name}</a>, <a role="button"
+        class="btn btn-secondary mt-4"
         style="vertical-align: baseline;"
-        href="${request.route_url('c2c_github_logout', _query={'came_from': request.current_route_url()})}">Logout</a>
+        href="${request.route_url('c2c_github_logout', _query={'came_from': request.current_route_url()})}"
+          >Logout</a>
       %else:
-        <a class="btn btn-primary" href="${request.route_url('c2c_github_login', _query={'came_from': request.current_route_url()})}">Login with GitHub</a>
+        <a class="btn btn-primary"
+          href="${request.route_url('c2c_github_login', _query={'came_from': request.current_route_url()})}"
+          >Login with GitHub</a>
       %endif
       </div>
     </div>
