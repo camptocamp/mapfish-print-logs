@@ -4,11 +4,11 @@ LABEL maintainer "info@camptocamp.org"
 # Fix for newer version of setuptools
 ENV SETUPTOOLS_USE_DISTUTILS=stdlib
 
-RUN apt update && \
-  DEBIAN_FRONTEND=noninteractive apt install --assume-yes --no-install-recommends \
-  python3-pip python3-dev gcc libpq-dev && \
-  apt clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache/*
+RUN apt update \
+    && DEBIAN_FRONTEND=noninteractive apt install --assume-yes --no-install-recommends \
+        python3-pip python3-dev gcc libpq-dev \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache/*
 
 # Doing things in two steps to avoid needing to re-install everything when we do a rebuild
 # after changing code
@@ -26,34 +26,34 @@ RUN apt remove --assume-yes --auto-remove python3-dev gcc
 CMD ["c2cwsgiutils-run"]
 
 ENV TERM=linux \
-  LANG=C.UTF-8 \
-  LOG_TYPE=console \
-  LOG_HOST=localhost \
-  LOG_PORT=514 \
-  SQL_LOG_LEVEL=WARN \
-  GUNICORN_LOG_LEVEL=WARN \
-  OTHER_LOG_LEVEL=WARN \
-  DEVELOPMENT=0 \
-  PKG_CONFIG_ALLOW_SYSTEM_LIBS=OHYESPLEASE
+    LANG=C.UTF-8 \
+    LOG_TYPE=console \
+    LOG_HOST=localhost \
+    LOG_PORT=514 \
+    SQL_LOG_LEVEL=WARN \
+    GUNICORN_LOG_LEVEL=WARN \
+    OTHER_LOG_LEVEL=WARN \
+    DEVELOPMENT=0 \
+    PKG_CONFIG_ALLOW_SYSTEM_LIBS=OHYESPLEASE
 
 ENV C2C_BASE_PATH=/logs/c2c \
-  C2C_SECRET= \
-  C2CWSGIUTILS_CONFIG=/app/production.ini \
-  C2C_REDIS_URL= \
-  C2C_REDIS_SENTINELS= \
-  C2C_REDIS_TIMEOUT=3 \
-  C2C_REDIS_SERVICENAME=mymaster \
-  C2C_REDIS_DB=0 \
-  C2C_BROADCAST_PREFIX=broadcast_api_ \
-  C2C_REQUEST_ID_HEADER= \
-  C2C_REQUESTS_DEFAULT_TIMEOUT= \
-  C2C_SQL_PROFILER_ENABLED=1 \
-  C2C_PROFILER_PATH= \
-  C2C_PROFILER_MODULES= \
-  C2C_DEBUG_VIEW_ENABLED=1 \
-  C2C_ENABLE_EXCEPTION_HANDLING=0 \
-  C2C_LOG_VIEW_ENABLED=1 \
-  C2C_REQUESTS_DEFAULT_TIMEOUT=10
+    C2C_SECRET= \
+    C2CWSGIUTILS_CONFIG=/app/production.ini \
+    C2C_REDIS_URL= \
+    C2C_REDIS_SENTINELS= \
+    C2C_REDIS_TIMEOUT=3 \
+    C2C_REDIS_SERVICENAME=mymaster \
+    C2C_REDIS_DB=0 \
+    C2C_BROADCAST_PREFIX=broadcast_api_ \
+    C2C_REQUEST_ID_HEADER= \
+    C2C_REQUESTS_DEFAULT_TIMEOUT= \
+    C2C_SQL_PROFILER_ENABLED=1 \
+    C2C_PROFILER_PATH= \
+    C2C_PROFILER_MODULES= \
+    C2C_DEBUG_VIEW_ENABLED=1 \
+    C2C_ENABLE_EXCEPTION_HANDLING=0 \
+    C2C_LOG_VIEW_ENABLED=1 \
+    C2C_REQUESTS_DEFAULT_TIMEOUT=10
 # End from c2cwsgiutils
 
 ENV MAPFISH_LOG_LEVEL=INFO \
@@ -69,10 +69,9 @@ COPY . /app
 ARG GIT_HASH
 RUN python3 -m pip install --no-cache-dir --no-deps --editable=.
 
-RUN c2cwsgiutils-genversion $GIT_HASH && \
-    python3 -m compileall -q . /usr/local/lib/python3.* \
-    -x /usr/local/lib/python3.*/dist-packages/pipenv/
-
+RUN c2cwsgiutils-genversion $GIT_HASH \
+    && python3 -m compileall -q . /usr/local/lib/python3.* \
+        -x /usr/local/lib/python3.*/dist-packages/pipenv/
 
 FROM base as checker
 
