@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional
 
 import pyramid.request  # type: ignore
-import sqlalchemy  # type: ignore
+import sqlalchemy
 from c2cwsgiutils import services
 
 from mapfish_print_logs import utils

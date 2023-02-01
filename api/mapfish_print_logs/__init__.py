@@ -8,6 +8,7 @@ from typing import Any, Dict
 import c2cwsgiutils.pyramid
 import pyramid.request  # type: ignore
 import pyramid.response  # type: ignore
+import sqlalchemy
 from c2cwsgiutils.health_check import HealthCheck
 from pyramid.config import Configurator  # type: ignore
 
@@ -42,7 +43,7 @@ def main(_: Any, **settings: Dict[str, Any]) -> Any:
 
     health_check = HealthCheck(config)
     health_check.add_db_session_check(
-        dbsession, query_cb=lambda session: session.execute("SELECT 1").fetchall()[0][0]
+        dbsession, query_cb=lambda session: session.execute(sqlalchemy.text("SELECT 1")).fetchall()[0][0]
     )
     if SCM_URL is not None:
         health_check.add_url_check(SCM_URL + "c2c/health_check", name="scm", level=3)

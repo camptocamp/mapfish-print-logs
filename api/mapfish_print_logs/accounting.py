@@ -2,7 +2,7 @@ import os
 from typing import Any, Dict, List, Optional, Set, TypedDict, cast
 
 import pyramid.request  # type: ignore
-import sqlalchemy as sa  # type: ignore
+import sqlalchemy as sa
 
 from mapfish_print_logs import utils
 from mapfish_print_logs.configuration import Config

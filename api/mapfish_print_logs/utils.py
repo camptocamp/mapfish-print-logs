@@ -1,5 +1,6 @@
-from typing import Any, Dict, Optional, Tuple, cast
+from typing import Any, Dict, Optional, Tuple, Union, cast
 
+import sqlalchemy
 import yaml
 
 from mapfish_print_logs.config import SHARED_CONFIG_MASTER
@@ -62,7 +63,7 @@ def get_app_id(config: Config, source: str) -> str:
     return cast(str, source_config.get("app_id", source))
 
 
-def app_id2source(app_id: str, config: Optional[Config] = None) -> str:
+def app_id2source(app_id: Union[str, sqlalchemy.Column[str]], config: Optional[Config] = None) -> str:
     app_id = app_id.split(":")[0]
     if config is None:
         config = read_shared_config()
