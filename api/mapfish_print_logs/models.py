@@ -1,9 +1,9 @@
 import os
 from typing import Any, Dict
 
-import sqlalchemy as sa  # type: ignore
-import sqlalchemy.ext.declarative  # type: ignore
-from sqlalchemy.dialects.postgresql import JSONB  # type: ignore
+import sqlalchemy as sa
+import sqlalchemy.ext.declarative
+from sqlalchemy.dialects.postgresql import JSONB
 
 from mapfish_print_logs import utils
 
@@ -45,7 +45,7 @@ class PrintAccounting(Base):  # type: ignore
 
     def pages_stats(self) -> str:
         if self.stats and "pages" in self.stats:
-            stats = [utils.page_size2fullname(page) for page in self.stats["pages"]]
+            stats = [utils.page_size2fullname(page) for page in self.stats["pages"]]  # type: ignore
             summary: Dict[str, Any] = {}
             for stat in stats:
                 summary.setdefault(stat, 0)
@@ -57,7 +57,7 @@ class PrintAccounting(Base):  # type: ignore
         if self.stats and "maps" in self.stats:
             # [{'dpi': 72.0, 'size': {'width': 780, 'height': 330}, 'nbLayers': 1}]
             maps = []
-            for map_ in self.stats["maps"]:
+            for map_ in self.stats["maps"]:  # type: ignore
                 maps.append(
                     f'{map_["size"]["width"]}x{map_["size"]["height"]} D{int(map_["dpi"])} '
                     f'L{map_["nbLayers"]}'

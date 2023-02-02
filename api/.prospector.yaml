@@ -10,10 +10,12 @@ pylint:
     - too-few-public-methods
     - wrong-import-order
     - missing-timeout # Default timeout set by c2cwsgiutils
+    - trailing-whitespace # Duplicated with Black
 
 pycodestyle:
   disable:
     - E501 # line too long
+    - W291 # trailing whitespace, duplicated with Black
 
 mypy:
   run: true

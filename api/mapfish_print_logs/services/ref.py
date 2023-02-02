@@ -1,7 +1,7 @@
 from typing import Any, Dict
 
 import pyramid.request  # type: ignore
-import sqlalchemy  # type: ignore
+import sqlalchemy
 from c2cwsgiutils import services
 from pyramid.httpexceptions import HTTPNotFound  # type: ignore
 from pyramid.security import Allowed  # type: ignore
