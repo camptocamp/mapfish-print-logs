@@ -48,7 +48,7 @@ def main(_: Any, **settings: Dict[str, Any]) -> Any:
         health_check.add_url_check(SCM_URL + "c2c/health_check", name="scm", level=3)
     health_check.add_url_check(
         SEARCH_URL,
-        params=dict(size="0"),
+        params={"size": "0"},
         headers=SEARCH_HEADERS,
         check_cb=lambda request, response: response.json(),
         name="elasticsearch",
