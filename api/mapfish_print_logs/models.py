@@ -28,20 +28,20 @@ class PrintAccounting(Base):  # type: ignore
     total_time_ms = sa.Column(sa.Integer)
 
     def to_json(self) -> Dict[str, Any]:
-        return dict(
-            reference_id=self.reference_id,
-            app_id=self.app_id,
-            completion_time=self.completion_time.isoformat(),
-            file_size=self.file_size,
-            layout=self.layout,
-            map_export=self.mapexport,
-            output_format=self.output_format,
-            processing_time_ms=self.processing_time_ms,
-            referrr=self.referer,
-            stats=self.stats,
-            status=self.status,
-            total_time_ms=self.total_time_ms,
-        )
+        return {
+            "reference_id": self.reference_id,
+            "app_id": self.app_id,
+            "completion_time": self.completion_time.isoformat(),
+            "file_size": self.file_size,
+            "layout": self.layout,
+            "map_export": self.mapexport,
+            "output_format": self.output_format,
+            "processing_time_ms": self.processing_time_ms,
+            "referrer": self.referer,
+            "stats": self.stats,
+            "status": self.status,
+            "total_time_ms": self.total_time_ms,
+        }
 
     def pages_stats(self) -> str:
         if self.stats and "pages" in self.stats:

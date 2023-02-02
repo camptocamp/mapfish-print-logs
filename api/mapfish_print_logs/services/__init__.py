@@ -16,7 +16,7 @@ def get_config_info(source: str) -> Optional[Dict[str, Any]]:
         response = requests.get(url)
     except Exception:  # pylint: disable=broad-except
         LOG.exception("Error in request: %s", url)
-        return dict(status=500, message="Error in sub-request, see logs for details")
+        return {"status": 500, "message": "Error in sub-request, see logs for details"}
     if response.status_code != 200:
-        return dict(status=response.status_code, message=response.text)
+        return {"status": response.status_code, "message": response.text}
     return cast(Dict[str, Any], response.json())
