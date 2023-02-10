@@ -12,6 +12,7 @@
     automerge: true,
     schedule: 'after 5pm on the first day of the month',
   },
+  baseBranches: ['master', '1.2', '1.3'],
   packageRules: [
     /** Docker images versioning */
     {
