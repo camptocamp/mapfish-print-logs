@@ -59,5 +59,11 @@
       separateMajorMinor: false,
       separateMinorPatch: false,
     },
+    /** Accept only the patch on the stabilization branches */
+    {
+      matchBaseBranches: ['/1\\..*/'],
+      matchUpdateTypes: ['major', 'minor', 'pin', 'digest', 'lockFileMaintenance', 'rollback', 'bump'],
+      enabled: false,
+    },
   ],
 }
