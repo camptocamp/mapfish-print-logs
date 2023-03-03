@@ -15,7 +15,7 @@ authors = []
 python = ">=3.10,<3.11"
 humanfriendly = "10.0"
 pyramid-mako = "1.1.0"
-c2cwsgiutils = { version = "5.2.2", extras = ["broadcast", "standard"] }
+c2cwsgiutils = { version = "5.2.2", extras = ["broadcast", "standard", "oauth2"] }
 pyramid = "2.0.1"
 sqlalchemy = "2.0.4"
 
