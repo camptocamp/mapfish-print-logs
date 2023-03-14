@@ -96,7 +96,7 @@ services:
       - 15432:5432
 
   print:
-    image: camptocamp/mapfish_print:3.29
+    image: camptocamp/mapfish_print:3.30
     environment:
       LOG_LEVEL: DEBUG
       CATALINA_OPTS: >-
