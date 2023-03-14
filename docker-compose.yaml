@@ -100,7 +100,7 @@ services:
     environment:
       LOG_LEVEL: DEBUG
       CATALINA_OPTS: >-
-        -Xmx512M -Ddb.username=www-data -Ddb.password=www-data -Ddb.host=db -Ddb.name=print
+        -Xmx512M -Ddb.username=www-data -Ddb.password=www-data -Ddb.host=db -Ddb.port=5432 -Ddb.name=print
         -Dmapfish.maxContentLength=4194304
       PGOPTIONS: '-c statement_timeout=30000'
     volumes_from:
