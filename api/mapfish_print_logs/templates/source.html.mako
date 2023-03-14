@@ -94,7 +94,7 @@
                   <td class="job-${job.status}">${job.status | h}</td>
                   <td>${job.app_id | h}</td>
                   <td>${job.layout | h}</td>
-                  <td class="text-truncate">${job.referer | h}</td>
+                  <td class="text-truncate">${job.referrer | h}</td>
                 </tr>
               %endfor
             </tbody>

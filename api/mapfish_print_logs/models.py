@@ -22,7 +22,7 @@ class PrintAccounting(Base):  # type: ignore
     mapexport = sa.Column(sa.Boolean, nullable=False)
     output_format = sa.Column(sa.Text, nullable=False)
     processing_time_ms = sa.Column(sa.Integer)
-    referer = sa.Column(sa.Text)
+    referrer = sa.Column(sa.Text)
     stats = sa.Column(JSONB)
     status = sa.Column(sa.Text, nullable=False)
     total_time_ms = sa.Column(sa.Integer)
@@ -37,7 +37,7 @@ class PrintAccounting(Base):  # type: ignore
             "map_export": self.mapexport,
             "output_format": self.output_format,
             "processing_time_ms": self.processing_time_ms,
-            "referrer": self.referer,
+            "referrer": self.referrer,
             "stats": self.stats,
             "status": self.status,
             "total_time_ms": self.total_time_ms,
