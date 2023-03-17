@@ -4,11 +4,11 @@ LABEL maintainer "info@camptocamp.org"
 # Fix for newer version of setuptools
 ENV SETUPTOOLS_USE_DISTUTILS=stdlib
 
-RUN apt update && \
-  DEBIAN_FRONTEND=noninteractive apt install --assume-yes --no-install-recommends \
-  python3-pip python3-dev gcc libpq-dev postgresql-client && \
-  apt clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache/*
+RUN apt update \
+  && DEBIAN_FRONTEND=noninteractive apt install --assume-yes --no-install-recommends \
+    python3-pip python3-dev gcc libpq-dev postgresql-client \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache/*
 
 # Doing things in two steps to avoid needing to re-install everything when we do a rebuild
 # after changing code
@@ -56,19 +56,18 @@ ENV C2C_BASE_PATH=/logs/c2c \
 # End from c2cwsgiutils
 
 ENV LOG_LEVEL=INFO \
-    C2CWSGIUTILS_LOG_LEVEL=INFO \
-    ALEMBIC_LOG_LEVEL=INFO \
-    GUNICORN_LOG_LEVEL=WARN \
-    GUNICORN_ACCESS_LOG_LEVEL=INFO \
-    SQLALCHEMY_POOL_SIZE=5 \
-    SQLALCHEMY_MAX_OVERFLOW=25 \
-    SQLALCHEMY_POOL_RECYCLE=30 \
-    SQLALCHEMY_SLAVE_POOL_SIZE=5 \
-    SQLALCHEMY_SLAVE_MAX_OVERFLOW=25 \
-    SQLALCHEMY_SLAVE_POOL_RECYCLE=30 \
-    SQLALCHEMY_WARN_20=true \
-    VISIBLE_ENTRY_POINT=/
-
+  C2CWSGIUTILS_LOG_LEVEL=INFO \
+  ALEMBIC_LOG_LEVEL=INFO \
+  GUNICORN_LOG_LEVEL=WARN \
+  GUNICORN_ACCESS_LOG_LEVEL=INFO \
+  SQLALCHEMY_POOL_SIZE=5 \
+  SQLALCHEMY_MAX_OVERFLOW=25 \
+  SQLALCHEMY_POOL_RECYCLE=30 \
+  SQLALCHEMY_SLAVE_POOL_SIZE=5 \
+  SQLALCHEMY_SLAVE_MAX_OVERFLOW=25 \
+  SQLALCHEMY_SLAVE_POOL_RECYCLE=30 \
+  SQLALCHEMY_WARN_20=true \
+  VISIBLE_ENTRY_POINT=/
 
 FROM base as checker
 
@@ -78,7 +77,6 @@ COPY . /app
 
 RUN prospector --output=pylint
 
-
 FROM base as runner
 
 COPY . /app
@@ -86,8 +84,8 @@ COPY . /app
 ARG GIT_HASH
 RUN python3 -m pip install --no-cache-dir --no-deps --editable=.
 
-RUN c2cwsgiutils-genversion $GIT_HASH && \
-    python3 -m compileall -q . /usr/local/lib/python3.* \
+RUN c2cwsgiutils-genversion $GIT_HASH \
+  && python3 -m compileall -q . /usr/local/lib/python3.* \
     -x /usr/local/lib/python3.*/dist-packages/pipenv/
 
 EXPOSE 8080
