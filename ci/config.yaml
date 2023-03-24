@@ -2,13 +2,7 @@ checks:
   black:
     ignore_patterns_re:
       - api/mapfish_print_logs/templates/source\.html\.mako
-  codespell:
-    ignore_re:
-      - configs/print-apps/simple/countries\.geojson
-      - api/poetry\.lock
-      - acceptance_tests/poetry\.lock
-      - acceptance_tests/package-lock\.json
-
+  codespell: false
 publish:
   docker:
     dispatch: {}
