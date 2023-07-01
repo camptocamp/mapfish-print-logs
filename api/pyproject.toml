@@ -17,11 +17,11 @@ humanfriendly = "10.0"
 pyramid-mako = "1.1.0"
 c2cwsgiutils = { version = "5.2.2", extras = ["broadcast", "standard", "oauth2"] }
 pyramid = "2.0.1"
-sqlalchemy = "2.0.15"
+sqlalchemy = "2.0.17"
 
 [tool.poetry.dev-dependencies]
 prospector = { version = "1.10.2", extras = ["with_bandit", "with_mypy"] }
-pytest = "7.3.1"
+pytest = "7.3.2"
 types-setuptools = "67.8.0.0"
 types-pyyaml = "6.0.12.10"
 types-requests = "2.31.0.1"
