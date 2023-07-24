@@ -72,5 +72,10 @@
       matchUpdateTypes: ['major', 'minor', 'pin', 'digest', 'lockFileMaintenance', 'rollback', 'bump'],
       enabled: false,
     },
+    /** Desable on master branch */
+    {
+      matchBaseBranches: ['master'],
+      enabled: false,
+    },
   ],
 }
