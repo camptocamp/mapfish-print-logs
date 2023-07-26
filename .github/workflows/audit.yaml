@@ -15,7 +15,6 @@ jobs:
       matrix:
         branch:
           - '1.2'
-          - '1.3'
 
     steps:
       # Remove Python packages with wriong version
