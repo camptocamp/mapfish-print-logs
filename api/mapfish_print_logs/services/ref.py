@@ -31,9 +31,9 @@ def get_ref(request):
         "cur_pos": pos,
         "next_pos": None if len(logs) + pos >= total else pos + LOG_LIMIT,
         "prev_pos": None if pos == 0 else max(0, pos - LOG_LIMIT),
-        "last_pos": None
-        if len(logs) + pos >= total
-        else ((min(total, MAX_LOGS) - 1) // LOG_LIMIT) * LOG_LIMIT,
+        "last_pos": (
+            None if len(logs) + pos >= total else ((min(total, MAX_LOGS) - 1) // LOG_LIMIT) * LOG_LIMIT
+        ),
         "limit": LOG_LIMIT,
         "total": total,
         "max_logs": MAX_LOGS,
