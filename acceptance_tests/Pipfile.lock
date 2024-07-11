@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "99d5d6101a1324e6ebe48e28bcea787e7fe4c7b2b613c3cbd21b2af6f222f086"
+            "sha256": "a4f294329a295a63182a9701a43504a4cbf111b97bbede5477b114fedaef28de"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -167,7 +167,7 @@
                 "sha256:fd1abc0d89e30cc4e02e4064dc67fcc51bd941eb395c502aac3ec19fab46b519",
                 "sha256:ff8fa367d09b717b2a17a052544193ad76cd49979c805768879cb63d9ca50561"
             ],
-            "markers": "python_version >= '3.7'",
+            "markers": "python_full_version >= '3.7.0'",
             "version": "==3.3.2"
         },
         "cornice": {
@@ -895,11 +895,11 @@
         },
         "zipp": {
             "hashes": [
-                "sha256:a5303f8ad20aff64720bf548256646f74fc8c167065c0d177a98a7cadceed85a",
-                "sha256:ce85de43ee0ead77dd0fbee3902bec1501aef59b92a2e18265396b22a1d756ab"
+                "sha256:2828e64edb5386ea6a52e7ba7cdb17bb30a73a858f5eb6eb93d8d36f5ea26091",
+                "sha256:35427f6d5594f4acf82d25541438348c26736fa9b3afa2754bcd63cdb99d8e8f"
             ],
             "index": "pypi",
-            "version": "==3.4.2"
+            "version": "==3.19.1"
         },
         "zope.deprecation": {
             "hashes": [
