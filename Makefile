@@ -32,16 +32,16 @@ build_acceptance:
 	docker build --tag=$(DOCKER_BASE)-acceptance:$(DOCKER_TAG) acceptance_tests
 
 run: build build_acceptance
-	docker-compose stop
+	docker compose stop
 	rm -rf reports/coverage/api reports/acceptance*.xml
 	mkdir -p reports/coverage/api
 	chmod o+rw reports
-	docker-compose up -d
+	docker compose up -d
 
 .PHONY: acceptance
 acceptance:
 	rm -rf reports/coverage/api reports/acceptance*.xml
 	mkdir -p reports/coverage/api
 	# Run the tests
-	docker-compose exec $(DOCKER_COMPOSE_TTY) run py.test --verbosity=2 --color=yes --junitxml /reports/acceptance.xml $(PYTEST_OPTS) acceptance
-	docker-compose exec $(DOCKER_COMPOSE_TTY) run junit2html /reports/acceptance.xml /reports/acceptance.html
+	docker compose exec $(DOCKER_COMPOSE_TTY) run py.test --verbosity=2 --color=yes --junitxml /reports/acceptance.xml $(PYTEST_OPTS) acceptance
+	docker compose exec $(DOCKER_COMPOSE_TTY) run junit2html /reports/acceptance.xml /reports/acceptance.html
