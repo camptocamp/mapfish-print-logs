@@ -61,9 +61,7 @@ jobs:
       - run: make run
       - name: Acceptance
         run: make acceptance
-      - run: docker-compose exec -T run junit2html /reports/acceptance.xml /reports/acceptance.html || true
-        if: always()
-      - run: c2cciutils-docker-logs
+      - run: docker compose exec -T run junit2html /reports/acceptance.xml /reports/acceptance.html || true
         if: always()
       - uses: actions/upload-artifact@v3
         with:

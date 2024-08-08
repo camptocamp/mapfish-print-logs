@@ -40,28 +40,28 @@ build-acceptance: ## Build the Docker acceptance image
 	docker build --tag=$(DOCKER_BASE)-acceptance:$(DOCKER_TAG) acceptance_tests
 
 run: build build-acceptance
-	docker-compose stop
+	docker compose stop
 	rm -rf reports/coverage/api reports/acceptance*.xml
 	mkdir -p reports/coverage/api
 	chmod o+rw reports
 	GITHUB_TOKEN=$(shell gopass show gs/ci/github/token/gopass) \
 	C2C_AUTH_GITHUB_CLIENT_ID=$(shell gopass show gs/projects/github/oauth-apps/geoservices-int/client-id) \
 	C2C_AUTH_GITHUB_CLIENT_SECRET=$(shell gopass show gs/projects/github/oauth-apps/geoservices-int/client-secret) \
-	docker-compose up -d
+	docker compose up -d
 
 .PHONY: acceptance
 acceptance: ## Run the acceptance tests
 	rm -rf reports/coverage/api reports/acceptance*.xml
 	mkdir -p reports/coverage/api
 	# Run the tests
-	docker-compose exec $(DOCKER_COMPOSE_TTY) api proutes c2c://production.ini || true
-	docker-compose exec $(DOCKER_COMPOSE_TTY) run pytest --verbosity=2 --color=yes --junitxml /reports/acceptance.xml $(PYTEST_OPTS) acceptance
-	docker-compose exec $(DOCKER_COMPOSE_TTY) run junit2html /reports/acceptance.xml /reports/acceptance.html
+	docker compose exec $(DOCKER_COMPOSE_TTY) api proutes c2c://production.ini || true
+	docker compose exec $(DOCKER_COMPOSE_TTY) run pytest --verbosity=2 --color=yes --junitxml /reports/acceptance.xml $(PYTEST_OPTS) acceptance
+	docker compose exec $(DOCKER_COMPOSE_TTY) run junit2html /reports/acceptance.xml /reports/acceptance.html
 
 .PHONY: acceptance-exitfirst
 acceptance-exitfirst: ## Run the acceptance tests, exit on first error
 	# Run the tests
-	docker-compose exec $(DOCKER_COMPOSE_TTY) run pytest --verbosity=2 --color=yes --exitfirst $(PYTEST_OPTS) acceptance
+	docker compose exec $(DOCKER_COMPOSE_TTY) run pytest --verbosity=2 --color=yes --exitfirst $(PYTEST_OPTS) acceptance
 
 .PHONY: checks
 checks: prospector ## Run the checks
